@@ -1,0 +1,32 @@
+2026-09-30T16:49:34Z START eval_or
+--- restart 2026-09-30T17:09:31Z (default obs builder switched to Dummy)
+2026-09-30T17:09:31Z START eval_or
+2026-09-30T17:10:43Z END eval_or rc=0 wall_s=72
+2026-09-30T17:10:43Z START eval_shortest_path
+2026-09-30T17:11:39Z END eval_shortest_path rc=0 wall_s=56
+2026-09-30T17:11:39Z START eval_reactive_avoid
+2026-09-30T17:15:06Z END eval_reactive_avoid rc=0 wall_s=207
+2026-09-30T17:15:06Z START train_ppo
+2026-09-30T17:45:40Z END train_ppo rc=0 wall_s=1834
+2026-09-30T17:45:40Z START eval_ppo
+2026-09-30T17:52:30Z END eval_ppo rc=0 wall_s=410
+2026-09-30T17:52:30Z START train_imitation
+--- 2026-09-30T17:55:01Z killed train_imitation (value warm-up updated the shared trunk); relaunch from imitation
+2026-09-30T17:55:01Z START train_imitation
+2026-09-30T18:26:20Z END train_imitation rc=0 wall_s=1879
+2026-09-30T18:26:20Z START eval_bc
+2026-09-30T18:29:10Z END eval_bc rc=0 wall_s=170
+2026-09-30T18:29:10Z START eval_bc_ppo
+2026-09-30T18:30:32Z END eval_bc_ppo rc=0 wall_s=82
+2026-09-30T18:30:32Z START train_ppo_tree
+2026-09-30T19:01:58Z END train_ppo_tree rc=0 wall_s=1886
+2026-09-30T19:01:58Z START eval_ppo_tree
+2026-09-30T19:24:04Z END eval_ppo_tree rc=0 wall_s=1326
+2026-09-30T19:24:04Z ALL_DONE
+2026-09-30T19:24:07Z START eval_or_paired
+2026-09-30T19:25:15Z END eval_or_paired rc=0 wall_s=68
+2026-09-30T19:25:15Z START eval_shortest_path_paired
+2026-09-30T19:26:03Z END eval_shortest_path_paired rc=0 wall_s=48
+2026-09-30T19:26:03Z START eval_reactive_avoid_paired
+2026-09-30T19:29:33Z END eval_reactive_avoid_paired rc=0 wall_s=210
+2026-09-30T19:29:33Z POST_DONE

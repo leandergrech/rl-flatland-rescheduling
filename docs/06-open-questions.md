@@ -5,7 +5,10 @@ one laptop-class CPU for prototyping, and access to a cluster for scaling. Effor
 repository as the starting point. Each entry says why it is open, what a first paper would show,
 and what it would take.
 
-RANKING_NOTE_PLACEHOLDER
+The ranking follows from the results in [04-designs](04-designs.md#results-on-our-scenarios). On
+their own, learned policies here are 37 to 82 points of arrival rate behind the planner after 30
+CPU minutes, while the planner loses 1.3 to 6.6 points to malfunctions from medium to xlarge. So the
+openings that attach learning to a planner (1 to 4) rank above those that try to replace it (5 to 7).
 
 ## 1. Learned repair: when to break the planned order after a malfunction
 
@@ -15,11 +18,12 @@ spends engineering effort on replanning: LNS-based partial replanning in 2020 an
 [Chen et al. 2023](https://arxiv.org/abs/2306.06455)), and "overstay rights" plus corridor locks in
 the ECML 2026 winner ([repo](https://github.com/darshanmakwana412/ecml2026)). Malfunctions are
 still where OR loses most: the ECML 2026 winner fell from 100% delivered on clean levels to 56 to
-78% with malfunctions. On our scenarios the OR reference loses 3.7 to 6.1 points of arrival rate to
-malfunctions on medium to xlarge, and knock-on waiting behind late trains exceeds the waiting the
-plan contains (1,725 against 1,240 train-steps on large, seed 2000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). No published RL work targets
-the repair decision on top of a planner. This is the place where the brief's "RL beats OR on
-malfunction response" hypothesis can actually be tested.
+78% with malfunctions. On our scenarios the OR reference loses 1.3, 4.4 and 6.6 points of arrival
+rate to malfunctions on medium, large and xlarge (same seeds, malfunctions on and off), and knock-on
+waiting behind late or broken trains is almost six times the waiting the plan itself contains
+(4,349 against 742 train-steps on large, seed 1000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). No published RL work targets
+the repair decision on top of a planner. This is where the hypothesis that RL can beat OR on
+malfunction response can actually be tested.
 
 **First paper.** A gate that, when a train is held behind a late or broken train, chooses "keep
 order" or "overtake and re-plan this train". Trained as a contextual bandit with counterfactual

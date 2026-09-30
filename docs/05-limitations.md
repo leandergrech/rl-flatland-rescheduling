@@ -14,7 +14,34 @@ from OR based solutions" ([Laurent et al. 2021, §6](http://proceedings.mlr.pres
 
 ## On our mid-size scenarios
 
-OURS_PLACEHOLDER
+Details and all metrics are in [04-designs](04-designs.md#results-on-our-scenarios).
+
+<!-- README_RESULTS:START -->
+| Policy | small 30×30, 10 trains | medium 50×50, 30 | large 80×80, 60 | xlarge 100×100, 100 | train + eval (min) |
+|---|---|---|---|---|---|
+| OR: PP+SIPP+MCP | 100.0 / 100.0 | 99.3 / 98.0 | 98.2 / 93.8 | 95.7 / 89.1 | 0.0 + 1.1 |
+| PPO (compact obs) | 60.0 / 60.0 | 35.0 / 36.0 | 14.3 / 14.2 | 7.5 / 7.5 | 30.3 + 6.7 |
+| BC from OR | 39.0 / 41.0 | 18.0 / 19.7 | 13.0 / 15.2 | 7.9 / 8.2 | 0.5 + 2.7 |
+| BC then PPO | 63.0 / 61.0 | 23.7 / 20.7 | 13.3 / 15.3 | 6.4 / 6.9 | 31.2 + 1.4 |
+| PPO (tree obs) | 25.0 / 22.0 | 24.7 / 22.7 | 16.5 / 16.3 | 16.0 / 15.0 | 31.3 + 22.0 |
+| Reactive heuristic | 82.0 / 76.0 | 46.3 / 45.7 | 25.3 / 22.3 | 11.1 / 9.8 | 0.0 + 3.5 |
+| Shortest path, no coordination | 36.0 / 36.0 | 24.7 / 23.7 | 8.3 / 9.2 | 5.7 / 5.2 | 0.0 + 0.8 |
+
+Arrival rate in % on the 10 held-out seeds per scenario, without / with malfunctions (same seeds, rate 1/1000 per train-step, 20 to 50 steps). Mean over episodes. Wall-clock on a ThinkPad i7-1260P (16 threads) with 8 worker processes, while two unrelated training jobs shared the CPU (1-minute load average median 23, range 11 to 44, logged in data/results/run_log/).
+
+<!-- README_RESULTS:END -->
+
+After 30 CPU minutes of training, the best learned policy is 37 points of arrival rate behind the OR
+reference on small, 64 on medium, 82 on large and 80 on xlarge. From medium up, that is larger
+than both the 20-point gap of NeurIPS 2020 and the 49-point gap between the best Flatland 3 OR and
+RL entries (88.0% against 38.6%, [Jiang et al. 2023, Table 7](https://arxiv.org/pdf/2210.12933)),
+for two reasons. First, the budget is minutes rather than days. Second, the
+learned policies here have none of the structural fixes the competitive RL entries used (departure
+gating, priorities, communication). The failure modes are the ones the literature describes:
+behaviour cloning walks into deadlocks (up to 30.9 trains per xlarge episode), and PPO trades
+deadlocks for gridlock, with 79 of 86 unarrived trains on 4 medium seeds waiting on the map at the
+horizon. The OR reference, meanwhile, loses 1.3 to 6.6 points to malfunctions from medium to xlarge.
+That loss is the one clear opening for learning at this scale.
 
 ## Where RL fails, mechanically
 
@@ -46,9 +73,9 @@ OR is not solved either, which is the opening for learning:
   ([Li et al. 2021](https://ojs.aaai.org/index.php/ICAPS/article/download/15994/15805/19487)),
   so repair matters, and it is where the OR entries spend their engineering effort.
 - **Knock-on delay from order-preserving execution.** MCP keeps the plan's order in every cell, so a
-  broken train holds up everyone planned behind it. On our large scenario (seed 2000), ordered
-  execution adds 1,725 held train-steps behind late or broken trains, on top of 1,240 steps of
-  waiting the plan itself contains ([`notebooks/03-first-experiment.ipynb`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)).
+  broken train holds up everyone planned behind it. On our large scenario (seed 1000, malfunctions
+  on), ordered execution holds trains for 4,349 train-steps behind late or broken trains (4,036
+  late, 313 broken), against 742 steps of waiting the plan itself contains ([`notebooks/03-first-experiment.ipynb`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)).
 - **Density.** At high density some trains cannot be planned at all within the horizon and are never
   dispatched. The ECML 2026 runner-up does this deliberately ("abandon unplaceable",
   [v5-dispatcher](https://github.com/Avinash837/ecml2026-starterkit/tree/v5-dispatcher-submission)).

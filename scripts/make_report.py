@@ -78,7 +78,51 @@ def main() -> None:
         fig.tight_layout()
         fig.savefig(ASSETS / "training_curves.png", dpi=150)
         plt.close(fig)
+    readme = readme_table(rows, pols)
+    inject(ROOT / "docs" / "04-designs.md", "RESULTS", "\n\n".join(out))
+    inject(ROOT / "README.md", "README_RESULTS", readme)
+    inject(ROOT / "docs" / "05-limitations.md", "README_RESULTS", readme)
     print(tables.read_text())
+    print(readme)
+
+
+def wall_clock(policy: str) -> str:
+    """Training + evaluation wall-clock in minutes, from the stored run metadata."""
+    res = ROOT / "data" / "results" / f"{policy}.json"
+    ev = json.loads(res.read_text()).get("eval_wall_s", 0.0) if res.exists() else 0.0
+    ck = {"ppo": "ppo", "ppo_tree": "ppo_tree", "bc": "bc", "bc_ppo": "bc_ppo"}.get(policy)
+    tr = 0.0
+    if ck and (ROOT / "data" / "checkpoints" / ck / "wall_clock.json").exists():
+        tr = json.loads((ROOT / "data" / "checkpoints" / ck / "wall_clock.json").read_text()).get("train_wall_s", 0.0)
+    return f"{tr / 60:.1f} + {ev / 60:.1f}"
+
+
+def readme_table(rows, pols) -> str:
+    name = {"or_pp_sipp": "or"}
+    head = ("| Policy | small 30×30, 10 trains | medium 50×50, 30 | large 80×80, 60 | xlarge 100×100, 100 | "
+            "train + eval (min) |\n|---|---|---|---|---|---|\n")
+    body = ""
+    for p in pols:
+        cells = []
+        for sc in SCENARIO_ORDER:
+            a = [r["arrival_rate"] for r in rows if r["policy"] == p and r["scenario"] == sc and r["split"] == "test"]
+            b = [r["arrival_rate"] for r in rows if r["policy"] == p and r["scenario"] == sc and r["split"] == "test_malfunction"]
+            cells.append(f"{100 * np.mean(a):.1f} / {100 * np.mean(b):.1f}" if a and b else "–")
+        body += f"| {POLICY_LABEL.get(p, p)} | " + " | ".join(cells) + f" | {wall_clock(name.get(p, p))} |\n"
+    note = ("\nArrival rate in % on the 10 held-out seeds per scenario, without / with malfunctions (same "
+            "seeds, rate 1/1000 per train-step, 20 to 50 steps). Mean over episodes. Wall-clock on a "
+            "ThinkPad i7-1260P (16 threads) with 8 worker processes, while two unrelated training jobs shared "
+            "the CPU (1-minute load average median 23, range 11 to 44, logged in data/results/run_log/).\n")
+    return head + body + note
+
+
+def inject(path: Path, tag: str, text: str) -> None:
+    s = path.read_text()
+    a, b = f"<!-- {tag}:START -->", f"<!-- {tag}:END -->"
+    if a in s and b in s:
+        pre, rest = s.split(a, 1)
+        _, post = rest.split(b, 1)
+        path.write_text(pre + a + "\n" + text + "\n" + b + post)
 
 
 if __name__ == "__main__":
