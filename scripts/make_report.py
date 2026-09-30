@@ -1,6 +1,7 @@
-"""Build the result tables (Markdown) and figures (PNG) used in the docs from data/results.
+"""Build the result tables (Markdown) and all figures (light and dark SVG) used in the docs.
 
-    python scripts/make_report.py            # writes docs/assets/*.png and data/results/summary_tables.md
+    python scripts/make_report.py      # tables -> data/results/summary_tables.md and injected into docs/README,
+                                       # figures -> docs/assets/figures/*-{light,dark}.svg
 """
 
 from __future__ import annotations
@@ -58,32 +59,37 @@ def main() -> None:
     tables = ROOT / "data" / "results" / "summary_tables.md"
     tables.write_text("\n\n".join(out) + "\n")
 
-    fig, axes = plt.subplots(2, 1, figsize=(9, 6.5), sharex=True)
-    plot_results(rows, "arrival_rate", "test", policies=pols, ax=axes[0], ylabel="arrival rate, no malfunctions")
-    plot_results(rows, "arrival_rate", "test_malfunction", policies=pols, ax=axes[1], ylabel="arrival rate, malfunctions")
-    axes[1].get_legend().remove()
-    axes[0].legend(frameon=False, fontsize=8, ncol=4, loc="upper center", bbox_to_anchor=(0.5, 1.28))
-    for ax in axes:
-        ax.set_ylim(0, 1.05)
-    fig.tight_layout()
-    fig.savefig(ASSETS / "arrival_rate.png", dpi=150)
-    plt.close(fig)
+    from rl_flatland.figures import build_all
 
-    logs = {n: ROOT / "data" / "checkpoints" / n / "train_log.jsonl" for n in ["ppo", "bc_ppo", "ppo_tree"]}
-    logs = {k: v for k, v in logs.items() if v.exists()}
-    if logs:
-        fig, ax = plt.subplots(figsize=(7, 3.4))
-        plot_training(logs, ax=ax)
-        ax.set_ylim(0, 1.0)
-        fig.tight_layout()
-        fig.savefig(ASSETS / "training_curves.png", dpi=150)
-        plt.close(fig)
+    paths = build_all(ASSETS / "figures")
+    print(f"wrote {len(paths)} figure files")
+    fm = ROOT / "data" / "analysis" / "failure_modes.json"
+    if fm.exists():
+        inject(ROOT / "docs" / "05-limitations.md", "FAILURE_MODES", failure_table(json.loads(fm.read_text())["rows"]))
     readme = readme_table(rows, pols)
     inject(ROOT / "docs" / "04-designs.md", "RESULTS", "\n\n".join(out))
-    inject(ROOT / "README.md", "README_RESULTS", readme)
+    picture = ('<picture>\n  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/figures/results-arrival-dark.svg">\n'
+               '  <img alt="Arrival rate by scenario and policy" src="docs/assets/figures/results-arrival-light.svg">\n</picture>\n\n')
+    inject(ROOT / "README.md", "README_RESULTS", picture + readme)
     inject(ROOT / "docs" / "05-limitations.md", "README_RESULTS", readme)
     print(tables.read_text())
     print(readme)
+
+
+def failure_table(rows) -> str:
+    from rl_flatland.theme import POLICY_LABEL, POLICY_ORDER
+
+    head = "| Policy | Scenario | Arrived | Stuck on the map | Never departed | Deadlocked |\n|---|---|---|---|---|---|\n"
+    body = ""
+    for p in POLICY_ORDER:
+        for sc in SCENARIO_ORDER:
+            rr = [r for r in rows if r["policy"] == p and r["scenario"] == sc]
+            if not rr:
+                continue
+            n = sum(r["n_agents"] for r in rr)
+            cells = [f"{100 * sum(r[k] for r in rr) / n:.1f}%" for k in ["arrived", "stuck_on_map", "never_departed", "deadlocked"]]
+            body += f"| {POLICY_LABEL[p]} | {sc} | " + " | ".join(cells) + " |\n"
+    return head + body
 
 
 def wall_clock(policy: str) -> str:

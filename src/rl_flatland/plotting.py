@@ -15,21 +15,13 @@ import numpy as np
 from flatland.envs.rail_env import RailEnv
 from flatland.envs.step_utils.states import TrainState
 
-POLICY_ORDER = ["or_pp_sipp", "ppo", "bc", "bc_ppo", "ppo_tree", "reactive_avoid", "shortest_path", "random"]
-POLICY_LABEL = {
-    "or_pp_sipp": "OR: PP+SIPP+MCP",
-    "ppo": "PPO (compact obs)",
-    "bc": "BC from OR",
-    "bc_ppo": "BC then PPO",
-    "ppo_tree": "PPO (tree obs)",
-    "reactive_avoid": "Reactive heuristic",
-    "shortest_path": "Shortest path, no coordination",
-    "random": "Random",
-}
-# categorical slots 1..8 of the reference palette (light mode), in fixed order
-PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#4a3aa7", "#e34948"]
+from rl_flatland.theme import POLICY_LABEL, POLICY_ORDER, SERIES, STATUS, TOKENS
+
+# same palette and order as the docs figures (light mode), see theme.py
+PALETTE = SERIES["light"]
 POLICY_COLOR = {p: PALETTE[i] for i, p in enumerate(POLICY_ORDER)}
-INK, INK_2, GRID, SURFACE = "#0b0b0b", "#52514e", "#e4e3df", "#fcfcfb"
+POLICY_LABEL = {**POLICY_LABEL, "random": "Random"}
+INK, INK_2, GRID, SURFACE = TOKENS["light"]["ink"], TOKENS["light"]["ink2"], TOKENS["light"]["grid"], TOKENS["light"]["surface"]
 SCENARIO_ORDER = ["small", "medium", "large", "xlarge"]
 
 EDGE = {0: (0.0, -0.5), 1: (0.5, 0.0), 2: (0.0, 0.5), 3: (-0.5, 0.0)}  # (dx, dy) to the edge in direction d
@@ -63,7 +55,7 @@ def plot_rail(env: RailEnv, ax=None, show_trains: bool = True, title: Optional[s
     for r, c, ein, e in segs:
         x0, y0 = c + EDGE[ein][0], r + EDGE[ein][1]
         x1, y1 = c + EDGE[e][0], r + EDGE[e][1]
-        ax.plot([x0, c, x1], [y0, r, y1], color="#8c8b86", linewidth=1.0, solid_capstyle="round", zorder=1)
+        ax.plot([x0, c, x1], [y0, r, y1], color=TOKENS["light"]["rail"], linewidth=1.0, solid_capstyle="round", zorder=1)
     targets = {tuple(list(a.targets)[0][0]) for a in env.agents if a.targets}
     if targets:
         tx, ty = zip(*[(c, r) for r, c in targets])
@@ -75,7 +67,7 @@ def plot_rail(env: RailEnv, ax=None, show_trains: bool = True, title: Optional[s
                 (r, c), d = a.current_configuration
                 xs.append(c)
                 ys.append(r)
-                cs.append(PALETTE[7] if a.malfunction_handler.in_malfunction else PALETTE[0])
+                cs.append(STATUS["critical"] if a.malfunction_handler.in_malfunction else INK)
         if xs:
             ax.scatter(xs, ys, s=40, c=cs, edgecolor=SURFACE, linewidth=1.5, zorder=3)
         done = sum(a.state == TrainState.DONE for a in env.agents)
