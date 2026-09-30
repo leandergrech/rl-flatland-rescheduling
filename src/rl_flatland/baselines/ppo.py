@@ -179,6 +179,16 @@ def ppo_update(
         perm = torch.randperm(n)
         for s in range(0, n, cfg.minibatch):
             idx = perm[s : s + cfg.minibatch]
+            if value_only:
+                # warm-up: fit the value head on a frozen trunk, so the (e.g. cloned) policy is untouched
+                with torch.no_grad():
+                    h = model.body(obs[idx])
+                vf = F.mse_loss(model.v(h).squeeze(-1), ret[idx])
+                opt.zero_grad()
+                (cfg.vf_coef * vf).backward()
+                opt.step()
+                stats["vf"].append(float(vf.detach()))
+                continue
             logits, v = model(obs[idx], mask[idx])
             logp_all = F.log_softmax(logits, -1)
             logp = logp_all.gather(-1, a[idx][:, None]).squeeze(-1)
@@ -187,8 +197,8 @@ def ppo_update(
             vf = F.mse_loss(v, ret[idx])
             p = torch.exp(logp_all)
             ent = -(p * torch.where(mask[idx] > 0.5, logp_all, torch.zeros_like(logp_all))).sum(-1).mean()
-            loss = cfg.vf_coef * vf if value_only else pg + cfg.vf_coef * vf - cfg.ent_coef * ent
-            if bc_data is not None and bc_coef > 0 and not value_only:
+            loss = pg + cfg.vf_coef * vf - cfg.ent_coef * ent
+            if bc_data is not None and bc_coef > 0:
                 j = torch.randint(0, len(bc_data["a"]), (min(cfg.minibatch, len(bc_data["a"])),))
                 bl, _ = model(bc_data["obs"][j], bc_data["mask"][j])
                 bc = F.cross_entropy(bl, bc_data["a"][j])

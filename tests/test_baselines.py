@@ -68,3 +68,16 @@ def test_network_policy_runs(tmp_path):
     torch.save(model.state_dict(), tmp_path / "m.pt")
     r = run_episode(NetworkPolicy(tmp_path / "m.pt"), "small", 1000, malfunctions=False, max_steps=30)
     assert r.steps == 30
+
+
+def test_value_warmup_leaves_policy_unchanged():
+    cfg = PPOConfig(minibatch=256, epochs=1)
+    model = ActorCritic(make_obs("compact").dim)
+    batch = _collect_episode((model.state_dict(), asdict(cfg), "small", 13, False))
+    x = torch.as_tensor(batch["obs"][:64])
+    m = torch.as_tensor(batch["mask"][:64])
+    before, _ = model(x, m)
+    opt = torch.optim.Adam(model.parameters(), lr=1e-2)
+    ppo_update(model, opt, batch, cfg, value_only=True)
+    after, _ = model(x, m)
+    assert torch.allclose(before, after)

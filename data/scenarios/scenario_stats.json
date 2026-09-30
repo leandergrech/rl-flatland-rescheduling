@@ -1,0 +1,434 @@
+{
+ "small": {
+  "config": {
+   "name": "small",
+   "width": 30,
+   "height": 30,
+   "n_agents": 10,
+   "n_cities": 2,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "T_min": 129,
+  "T_max": 226,
+  "rail_cells_mean": 103.4,
+  "switch_cells_mean": 25.2,
+  "sp_time_median": 60.0,
+  "slack_median": 36.25,
+  "per_seed": [
+   {
+    "seed": 1000,
+    "T": 203,
+    "rail_cells": 107,
+    "switch_cells": 32,
+    "sp_time_median": 38.0,
+    "slack_median": 26.0
+   },
+   {
+    "seed": 1001,
+    "T": 165,
+    "rail_cells": 135,
+    "switch_cells": 22,
+    "sp_time_median": 60.0,
+    "slack_median": 35.5
+   },
+   {
+    "seed": 1002,
+    "T": 226,
+    "rail_cells": 95,
+    "switch_cells": 23,
+    "sp_time_median": 68.0,
+    "slack_median": 42.5
+   },
+   {
+    "seed": 1003,
+    "T": 129,
+    "rail_cells": 96,
+    "switch_cells": 26,
+    "sp_time_median": 42.5,
+    "slack_median": 26.0
+   },
+   {
+    "seed": 1004,
+    "T": 209,
+    "rail_cells": 108,
+    "switch_cells": 27,
+    "sp_time_median": 52.0,
+    "slack_median": 31.0
+   },
+   {
+    "seed": 1005,
+    "T": 200,
+    "rail_cells": 83,
+    "switch_cells": 22,
+    "sp_time_median": 58.0,
+    "slack_median": 37.0
+   },
+   {
+    "seed": 1006,
+    "T": 180,
+    "rail_cells": 111,
+    "switch_cells": 20,
+    "sp_time_median": 72.0,
+    "slack_median": 39.0
+   },
+   {
+    "seed": 1007,
+    "T": 216,
+    "rail_cells": 95,
+    "switch_cells": 20,
+    "sp_time_median": 96.0,
+    "slack_median": 52.0
+   },
+   {
+    "seed": 1008,
+    "T": 211,
+    "rail_cells": 85,
+    "switch_cells": 19,
+    "sp_time_median": 60.0,
+    "slack_median": 36.0
+   },
+   {
+    "seed": 1009,
+    "T": 199,
+    "rail_cells": 119,
+    "switch_cells": 41,
+    "sp_time_median": 64.0,
+    "slack_median": 36.5
+   }
+  ]
+ },
+ "medium": {
+  "config": {
+   "name": "medium",
+   "width": 50,
+   "height": 50,
+   "n_agents": 30,
+   "n_cities": 4,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "T_min": 439,
+  "T_max": 902,
+  "rail_cells_mean": 331.7,
+  "switch_cells_mean": 57.2,
+  "sp_time_median": 127.25,
+  "slack_median": 75.5,
+  "per_seed": [
+   {
+    "seed": 1000,
+    "T": 475,
+    "rail_cells": 255,
+    "switch_cells": 46,
+    "sp_time_median": 150.0,
+    "slack_median": 82.0
+   },
+   {
+    "seed": 1001,
+    "T": 834,
+    "rail_cells": 354,
+    "switch_cells": 63,
+    "sp_time_median": 131.0,
+    "slack_median": 74.0
+   },
+   {
+    "seed": 1002,
+    "T": 834,
+    "rail_cells": 352,
+    "switch_cells": 57,
+    "sp_time_median": 123.0,
+    "slack_median": 77.0
+   },
+   {
+    "seed": 1003,
+    "T": 592,
+    "rail_cells": 310,
+    "switch_cells": 49,
+    "sp_time_median": 174.0,
+    "slack_median": 91.0
+   },
+   {
+    "seed": 1004,
+    "T": 902,
+    "rail_cells": 389,
+    "switch_cells": 64,
+    "sp_time_median": 133.0,
+    "slack_median": 77.0
+   },
+   {
+    "seed": 1005,
+    "T": 542,
+    "rail_cells": 351,
+    "switch_cells": 53,
+    "sp_time_median": 123.5,
+    "slack_median": 73.5
+   },
+   {
+    "seed": 1006,
+    "T": 598,
+    "rail_cells": 287,
+    "switch_cells": 39,
+    "sp_time_median": 102.0,
+    "slack_median": 63.0
+   },
+   {
+    "seed": 1007,
+    "T": 568,
+    "rail_cells": 276,
+    "switch_cells": 62,
+    "sp_time_median": 91.0,
+    "slack_median": 54.0
+   },
+   {
+    "seed": 1008,
+    "T": 829,
+    "rail_cells": 424,
+    "switch_cells": 57,
+    "sp_time_median": 188.0,
+    "slack_median": 96.5
+   },
+   {
+    "seed": 1009,
+    "T": 439,
+    "rail_cells": 319,
+    "switch_cells": 82,
+    "sp_time_median": 119.0,
+    "slack_median": 66.0
+   }
+  ]
+ },
+ "large": {
+  "config": {
+   "name": "large",
+   "width": 80,
+   "height": 80,
+   "n_agents": 60,
+   "n_cities": 6,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "T_min": 1010,
+  "T_max": 1450,
+  "rail_cells_mean": 562.3,
+  "switch_cells_mean": 81.5,
+  "sp_time_median": 200.25,
+  "slack_median": 114.5,
+  "per_seed": [
+   {
+    "seed": 1000,
+    "T": 1233,
+    "rail_cells": 516,
+    "switch_cells": 70,
+    "sp_time_median": 184.5,
+    "slack_median": 110.0
+   },
+   {
+    "seed": 1001,
+    "T": 1249,
+    "rail_cells": 631,
+    "switch_cells": 82,
+    "sp_time_median": 250.0,
+    "slack_median": 142.0
+   },
+   {
+    "seed": 1002,
+    "T": 1010,
+    "rail_cells": 648,
+    "switch_cells": 98,
+    "sp_time_median": 163.0,
+    "slack_median": 90.5
+   },
+   {
+    "seed": 1003,
+    "T": 1390,
+    "rail_cells": 445,
+    "switch_cells": 73,
+    "sp_time_median": 214.5,
+    "slack_median": 126.5
+   },
+   {
+    "seed": 1004,
+    "T": 1176,
+    "rail_cells": 540,
+    "switch_cells": 78,
+    "sp_time_median": 213.0,
+    "slack_median": 116.5
+   },
+   {
+    "seed": 1005,
+    "T": 1450,
+    "rail_cells": 551,
+    "switch_cells": 72,
+    "sp_time_median": 187.0,
+    "slack_median": 112.5
+   },
+   {
+    "seed": 1006,
+    "T": 1310,
+    "rail_cells": 455,
+    "switch_cells": 53,
+    "sp_time_median": 256.0,
+    "slack_median": 142.0
+   },
+   {
+    "seed": 1007,
+    "T": 1123,
+    "rail_cells": 547,
+    "switch_cells": 72,
+    "sp_time_median": 241.0,
+    "slack_median": 130.5
+   },
+   {
+    "seed": 1008,
+    "T": 1252,
+    "rail_cells": 569,
+    "switch_cells": 100,
+    "sp_time_median": 187.5,
+    "slack_median": 106.5
+   },
+   {
+    "seed": 1009,
+    "T": 1294,
+    "rail_cells": 721,
+    "switch_cells": 117,
+    "sp_time_median": 182.5,
+    "slack_median": 105.0
+   }
+  ]
+ },
+ "xlarge": {
+  "config": {
+   "name": "xlarge",
+   "width": 100,
+   "height": 100,
+   "n_agents": 100,
+   "n_cities": 8,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "T_min": 1116,
+  "T_max": 2021,
+  "rail_cells_mean": 886.4,
+  "switch_cells_mean": 108.5,
+  "sp_time_median": 264.0,
+  "slack_median": 147.0,
+  "per_seed": [
+   {
+    "seed": 1000,
+    "T": 1316,
+    "rail_cells": 868,
+    "switch_cells": 119,
+    "sp_time_median": 253.5,
+    "slack_median": 142.0
+   },
+   {
+    "seed": 1001,
+    "T": 1116,
+    "rail_cells": 763,
+    "switch_cells": 105,
+    "sp_time_median": 184.0,
+    "slack_median": 109.0
+   },
+   {
+    "seed": 1002,
+    "T": 1846,
+    "rail_cells": 917,
+    "switch_cells": 125,
+    "sp_time_median": 337.0,
+    "slack_median": 188.0
+   },
+   {
+    "seed": 1003,
+    "T": 1153,
+    "rail_cells": 959,
+    "switch_cells": 100,
+    "sp_time_median": 238.0,
+    "slack_median": 132.0
+   },
+   {
+    "seed": 1004,
+    "T": 2021,
+    "rail_cells": 940,
+    "switch_cells": 120,
+    "sp_time_median": 319.0,
+    "slack_median": 187.5
+   },
+   {
+    "seed": 1005,
+    "T": 1875,
+    "rail_cells": 868,
+    "switch_cells": 93,
+    "sp_time_median": 321.0,
+    "slack_median": 177.0
+   },
+   {
+    "seed": 1006,
+    "T": 1920,
+    "rail_cells": 756,
+    "switch_cells": 76,
+    "sp_time_median": 274.5,
+    "slack_median": 152.0
+   },
+   {
+    "seed": 1007,
+    "T": 1127,
+    "rail_cells": 656,
+    "switch_cells": 87,
+    "sp_time_median": 186.0,
+    "slack_median": 106.0
+   },
+   {
+    "seed": 1008,
+    "T": 1725,
+    "rail_cells": 1022,
+    "switch_cells": 124,
+    "sp_time_median": 309.0,
+    "slack_median": 166.5
+   },
+   {
+    "seed": 1009,
+    "T": 1390,
+    "rail_cells": 1115,
+    "switch_cells": 136,
+    "sp_time_median": 233.0,
+    "slack_median": 132.0
+   }
+  ]
+ }
+}

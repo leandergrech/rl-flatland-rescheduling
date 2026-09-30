@@ -65,19 +65,20 @@ rotations, passenger connections, and infrastructure closures (the ECML 2026 lev
 
 ## What the numbers look like
 
-Generated networks are sparse. On our held-out seeds (computed by `scripts/evaluate.py --stats`,
-flatland-rl 4.3.0):
+Generated networks are sparse. On our 10 held-out seeds per scenario (computed by
+`python scripts/evaluate.py --stats`, stored in `data/scenarios/scenario_stats.json`, flatland-rl
+4.3.0; the last two columns are the median over seeds of each seed's median train):
 
-| Scenario | Grid | Trains | Cities | Rail cells (mean) | Switch cells (mean) | Horizon \(T\) (min to max) | Median shortest-path time | Median slack \(LA - ED - \tau\) |
+| Scenario | Grid | Trains | Cities | Rail cells (mean) | Switch cells (mean) | Horizon \(T\) (min to max) | Shortest-path time \(\tau\) | Slack \(LA - ED - \tau\) |
 |---|---|---|---|---|---|---|---|---|
 | small | 30×30 | 10 | 2 | 103 | 25 | 129 to 226 | 60 steps | 36 steps |
-| medium | 50×50 | 30 | 4 | 331 | 57 | 439 to 902 | 124 steps | 74 steps |
-| large | 80×80 | 60 | 6 | 562 | 81 | 1,010 to 1,450 | 206 steps | 117 steps |
-| xlarge | 100×100 | 100 | 8 | 886 | 108 | 1,116 to 2,021 | 260 steps | 147 steps |
+| medium | 50×50 | 30 | 4 | 332 | 57 | 439 to 902 | 127 steps | 76 steps |
+| large | 80×80 | 60 | 6 | 562 | 82 | 1,010 to 1,450 | 200 steps | 114 steps |
+| xlarge | 100×100 | 100 | 8 | 886 | 108 | 1,116 to 2,021 | 264 steps | 147 steps |
 
 Only about 11% of cells carry track at 30×30 and 9% at 100×100, so trains share a small number of
-corridors between cities. The median train has a slack of about half its own travel time: enough
-to wait once at a junction, not enough to wait behind a long queue.
+corridors between cities. The median train's slack is about 0.6 times its own shortest-path travel
+time: enough to wait once or twice at a junction, not enough to wait behind a long queue.
 
 The 2020 competition used malfunction rates between 0 and 1/250 per train-step with durations of
 20 to 50 steps

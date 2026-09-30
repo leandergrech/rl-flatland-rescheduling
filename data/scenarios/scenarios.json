@@ -1,0 +1,114 @@
+{
+ "flatland_rl_version": "4.3.0",
+ "generator": "sparse_rail_generator + sparse_line_generator + Flatland 3 timetable_generator",
+ "scenarios": {
+  "small": {
+   "name": "small",
+   "width": 30,
+   "height": 30,
+   "n_agents": 10,
+   "n_cities": 2,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "medium": {
+   "name": "medium",
+   "width": 50,
+   "height": 50,
+   "n_agents": 30,
+   "n_cities": 4,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "large": {
+   "name": "large",
+   "width": 80,
+   "height": 80,
+   "n_agents": 60,
+   "n_cities": 6,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  },
+  "xlarge": {
+   "name": "xlarge",
+   "width": 100,
+   "height": 100,
+   "n_agents": 100,
+   "n_cities": 8,
+   "max_rails_between_cities": 2,
+   "max_rail_pairs_in_city": 2,
+   "speed_ratio_map": {
+    "1.0": 0.25,
+    "0.5": 0.25,
+    "0.3333333333333333": 0.25,
+    "0.25": 0.25
+   },
+   "malfunction_rate": 0.001,
+   "malfunction_min_duration": 20,
+   "malfunction_max_duration": 50
+  }
+ },
+ "splits": {
+  "train": {
+   "seeds": "0..999",
+   "malfunctions": "50% of training episodes"
+  },
+  "test": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009
+   ],
+   "malfunctions": false
+  },
+  "test_malfunction": {
+   "seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009
+   ],
+   "malfunctions": true
+  }
+ }
+}
