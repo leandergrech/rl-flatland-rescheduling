@@ -66,7 +66,7 @@ rotations, passenger connections, and infrastructure closures (the ECML 2026 lev
 ## What the numbers look like
 
 Generated networks are sparse. On our 10 held-out seeds per scenario (computed by
-`python scripts/evaluate.py --stats`, stored in `data/scenarios/scenario_stats.json`, flatland-rl
+`python scripts/evaluate.py --stats`, stored in [`data/scenarios/scenario_stats.json`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/scenarios/scenario_stats.json), flatland-rl
 4.3.0; the last two columns are the median over seeds of each seed's median train):
 
 | Scenario | Grid | Trains | Cities | Rail cells (mean) | Switch cells (mean) | Horizon \(T\) (min to max) | Shortest-path time \(\tau\) | Slack \(LA - ED - \tau\) |

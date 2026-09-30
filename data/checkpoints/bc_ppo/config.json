@@ -1,0 +1,25 @@
+{
+ "obs": "compact",
+ "hidden": 128,
+ "gamma": 0.99,
+ "lam": 0.95,
+ "clip": 0.2,
+ "lr": 0.0001,
+ "epochs": 4,
+ "minibatch": 2048,
+ "ent_coef": 0.003,
+ "vf_coef": 0.5,
+ "max_grad_norm": 0.5,
+ "episodes_per_iter": 16,
+ "iterations": 200,
+ "time_budget_s": 1800.0,
+ "workers": 8,
+ "train_mix": {
+  "small": 0.5,
+  "medium": 0.5
+ },
+ "malfunction_prob": 0.5,
+ "seed": 0,
+ "bc_coef_start": 1.0,
+ "value_warmup_iters": 3
+}

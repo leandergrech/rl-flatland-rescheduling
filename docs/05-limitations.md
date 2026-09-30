@@ -48,7 +48,7 @@ OR is not solved either, which is the opening for learning:
 - **Knock-on delay from order-preserving execution.** MCP keeps the plan's order in every cell, so a
   broken train holds up everyone planned behind it. On our large scenario (seed 2000), ordered
   execution adds 1,725 held train-steps behind late or broken trains, on top of 1,240 steps of
-  waiting the plan itself contains (`notebooks/03-first-experiment.ipynb`).
+  waiting the plan itself contains ([`notebooks/03-first-experiment.ipynb`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)).
 - **Density.** At high density some trains cannot be planned at all within the horizon and are never
   dispatched. The ECML 2026 runner-up does this deliberately ("abandon unplaceable",
   [v5-dispatcher](https://github.com/Avinash837/ecml2026-starterkit/tree/v5-dispatcher-submission)).

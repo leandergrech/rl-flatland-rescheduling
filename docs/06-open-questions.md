@@ -17,7 +17,7 @@ the ECML 2026 winner ([repo](https://github.com/darshanmakwana412/ecml2026)). Ma
 still where OR loses most: the ECML 2026 winner fell from 100% delivered on clean levels to 56 to
 78% with malfunctions. On our scenarios the OR reference loses 3.7 to 6.1 points of arrival rate to
 malfunctions on medium to xlarge, and knock-on waiting behind late trains exceeds the waiting the
-plan contains (1,725 against 1,240 train-steps on large, seed 2000). No published RL work targets
+plan contains (1,725 against 1,240 train-steps on large, seed 2000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). No published RL work targets
 the repair decision on top of a planner. This is the place where the brief's "RL beats OR on
 malfunction response" hypothesis can actually be tested.
 
