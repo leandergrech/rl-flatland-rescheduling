@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rl_flatland"
+version = "0.1.0"
+description = "Mid-size Flatland train-rescheduling scenarios with OR, PPO and imitation-then-RL baselines"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Leander Grech" }]
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
