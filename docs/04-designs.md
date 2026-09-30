@@ -17,6 +17,11 @@ baselines in this repository and how they perform on our mid-size scenarios.
 | **v4-sipp-locks, ECML 2026 winner** ([repo](https://github.com/darshanmakwana412/ecml2026)) | Prioritized SIPP, tightest slack first; trains held off-map before departure; "overstay rights" (a train physically in a cell keeps it, and stale reservations are invalidated); directional locks on the 18 longest single-track corridors | Full state | Plan precomputed, re-planned on malfunction; avoids STOP actions (priced at 250 × speed by the ECML reward) | n/r | 20.8429, against 12.4925 for the runner-up ([results](https://flatland-association.github.io/flatland-book/challenges/ecml2026/post-competition_analysis.html)) |
 | **Deadlock-avoidance heuristic** ([flatland-baselines](https://github.com/flatland-association/flatland-baselines)) | Follow shortest path; move only if enough free cells separate you from every opposing train on your path | Full state | Native | Trivial | 10.7320 in ECML 2026 |
 
+![Score gained by each component of the two winning OR systems](assets/figures/or-components-light.svg#only-light)
+![Score gained by each component of the two winning OR systems](assets/figures/or-components-dark.svg#only-dark)
+
+*What each component was worth, from the winners' own ablations: the NeurIPS 2020 winner's competition score after each addition ([Laurent et al. 2021, §4.1](http://proceedings.mlr.press/v133/laurent21a/laurent21a.pdf)) and the Flatland 3 winner's score on its local 150-instance benchmark ([Chen et al. 2023](https://arxiv.org/abs/2306.06455)). Different benchmarks, so compare the steps, not the two panels.*
+
 ### Reinforcement learning
 
 | System | Algorithm and network | Observation | Action design | Reward | Training | Reported result |
@@ -58,15 +63,31 @@ communication or attention across trains; a curriculum over the number of trains
 ## Baselines in this repository
 
 All code is in `src/rl_flatland/`. Every baseline runs through the same harness
-(`evaluation.run_episode`), on the same four scenarios and the same held-out seeds (10 without and
-10 with malfunctions per scenario, see `data/scenarios/scenarios.json`).
+(`evaluation.run_episode`), on the same four scenarios and the same 10 held-out seeds per scenario,
+once without and once with malfunctions (see `data/scenarios/scenarios.json`).
+
+```mermaid
+flowchart TD
+    S["scenarios.py<br/>4 fixed scenarios<br/>train seeds 0–999<br/>test seeds 1000–1009"] --> ENV["flatland RailEnv 4.3.0"]
+    ENV --> OR["OR reference<br/>PP + SIPP +<br/>ordered execution"]
+    ENV --> W["DecisionEnv<br/>decision cells,<br/>3 meta-actions,<br/>shaped reward"]
+    W --> PPO["PPO<br/>compact or tree obs"]
+    OR -- "labelled decisions" --> BC["Behaviour cloning"]
+    W --> BC
+    BC --> BCP["BC then PPO"]
+    W --> H["Rule-based<br/>references"]
+    OR & PPO & BC & BCP & H --> EV["evaluation.run_episode<br/>same seeds, same metrics"]
+    EV --> RES[("data/results")]
+    RES --> REP["make_report.py<br/>tables and figures"]
+```
 
 ### Environment wrapper and observations
 
 - `scenarios.py` fixes four `sparse_rail_generator` scenarios (small 30×30/10 trains, medium
   50×50/30, large 80×80/60, xlarge 100×100/100) with the Flatland 3 mixed speed profile (a quarter
-  each at 1, 1/2, 1/3, 1/4). Training uses seeds 0 to 999, evaluation 1000 to 1009 (no
-  malfunctions) and 2000 to 2009 (malfunction rate 1/1000 per train-step, 20 to 50 steps).
+  each at 1, 1/2, 1/3, 1/4). Training uses seeds 0 to 999. Evaluation uses seeds 1000 to 1009 twice:
+  without malfunctions and with them (rate 1/1000 per train-step, 20 to 50 steps). Switching
+  malfunctions on does not change the network, lines or timetable of a seed.
 - `env.DecisionEnv` asks a train for a decision only when it is ready to depart, at a facing
   switch, or on the cell before a switch. Elsewhere it keeps rolling. On the medium scenario that
   is 29% of rail configurations (notebook 01). The action set is WAIT / GO along the shortest
@@ -78,6 +99,23 @@ All code is in `src/rl_flatland/`. Every baseline runs through the same harness
 - `observations.TreeObs` (260 features): flatland's depth-2 `TreeObsForRailEnv` with a 20-step
   shortest-path predictor, flattened and normalised as in the 2020 starter kits, plus 8 own
   features.
+
+How `DecisionEnv` treats each train on each step:
+
+```mermaid
+flowchart LR
+    T["Each train,<br/>each step"] --> D{"Done?"}
+    D -- "arrived or<br/>deadlocked" --> N["no action"]
+    D -- no --> O{"Off the<br/>map?"}
+    O -- yes --> R{"Past earliest<br/>departure?"}
+    R -- yes --> A2["policy:<br/>WAIT or GO"]
+    R -- no --> N
+    O -- no --> B{"Broken, or<br/>mid-cell?"}
+    B -- yes --> ROLL["keep rolling"]
+    B -- no --> SW{"At or just<br/>before a<br/>switch?"}
+    SW -- yes --> A3["policy: WAIT,<br/>GO shortest,<br/>GO alternative"]
+    SW -- no --> ROLL
+```
 
 ### OR reference: PP + SIPP + ordered execution
 
@@ -96,6 +134,23 @@ This matches the "PP + SIPP + MCP" stage of the 2020 winner (285.4 of their fina
 [Laurent et al. 2021, §4.1](http://proceedings.mlr.press/v133/laurent21a/laurent21a.pdf)),
 plus priority restarts. Not included: LNS, partial replanning after malfunctions, lazy planning.
 It is plain Python, and still plans 100 trains in about 2 s.
+
+```mermaid
+flowchart TD
+    subgraph plan["At reset: plan"]
+        O1["8 priority orders<br/>fast, slack, departure,<br/>short trip, 4 random"] --> P["Each train in order:<br/>SIPP earliest-arrival path<br/>around reserved cell-times"]
+        P <--> RT[("Reservation table<br/>cell intervals<br/>and moves")]
+        P --> Q{"Keep the plan with<br/>most trains routed,<br/>then least lateness"}
+    end
+    subgraph exec["Every step: execute"]
+        V["Planned visit<br/>order per cell"] --> G{"Earlier visitors of<br/>the next cell gone,<br/>planned time reached?"}
+        G -- yes --> MV["move"]
+        G -- no --> WT["wait"]
+    end
+    Q --> V
+    MF["Malfunction"] -. "delays trains;<br/>order still holds" .-> G
+    U["Unrouted trains"] -. "retried every<br/>10 steps" .-> P
+```
 
 ### PPO with parameter sharing
 
@@ -124,6 +179,14 @@ with cross-entropy for 15 epochs, then fine-tuned with PPO for 30 minutes (lr 1e
 3 value-only warm-up iterations). A BC loss on the demonstrations is added and annealed from
 weight 1 to 0 by half-way. The demonstrations are committed in `data/demos/or_demos.npz`.
 
+```mermaid
+flowchart TD
+    ORP["OR reference on<br/>120 training episodes"] --> L["Label each wrapper decision<br/>WAIT / GO shortest / GO alt.<br/>89,117 decisions in 22 s"]
+    L --> BC["Behaviour cloning<br/>15 epochs in 10 s<br/>90.8% validation accuracy"]
+    BC --> WU["3 value-only<br/>warm-up iterations<br/>(policy frozen)"]
+    WU --> FT["PPO fine-tuning, 30 min<br/>plus BC loss, weight 1 → 0<br/>by minute 15"]
+```
+
 ### Two rule-based references
 
 - `ShortestPathPolicy`: everybody departs at once and follows their shortest path, with no
@@ -140,19 +203,22 @@ regenerated by `python scripts/make_report.py`. Each cell is the mean over the 1
 (rate 1/1000 per train-step, 20 to 50 steps), so the difference between the two isolates the
 effect of malfunctions. Learned policies were trained on small and medium only.
 
-![Arrival rate by scenario and policy](assets/arrival_rate.png)
+![Arrival rate by scenario and policy, without and with malfunctions](assets/figures/results-arrival-light.svg#only-light)
+![Arrival rate by scenario and policy, without and with malfunctions](assets/figures/results-arrival-dark.svg#only-dark)
+
+*Share of trains arrived, mean over 10 held-out seeds with standard-error whiskers. The tables below give every number.*
 
 <!-- RESULTS:START -->
 ### Arrival rate (%), held-out seeds, no malfunctions
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 100.0 ± 0.0 | 99.3 ± 0.7 | 98.2 ± 0.9 | 95.7 ± 1.1 |
-| PPO (compact obs) | 60.0 ± 13.9 | 35.0 ± 8.7 | 14.3 ± 2.6 | 7.5 ± 1.5 |
+| OR: PP+SIPP+ordered execution | 100.0 ± 0.0 | 99.3 ± 0.7 | 98.2 ± 0.9 | 95.7 ± 1.1 |
+| PPO, compact obs | 60.0 ± 13.9 | 35.0 ± 8.7 | 14.3 ± 2.6 | 7.5 ± 1.5 |
 | BC from OR | 39.0 ± 7.1 | 18.0 ± 4.3 | 13.0 ± 2.2 | 7.9 ± 0.8 |
 | BC then PPO | 63.0 ± 12.4 | 23.7 ± 4.5 | 13.3 ± 1.7 | 6.4 ± 1.2 |
-| PPO (tree obs) | 25.0 ± 8.1 | 24.7 ± 4.8 | 16.5 ± 1.7 | 16.0 ± 1.5 |
-| Reactive heuristic | 82.0 ± 9.4 | 46.3 ± 10.7 | 25.3 ± 4.3 | 11.1 ± 2.1 |
+| PPO, tree obs | 25.0 ± 8.1 | 24.7 ± 4.8 | 16.5 ± 1.7 | 16.0 ± 1.5 |
+| Reactive rule | 82.0 ± 9.4 | 46.3 ± 10.7 | 25.3 ± 4.3 | 11.1 ± 2.1 |
 | Shortest path, no coordination | 36.0 ± 5.4 | 24.7 ± 4.7 | 8.3 ± 0.7 | 5.7 ± 1.0 |
 
 
@@ -160,12 +226,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.995 ± 0.004 | 0.991 ± 0.006 | 0.972 ± 0.010 | 0.953 ± 0.007 |
-| PPO (compact obs) | 0.810 ± 0.062 | 0.724 ± 0.043 | 0.626 ± 0.020 | 0.582 ± 0.015 |
+| OR: PP+SIPP+ordered execution | 0.995 ± 0.004 | 0.991 ± 0.006 | 0.972 ± 0.010 | 0.953 ± 0.007 |
+| PPO, compact obs | 0.810 ± 0.062 | 0.724 ± 0.043 | 0.626 ± 0.020 | 0.582 ± 0.015 |
 | BC from OR | 0.734 ± 0.038 | 0.679 ± 0.026 | 0.658 ± 0.015 | 0.623 ± 0.010 |
 | BC then PPO | 0.823 ± 0.058 | 0.700 ± 0.028 | 0.646 ± 0.013 | 0.614 ± 0.011 |
-| PPO (tree obs) | 0.664 ± 0.044 | 0.751 ± 0.020 | 0.744 ± 0.012 | 0.737 ± 0.013 |
-| Reactive heuristic | 0.885 ± 0.041 | 0.766 ± 0.043 | 0.689 ± 0.024 | 0.615 ± 0.012 |
+| PPO, tree obs | 0.664 ± 0.044 | 0.751 ± 0.020 | 0.744 ± 0.012 | 0.737 ± 0.013 |
+| Reactive rule | 0.885 ± 0.041 | 0.766 ± 0.043 | 0.689 ± 0.024 | 0.615 ± 0.012 |
 | Shortest path, no coordination | 0.728 ± 0.038 | 0.656 ± 0.030 | 0.564 ± 0.009 | 0.538 ± 0.012 |
 
 
@@ -173,12 +239,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.0 | 0.0 | 0.0 | 0.0 |
-| PPO (compact obs) | 0.0 | 0.9 | 2.4 | 7.6 |
+| OR: PP+SIPP+ordered execution | 0.0 | 0.0 | 0.0 | 0.0 |
+| PPO, compact obs | 0.0 | 0.9 | 2.4 | 7.6 |
 | BC from OR | 1.1 | 5.8 | 13.7 | 24.6 |
 | BC then PPO | 0.8 | 2.5 | 4.9 | 8.2 |
-| PPO (tree obs) | 0.0 | 0.2 | 0.2 | 1.0 |
-| Reactive heuristic | 0.0 | 1.2 | 6.4 | 6.3 |
+| PPO, tree obs | 0.0 | 0.2 | 0.2 | 1.0 |
+| Reactive rule | 0.0 | 1.2 | 6.4 | 6.3 |
 | Shortest path, no coordination | 3.6 | 17.9 | 30.7 | 61.7 |
 
 
@@ -186,12 +252,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 100.0 ± 0.0 | 98.0 ± 1.4 | 93.8 ± 1.6 | 89.1 ± 2.2 |
-| PPO (compact obs) | 60.0 ± 13.9 | 36.0 ± 8.3 | 14.2 ± 3.3 | 7.5 ± 1.6 |
+| OR: PP+SIPP+ordered execution | 100.0 ± 0.0 | 98.0 ± 1.4 | 93.8 ± 1.6 | 89.1 ± 2.2 |
+| PPO, compact obs | 60.0 ± 13.9 | 36.0 ± 8.3 | 14.2 ± 3.3 | 7.5 ± 1.6 |
 | BC from OR | 41.0 ± 7.1 | 19.7 ± 4.2 | 15.2 ± 2.8 | 8.2 ± 1.1 |
 | BC then PPO | 61.0 ± 11.3 | 20.7 ± 3.6 | 15.3 ± 2.3 | 6.9 ± 1.6 |
-| PPO (tree obs) | 22.0 ± 7.7 | 22.7 ± 4.5 | 16.3 ± 1.6 | 15.0 ± 1.5 |
-| Reactive heuristic | 76.0 ± 9.7 | 45.7 ± 9.7 | 22.3 ± 4.0 | 9.8 ± 1.3 |
+| PPO, tree obs | 22.0 ± 7.7 | 22.7 ± 4.5 | 16.3 ± 1.6 | 15.0 ± 1.5 |
+| Reactive rule | 76.0 ± 9.7 | 45.7 ± 9.7 | 22.3 ± 4.0 | 9.8 ± 1.3 |
 | Shortest path, no coordination | 36.0 ± 5.4 | 23.7 ± 4.0 | 9.2 ± 0.7 | 5.2 ± 0.9 |
 
 
@@ -199,12 +265,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.991 ± 0.004 | 0.984 ± 0.009 | 0.952 ± 0.013 | 0.922 ± 0.007 |
-| PPO (compact obs) | 0.804 ± 0.060 | 0.729 ± 0.041 | 0.633 ± 0.020 | 0.580 ± 0.015 |
+| OR: PP+SIPP+ordered execution | 0.991 ± 0.004 | 0.984 ± 0.009 | 0.952 ± 0.013 | 0.922 ± 0.007 |
+| PPO, compact obs | 0.804 ± 0.060 | 0.729 ± 0.041 | 0.633 ± 0.020 | 0.580 ± 0.015 |
 | BC from OR | 0.741 ± 0.039 | 0.677 ± 0.025 | 0.660 ± 0.014 | 0.595 ± 0.009 |
 | BC then PPO | 0.821 ± 0.051 | 0.676 ± 0.026 | 0.654 ± 0.016 | 0.611 ± 0.014 |
-| PPO (tree obs) | 0.656 ± 0.043 | 0.747 ± 0.019 | 0.742 ± 0.012 | 0.732 ± 0.014 |
-| Reactive heuristic | 0.867 ± 0.040 | 0.761 ± 0.038 | 0.679 ± 0.024 | 0.612 ± 0.010 |
+| PPO, tree obs | 0.656 ± 0.043 | 0.747 ± 0.019 | 0.742 ± 0.012 | 0.732 ± 0.014 |
+| Reactive rule | 0.867 ± 0.040 | 0.761 ± 0.038 | 0.679 ± 0.024 | 0.612 ± 0.010 |
 | Shortest path, no coordination | 0.727 ± 0.038 | 0.649 ± 0.026 | 0.570 ± 0.010 | 0.537 ± 0.013 |
 
 
@@ -212,12 +278,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.0 | 0.0 | 0.0 | 0.0 |
-| PPO (compact obs) | 0.0 | 0.9 | 2.0 | 7.8 |
+| OR: PP+SIPP+ordered execution | 0.0 | 0.0 | 0.0 | 0.0 |
+| PPO, compact obs | 0.0 | 0.9 | 2.0 | 7.8 |
 | BC from OR | 1.1 | 5.9 | 15.4 | 30.9 |
 | BC then PPO | 1.0 | 2.4 | 4.3 | 8.0 |
-| PPO (tree obs) | 0.0 | 0.2 | 0.5 | 1.4 |
-| Reactive heuristic | 0.0 | 1.0 | 5.5 | 6.1 |
+| PPO, tree obs | 0.0 | 0.2 | 0.5 | 1.4 |
+| Reactive rule | 0.0 | 1.0 | 5.5 | 6.1 |
 | Shortest path, no coordination | 3.6 | 16.6 | 33.5 | 61.4 |
 
 
@@ -225,12 +291,12 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.05 | 0.17 | 0.45 | 1.27 |
-| PPO (compact obs) | 5.96 | 11.31 | 15.90 | 32.28 |
+| OR: PP+SIPP+ordered execution | 0.05 | 0.17 | 0.45 | 1.27 |
+| PPO, compact obs | 5.96 | 11.31 | 15.90 | 32.28 |
 | BC from OR | 0.66 | 2.00 | 2.88 | 23.16 |
 | BC then PPO | 0.84 | 2.27 | 3.54 | 5.86 |
-| PPO (tree obs) | 2.56 | 11.34 | 16.22 | 16.01 |
-| Reactive heuristic | 3.14 | 8.65 | 11.89 | 4.06 |
+| PPO, tree obs | 2.56 | 11.34 | 16.22 | 16.01 |
+| Reactive rule | 3.14 | 8.65 | 11.89 | 4.06 |
 | Shortest path, no coordination | 0.06 | 0.13 | 0.27 | 0.45 |
 
 
@@ -238,28 +304,33 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 | Policy | small | medium | large | xlarge |
 |---|---|---|---|---|
-| OR: PP+SIPP+MCP | 0.05 | 0.54 | 2.73 | 7.05 |
-| PPO (compact obs) | 0.00 | 0.00 | 0.00 | 0.00 |
+| OR: PP+SIPP+ordered execution | 0.05 | 0.54 | 2.73 | 7.05 |
+| PPO, compact obs | 0.00 | 0.00 | 0.00 | 0.00 |
 | BC from OR | 0.00 | 0.00 | 0.00 | 0.00 |
 | BC then PPO | 0.00 | 0.00 | 0.00 | 0.00 |
-| PPO (tree obs) | 0.00 | 0.00 | 0.00 | 0.00 |
-| Reactive heuristic | 0.00 | 0.00 | 0.00 | 0.00 |
+| PPO, tree obs | 0.00 | 0.00 | 0.00 | 0.00 |
+| Reactive rule | 0.00 | 0.00 | 0.00 | 0.00 |
 | Shortest path, no coordination | 0.03 | 0.17 | 0.43 | 0.61 |
 
 <!-- RESULTS:END -->
+
+![Normalised reward, deadlocks and policy time per step by scenario and policy](assets/figures/results-metrics-light.svg#only-light)
+![Normalised reward, deadlocks and policy time per step by scenario and policy](assets/figures/results-metrics-dark.svg#only-dark)
+
+*The no-malfunction tables above as charts. Policy time is on a log scale.*
 
 Wall-clock numbers were measured with 8 worker processes on a ThinkPad i7-1260P while two unrelated
 training jobs shared the CPU (1-minute load average median 23, range 11 to 44, logged in
 [`data/results/run_log/`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/results/run_log)). Treat them as upper bounds for a dedicated
 laptop and compare them within a column, not in absolute terms. The per-step time of PPO (tree obs)
-excludes building the tree, which flatland does inside `env.step`: that adds about 7 ms per step on
-small and 150 ms on xlarge (the env step averages 150 ms there against 20 ms for compact PPO).
+excludes building the tree, which flatland does inside `env.step`: with the tree builder the env
+step averages 7 ms on small and 150 ms on xlarge, against 4 and 20 ms for compact PPO.
 
 ### Training budgets
 
 | Baseline | Training wall-clock | Iterations × episodes | Env steps | Train-level decisions | Evaluation |
 |---|---|---|---|---|---|
-| PPO (compact obs) | 30.1 min | 141 × 16 = 2,256 | 857,609 | 5.4 M | 6.7 min |
+| PPO (compact obs) | 30.3 min | 141 × 16 = 2,256 | 857,609 | 5.4 M | 6.7 min |
 | BC from OR | 0.5 min (22 s demos, 10 s cloning) | 120 OR episodes, 89,117 labelled decisions | – | – | 2.7 min |
 | BC then PPO | 31.2 min including the BC stage | 133 × 16 = 2,128 | 838,525 | 7.2 M | 1.4 min |
 | PPO (tree obs) | 31.3 min | 52 × 16 = 832 | 295,719 | 0.65 M | 22.0 min |
@@ -268,7 +339,15 @@ small and 150 ms on xlarge (the env step averages 150 ms there against 20 ms for
 Every baseline trains and evaluates end to end in under an hour. The slowest is PPO (tree obs) at
 53.3 minutes.
 
-![Training curves](assets/training_curves.png)
+![Training and evaluation wall-clock per baseline against the one-hour ceiling](assets/figures/budgets-light.svg#only-light)
+![Training and evaluation wall-clock per baseline against the one-hour ceiling](assets/figures/budgets-dark.svg#only-dark)
+
+*The budget table as a chart: training (solid) plus evaluation on the 80-episode suite (hatched).*
+
+![Training curves: arrival and deadlock rates in training episodes](assets/figures/training-curves-light.svg#only-light)
+![Training curves: arrival and deadlock rates in training episodes](assets/figures/training-curves-dark.svg#only-dark)
+
+*Training episodes use sampled actions on small and medium maps (half with malfunctions), so these are not test numbers. Five-iteration moving average.*
 
 ### What the numbers say
 
@@ -300,7 +379,9 @@ Every baseline trains and evaluates end to end in under an hour. The slowest is 
    updates (52 iterations against 141, because the tree is expensive to build) PPO on the tree
    observation is worse on small (25.0%) but the best learned policy on large and xlarge (16.5 and
    16.0%), with almost no deadlocks (at most 1.4 trains per episode) and the best normalised reward
-   of any learned policy from medium up (0.751 to 0.737).
+   of any learned policy from medium up (0.751 to 0.737). The low deadlock count has a cost: it
+   never dispatches 67 to 69% of trains from medium up (see the failure-mode breakdown in
+   [05-limitations](05-limitations.md#where-the-trains-that-do-not-arrive-end-up)).
 6. **Malfunctions barely move the learned policies** (at most 6 points either way), because they
    fail for other reasons first. Malfunction robustness only becomes a meaningful comparison once a
    learned policy gets most trains home.

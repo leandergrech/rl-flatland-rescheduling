@@ -24,6 +24,12 @@ Installed on 2026-09-30 into a fresh `.venv` (uv 0.10.11, CPython 3.12.3) on a T
 | mkdocs | 1.6.1 | BSD-2-Clause | this site |
 | mkdocs-material | 9.7.7 | MIT | this site |
 | pytest | 9.1.1 | MIT | tests |
+| IBM Plex Sans, IBM Plex Mono, Space Mono | Google Fonts | SIL Open Font Licence 1.1 | site typography, loaded by the theme |
+| Inter | system package | SIL Open Font Licence 1.1 | figure typography (text converted to paths in the SVGs) |
+
+Figure colours follow a categorical palette checked with `scripts/validate_palette.py`, a Python
+port of a standard set of colour checks (OKLab lightness and chroma bands, colour-vision-deficiency
+separation simulated with Machado, Oliveira & Fernandes 2009, and WCAG contrast).
 
 No third-party solver code is vendored. The OR baseline in `src/rl_flatland/baselines/or_planner.py`
 was written from the published descriptions below. The 2020 winner's code

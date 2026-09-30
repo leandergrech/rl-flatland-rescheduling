@@ -33,6 +33,17 @@ group, not across rows.
 | 2026-06-29 | ECML 2026 challenge | Non-RL track winner: prioritized SIPP + corridor locks | 20.8429 against 9.4231 for the RL track's only listed entry (organisers' PPO baseline) | [post-competition analysis](https://flatland-association.github.io/flatland-book/challenges/ecml2026/post-competition_analysis.html) |
 | 2026-08-10 | Flatland Association | flatland-rl 4.3.0 (ECML 2026 rewards, Cython state machine) | — | [CHANGELOG](https://raw.githubusercontent.com/flatland-association/flatland-rl/main/CHANGELOG.md) |
 
+### The gap, per round
+
+![Best RL relative to best OR in each round, and arrival rates](assets/figures/rounds-light.svg#only-light)
+![Best RL relative to best OR in each round, and arrival rates](assets/figures/rounds-dark.svg#only-dark)
+
+*Left: the best RL score as a share of the best OR score in each round (NeurIPS 2020, Flatland 3 at
+competition close, Flatland 3 stages with TreeLSTM post hoc against the leaderboard winner's 141.0,
+ECML 2026 against the organisers' RL baseline). Right: share of trains arrived, best OR against best
+RL, where a round reports it, plus this repository's small and xlarge scenarios. Sources are the
+rows of the table above.*
+
 ## The same story as a timeline
 
 ```mermaid

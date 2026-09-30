@@ -71,6 +71,36 @@ At step \(t\) the full state is:
   (a fraction in multiples of \(1/k_i\)), and its remaining malfunction steps \(m_i\);
 - the static data: the graph, all \((s_i, g_i, k_i, ED_i, LA_i)\).
 
+A train's life, as flatland-rl 4.3.0's state machine implements it
+([`state_machine.py`](https://github.com/flatland-association/flatland-rl/blob/v4.3.0/flatland/envs/step_utils/state_machine.py)):
+
+```mermaid
+stateDiagram-v2
+    direction TB
+    [*] --> WAITING
+    WAITING --> READY_TO_DEPART: ED reached
+    WAITING --> MALFUNCTION_OFF_MAP: breaks
+    READY_TO_DEPART --> MOVING: move, cell free
+    READY_TO_DEPART --> MALFUNCTION_OFF_MAP: breaks
+    MALFUNCTION_OFF_MAP --> MOVING: repaired + move
+    MALFUNCTION_OFF_MAP --> STOPPED: repaired + stop
+    MALFUNCTION_OFF_MAP --> READY_TO_DEPART: repaired
+    MALFUNCTION_OFF_MAP --> WAITING: repaired before ED
+    MOVING --> DONE: reaches target
+    MOVING --> STOPPED: stop or blocked
+    MOVING --> MALFUNCTION: breaks
+    STOPPED --> MOVING: move, cell free
+    STOPPED --> MALFUNCTION: breaks
+    MALFUNCTION --> MOVING: repaired + move
+    MALFUNCTION --> STOPPED: repaired
+    DONE --> [*]
+```
+
+ED is the earliest departure. WAITING, READY_TO_DEPART and MALFUNCTION_OFF_MAP are off the map;
+DONE trains are removed. Only one transition happens per step. A broken
+train off the map skips READY_TO_DEPART and goes straight onto the map when it gets a movement
+action, which is an easy detail to miss when you write a planner.
+
 The simulator exposes all of this, so a centralised planner sees the full state. What it cannot
 see is the future: when the next malfunction will hit and how long it will last. For RL, each train
 is usually given only a local view (a tree of the track ahead), which turns the problem into a
@@ -107,6 +137,19 @@ Given the joint action, one step does the following (`RailEnv.step` in
    move together, and a ring of three or more trains can rotate.
 4. **State machine.** States update, and a train that enters its target cell becomes DONE and is
    removed from the grid in the same step.
+
+```mermaid
+flowchart TD
+    A["Joint action<br/>one per train"] --> M["1. Malfunctions<br/>each train breaks<br/>with p = 1 − e^−λ"]
+    M --> D["2. Desired moves<br/>only trains at a<br/>decision instant"]
+    D --> C{"3. MotionCheck"}
+    C -- "two trains swap" --> S1["both stopped"]
+    C -- "same target cell" --> S2["lower index wins"]
+    C -- "holder stays" --> S3["mover stopped"]
+    C -- "cell free, or holder<br/>leaves this step" --> OK["train moves"]
+    S1 & S2 & S3 & OK --> F["4. State machine<br/>target reached: DONE,<br/>removed from grid"]
+    F --> R["Rewards and<br/>observations"]
+```
 
 Everything except step 1 is deterministic. That is why this repo has no model-based RL baseline:
 the model is the simulator, and it is known exactly.

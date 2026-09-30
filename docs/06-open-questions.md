@@ -10,6 +10,11 @@ their own, learned policies here are 37 to 82 points of arrival rate behind the 
 CPU minutes, while the planner loses 1.3 to 6.6 points to malfunctions from medium to xlarge. So the
 openings that attach learning to a planner (1 to 4) rank above those that try to replace it (5 to 7).
 
+![The seven openings by estimated effort, in rank order](assets/figures/openings-light.svg#only-light)
+![The seven openings by estimated effort, in rank order](assets/figures/openings-dark.svg#only-dark)
+
+*Effort ranges from the sections below, in rank order. "2–3 months" and "2+ months" are drawn as 9 to 13 weeks.*
+
 ## 1. Learned repair: when to break the planned order after a malfunction
 
 **Why open.** Every OR winner keeps a plan's cell-visiting order after disruptions (MCP) and then

@@ -30,6 +30,31 @@ this site or in this repository.
   ([ai4realnet.eu](https://ai4realnet.eu/); [github.com/AI4REALNET](https://github.com/AI4REALNET)).
   A result that transfers between the two is exactly what that community is looking for.
 
+The same ideas on both sides, and the one that does not carry over:
+
+```mermaid
+flowchart LR
+    subgraph ATC["Air traffic control: TADA, BlueSky"]
+        A1["Separation minimum"]
+        A2["Arrival sequencing in<br/>terminal airspace"]
+        A3["Geometric resolver (MVP)<br/>as the classical baseline"]
+        A4["PPO + attention over<br/>neighbouring aircraft"]
+        A5["A hold or a heading change<br/>is always available"]
+    end
+    subgraph RAIL["Train rescheduling: Flatland"]
+        R1["One train per cell"]
+        R2["Who goes first through a<br/>junction or single track"]
+        R3["PP + SIPP + LNS<br/>as the classical baseline"]
+        R4["PPO + attention messages<br/>between trains (JBR_HSE)"]
+        R5["No escape once head-on:<br/>deadlock is absorbing"]
+    end
+    A1 --- R1
+    A2 --- R2
+    A3 --- R3
+    A4 --- R4
+    A5 -. "does not carry over" .- R5
+```
+
 **From the CERN crystal-alignment and accelerator work.**
 
 - *Sample efficiency and honest baselines* carry over, but the constraint flips. Flatland's
@@ -88,6 +113,11 @@ in the repository root.
 | 11–12 | Whatever the experiment needs | Run it: code, a 30-minute training budget, evaluation on the held-out and malfunction seeds |
 | 13 | [Atzmon et al. 2020 (robust MAPF)](https://jair.org/index.php/jair/article/view/11734) | Add the result to a copy of the results table in [04-designs](04-designs.md#results-on-our-scenarios); decide whether it is worth scaling |
 | 14 | — | Write a one-page note: hypothesis, result, what it would take at competition scale |
+
+The same plan as a timeline:
+
+![The two-week plan as a timeline](assets/figures/study-plan-light.svg#only-light)
+![The two-week plan as a timeline](assets/figures/study-plan-dark.svg#only-dark)
 
 ## The first experiment, in three lines
 
