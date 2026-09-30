@@ -1,11 +1,11 @@
 # STATUS
 repo: https://github.com/leandergrech/rl-flatland-rescheduling
-pages: not yet live
-step: 5
-state: running
-updated: 2026-09-30T19:33:17Z
+pages: https://leandergrech.github.io/rl-flatland-rescheduling/
+step: 7
+state: done
+updated: 2026-09-30T19:48:18Z
 blockers: none
-next: step 6: deploy MkDocs to GitHub Pages, confirm 200; final checks (pytest, reproduce.sh, mkdocs build --strict, pip install -e .[dev])
+next: none; suggested first experiment: learned overtaking gate on top of the OR planner (notebooks/03-first-experiment.ipynb)
 log:
 - 2026-09-30T16:08:06Z step 0 done: gh logged in as leandergrech (repo, workflow scopes); git user.name "Leander Grech"; repo folder empty
 - 2026-09-30T16:08:38Z step 1 done: skeleton committed, public repo created and pushed
@@ -15,3 +15,5 @@ log:
 - 2026-09-30T17:58:33Z step 4 progress: PPO (30 min, 8 workers) greedy arrival 60/35/14/7.5% small/medium/large/xlarge vs OR 100/99.3/98.2/95.7%; PPO avoids head-on deadlocks but gridlocks (trains wait at switches); fixed value warm-up bug and relaunched imitation
 - 2026-09-30T19:33:17Z step 4 done: all baselines trained and evaluated (560 episodes); arrival small/medium/large/xlarge, no malfunctions: OR 100/99.3/98.2/95.7, best learned 63.0/35.0/16.5/16.0; every baseline trains+evaluates in <60 min (max 53.3, PPO-tree)
 - 2026-09-30T19:33:17Z step 5 done: docs 04-06, for-leander, index, README with generated results tables and figures; notebooks 01-03 executed
+- 2026-09-30T19:48:18Z step 6 done: Pages enabled (workflow build), deploy succeeded after re-dispatch (first run stuck in 'waiting'); site and all 8 doc pages return HTTP 200; math and Mermaid render
+- 2026-09-30T19:48:18Z step 7 done: all four checks pass (pip install -e .[dev]; pytest 19 passed; bash scripts/reproduce.sh 280/280 episodes match; mkdocs build --strict); small commits throughout, no force-push
