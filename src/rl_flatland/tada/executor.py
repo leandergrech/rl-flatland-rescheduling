@@ -270,6 +270,9 @@ class TadaExecutor(PrioritizedPlannerPolicy):
                 break
             a = self.env.agents[x]
             start = to_config(a.current_configuration) if a.state.is_on_map_state() else None
+            if start is not None:
+                # x holds its current cell until it leaves; the next train in `steps` must see that
+                rt.reserve_for(x, (start[0], start[1]), now, path[0][1] - 1, "f")
             rt.reserve_future(x, start, path)
             new[x] = path
         for x in involved:
