@@ -1,0 +1,2806 @@
+{
+ "split": "test (no malfunctions)",
+ "wall_s": 183.3,
+ "rows": [
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 15,
+   "deadlocked": 2,
+   "stuck_on_map": 14,
+   "never_departed": 69
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 29,
+   "never_departed": 62
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 19,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 74
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 11,
+   "deadlocked": 2,
+   "stuck_on_map": 21,
+   "never_departed": 66
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 20,
+   "deadlocked": 2,
+   "stuck_on_map": 1,
+   "never_departed": 77
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 19,
+   "deadlocked": 0,
+   "stuck_on_map": 9,
+   "never_departed": 72
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 25,
+   "deadlocked": 0,
+   "stuck_on_map": 13,
+   "never_departed": 62
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 16,
+   "deadlocked": 0,
+   "stuck_on_map": 27,
+   "never_departed": 57
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 13,
+   "deadlocked": 2,
+   "stuck_on_map": 15,
+   "never_departed": 70
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 13,
+   "deadlocked": 2,
+   "stuck_on_map": 11,
+   "never_departed": 74
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 14,
+   "deadlocked": 0,
+   "stuck_on_map": 6,
+   "never_departed": 40
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 49
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 22,
+   "never_departed": 32
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 45
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 42
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 5,
+   "never_departed": 44
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 45
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 9,
+   "never_departed": 44
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 15,
+   "never_departed": 38
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 16,
+   "deadlocked": 2,
+   "stuck_on_map": 6,
+   "never_departed": 36
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 24
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 19
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 14,
+   "deadlocked": 0,
+   "stuck_on_map": 1,
+   "never_departed": 15
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 24
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 5,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 18
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 1,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 25
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 14,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 16
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 15
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 2,
+   "stuck_on_map": 0,
+   "never_departed": 25
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 21
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 5,
+   "never_departed": 5
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 6
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 1,
+   "deadlocked": 0,
+   "stuck_on_map": 2,
+   "never_departed": 7
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 5,
+   "never_departed": 5
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 2,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 7
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 6
+  },
+  {
+   "policy": "ppo_tree",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 6
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 2,
+   "deadlocked": 12,
+   "stuck_on_map": 63,
+   "never_departed": 23
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 6,
+   "deadlocked": 3,
+   "stuck_on_map": 59,
+   "never_departed": 32
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 2,
+   "deadlocked": 4,
+   "stuck_on_map": 60,
+   "never_departed": 34
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 10,
+   "deadlocked": 18,
+   "stuck_on_map": 59,
+   "never_departed": 13
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 3,
+   "deadlocked": 0,
+   "stuck_on_map": 86,
+   "never_departed": 11
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 2,
+   "stuck_on_map": 64,
+   "never_departed": 25
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 11,
+   "deadlocked": 2,
+   "stuck_on_map": 48,
+   "never_departed": 39
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 21,
+   "stuck_on_map": 61,
+   "never_departed": 10
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 7,
+   "deadlocked": 9,
+   "stuck_on_map": 65,
+   "never_departed": 19
+  },
+  {
+   "policy": "ppo",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 17,
+   "deadlocked": 5,
+   "stuck_on_map": 49,
+   "never_departed": 29
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 14,
+   "stuck_on_map": 41,
+   "never_departed": 37
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 5,
+   "deadlocked": 33,
+   "stuck_on_map": 28,
+   "never_departed": 34
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 6,
+   "deadlocked": 30,
+   "stuck_on_map": 16,
+   "never_departed": 48
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 5,
+   "deadlocked": 30,
+   "stuck_on_map": 20,
+   "never_departed": 45
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 11,
+   "deadlocked": 6,
+   "stuck_on_map": 35,
+   "never_departed": 48
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 7,
+   "deadlocked": 33,
+   "stuck_on_map": 10,
+   "never_departed": 50
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 12,
+   "deadlocked": 27,
+   "stuck_on_map": 15,
+   "never_departed": 46
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 10,
+   "deadlocked": 30,
+   "stuck_on_map": 24,
+   "never_departed": 36
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 31,
+   "stuck_on_map": 14,
+   "never_departed": 46
+  },
+  {
+   "policy": "bc",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 6,
+   "deadlocked": 12,
+   "stuck_on_map": 45,
+   "never_departed": 37
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 1,
+   "deadlocked": 17,
+   "stuck_on_map": 60,
+   "never_departed": 22
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 5,
+   "deadlocked": 3,
+   "stuck_on_map": 53,
+   "never_departed": 39
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 3,
+   "deadlocked": 13,
+   "stuck_on_map": 36,
+   "never_departed": 48
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 4,
+   "deadlocked": 10,
+   "stuck_on_map": 47,
+   "never_departed": 39
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 45,
+   "never_departed": 47
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 7,
+   "deadlocked": 2,
+   "stuck_on_map": 44,
+   "never_departed": 47
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 12,
+   "deadlocked": 6,
+   "stuck_on_map": 38,
+   "never_departed": 44
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 6,
+   "deadlocked": 19,
+   "stuck_on_map": 53,
+   "never_departed": 22
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 5,
+   "deadlocked": 12,
+   "stuck_on_map": 43,
+   "never_departed": 40
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 13,
+   "deadlocked": 0,
+   "stuck_on_map": 51,
+   "never_departed": 36
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 74,
+   "never_departed": 24
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 16,
+   "deadlocked": 3,
+   "stuck_on_map": 51,
+   "never_departed": 30
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 3,
+   "deadlocked": 17,
+   "stuck_on_map": 52,
+   "never_departed": 28
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 16,
+   "deadlocked": 6,
+   "stuck_on_map": 43,
+   "never_departed": 35
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 25,
+   "deadlocked": 0,
+   "stuck_on_map": 61,
+   "never_departed": 14
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 5,
+   "stuck_on_map": 64,
+   "never_departed": 23
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 13,
+   "deadlocked": 13,
+   "stuck_on_map": 51,
+   "never_departed": 23
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 11,
+   "stuck_on_map": 56,
+   "never_departed": 24
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 78,
+   "never_departed": 13
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 10,
+   "deadlocked": 8,
+   "stuck_on_map": 56,
+   "never_departed": 26
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 0,
+   "deadlocked": 78,
+   "stuck_on_map": 19,
+   "never_departed": 3
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 6,
+   "deadlocked": 67,
+   "stuck_on_map": 18,
+   "never_departed": 9
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 2,
+   "deadlocked": 42,
+   "stuck_on_map": 43,
+   "never_departed": 13
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 5,
+   "deadlocked": 73,
+   "stuck_on_map": 19,
+   "never_departed": 3
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 3,
+   "deadlocked": 76,
+   "stuck_on_map": 15,
+   "never_departed": 6
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 61,
+   "stuck_on_map": 16,
+   "never_departed": 14
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 41,
+   "stuck_on_map": 23,
+   "never_departed": 28
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 9,
+   "deadlocked": 67,
+   "stuck_on_map": 12,
+   "never_departed": 12
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 8,
+   "deadlocked": 53,
+   "stuck_on_map": 28,
+   "never_departed": 11
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 7,
+   "deadlocked": 59,
+   "stuck_on_map": 26,
+   "never_departed": 8
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 41,
+   "never_departed": 9
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 50,
+   "never_departed": 3
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 13,
+   "deadlocked": 0,
+   "stuck_on_map": 41,
+   "never_departed": 6
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 30,
+   "never_departed": 26
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 10,
+   "deadlocked": 2,
+   "stuck_on_map": 34,
+   "never_departed": 14
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 0,
+   "stuck_on_map": 38,
+   "never_departed": 17
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 2,
+   "deadlocked": 9,
+   "stuck_on_map": 45,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 4,
+   "stuck_on_map": 36,
+   "never_departed": 13
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 19,
+   "deadlocked": 0,
+   "stuck_on_map": 40,
+   "never_departed": 1
+  },
+  {
+   "policy": "ppo",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 9,
+   "deadlocked": 9,
+   "stuck_on_map": 36,
+   "never_departed": 6
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 3,
+   "deadlocked": 16,
+   "stuck_on_map": 10,
+   "never_departed": 31
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 3,
+   "deadlocked": 11,
+   "stuck_on_map": 27,
+   "never_departed": 19
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 10,
+   "stuck_on_map": 24,
+   "never_departed": 18
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 6,
+   "deadlocked": 14,
+   "stuck_on_map": 9,
+   "never_departed": 31
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 12,
+   "deadlocked": 16,
+   "stuck_on_map": 14,
+   "never_departed": 18
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 19,
+   "stuck_on_map": 11,
+   "never_departed": 19
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 2,
+   "deadlocked": 15,
+   "stuck_on_map": 9,
+   "never_departed": 34
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 6,
+   "stuck_on_map": 26,
+   "never_departed": 20
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 13,
+   "deadlocked": 9,
+   "stuck_on_map": 18,
+   "never_departed": 20
+  },
+  {
+   "policy": "bc",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 12,
+   "deadlocked": 21,
+   "stuck_on_map": 7,
+   "never_departed": 20
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 2,
+   "stuck_on_map": 33,
+   "never_departed": 20
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 6,
+   "deadlocked": 2,
+   "stuck_on_map": 35,
+   "never_departed": 17
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 41,
+   "never_departed": 10
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 4,
+   "deadlocked": 7,
+   "stuck_on_map": 21,
+   "never_departed": 28
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 7,
+   "stuck_on_map": 27,
+   "never_departed": 18
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 9,
+   "deadlocked": 3,
+   "stuck_on_map": 27,
+   "never_departed": 21
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 14,
+   "stuck_on_map": 21,
+   "never_departed": 20
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 8,
+   "deadlocked": 4,
+   "stuck_on_map": 32,
+   "never_departed": 16
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 15,
+   "deadlocked": 0,
+   "stuck_on_map": 36,
+   "never_departed": 9
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 10,
+   "stuck_on_map": 22,
+   "never_departed": 17
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 37,
+   "never_departed": 12
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 17,
+   "deadlocked": 4,
+   "stuck_on_map": 33,
+   "never_departed": 6
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 36,
+   "deadlocked": 0,
+   "stuck_on_map": 20,
+   "never_departed": 4
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 14,
+   "deadlocked": 29,
+   "stuck_on_map": 11,
+   "never_departed": 6
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 37,
+   "never_departed": 13
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 20,
+   "deadlocked": 4,
+   "stuck_on_map": 24,
+   "never_departed": 12
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 17,
+   "stuck_on_map": 31,
+   "never_departed": 5
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 14,
+   "deadlocked": 6,
+   "stuck_on_map": 35,
+   "never_departed": 5
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 46,
+   "never_departed": 3
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 12,
+   "deadlocked": 4,
+   "stuck_on_map": 30,
+   "never_departed": 14
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 6,
+   "deadlocked": 35,
+   "stuck_on_map": 10,
+   "never_departed": 9
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 4,
+   "deadlocked": 43,
+   "stuck_on_map": 13,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 32,
+   "stuck_on_map": 21,
+   "never_departed": 2
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 23,
+   "stuck_on_map": 31,
+   "never_departed": 1
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 19,
+   "stuck_on_map": 32,
+   "never_departed": 4
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 5,
+   "deadlocked": 23,
+   "stuck_on_map": 28,
+   "never_departed": 4
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 3,
+   "deadlocked": 41,
+   "stuck_on_map": 9,
+   "never_departed": 7
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 25,
+   "stuck_on_map": 23,
+   "never_departed": 5
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 3,
+   "deadlocked": 30,
+   "stuck_on_map": 18,
+   "never_departed": 9
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 7,
+   "deadlocked": 36,
+   "stuck_on_map": 17,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 4,
+   "stuck_on_map": 22,
+   "never_departed": 2
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 18,
+   "never_departed": 1
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 21,
+   "never_departed": 3
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 15,
+   "deadlocked": 0,
+   "stuck_on_map": 14,
+   "never_departed": 1
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 5,
+   "deadlocked": 5,
+   "stuck_on_map": 16,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 14,
+   "never_departed": 7
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 12,
+   "deadlocked": 0,
+   "stuck_on_map": 12,
+   "never_departed": 6
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 24,
+   "never_departed": 4
+  },
+  {
+   "policy": "ppo",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 13,
+   "deadlocked": 0,
+   "stuck_on_map": 17,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 8,
+   "stuck_on_map": 9,
+   "never_departed": 10
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 9,
+   "stuck_on_map": 3,
+   "never_departed": 12
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 15,
+   "deadlocked": 0,
+   "stuck_on_map": 8,
+   "never_departed": 7
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 14,
+   "never_departed": 14
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 5,
+   "deadlocked": 3,
+   "stuck_on_map": 9,
+   "never_departed": 13
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 19,
+   "stuck_on_map": 2,
+   "never_departed": 6
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 10,
+   "deadlocked": 6,
+   "stuck_on_map": 5,
+   "never_departed": 9
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 4,
+   "deadlocked": 6,
+   "stuck_on_map": 7,
+   "never_departed": 13
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 15,
+   "never_departed": 11
+  },
+  {
+   "policy": "bc",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 7,
+   "stuck_on_map": 12,
+   "never_departed": 9
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 5,
+   "stuck_on_map": 11,
+   "never_departed": 12
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 16,
+   "deadlocked": 0,
+   "stuck_on_map": 8,
+   "never_departed": 6
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 18,
+   "never_departed": 4
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 4,
+   "deadlocked": 3,
+   "stuck_on_map": 16,
+   "never_departed": 7
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 16,
+   "never_departed": 4
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 10,
+   "stuck_on_map": 10,
+   "never_departed": 8
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 10,
+   "never_departed": 10
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 2,
+   "stuck_on_map": 13,
+   "never_departed": 9
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 5,
+   "stuck_on_map": 10,
+   "never_departed": 9
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 21,
+   "never_departed": 2
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 4,
+   "stuck_on_map": 13,
+   "never_departed": 10
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 27,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 13,
+   "deadlocked": 0,
+   "stuck_on_map": 14,
+   "never_departed": 3
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 11,
+   "deadlocked": 0,
+   "stuck_on_map": 17,
+   "never_departed": 2
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 1,
+   "deadlocked": 6,
+   "stuck_on_map": 16,
+   "never_departed": 7
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 10,
+   "deadlocked": 2,
+   "stuck_on_map": 13,
+   "never_departed": 5
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 25,
+   "deadlocked": 0,
+   "stuck_on_map": 5,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 15,
+   "never_departed": 9
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 13,
+   "deadlocked": 0,
+   "stuck_on_map": 15,
+   "never_departed": 2
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 1,
+   "deadlocked": 23,
+   "stuck_on_map": 6,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 13,
+   "deadlocked": 15,
+   "stuck_on_map": 0,
+   "never_departed": 2
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 10,
+   "deadlocked": 18,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 12,
+   "deadlocked": 13,
+   "stuck_on_map": 4,
+   "never_departed": 1
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 13,
+   "deadlocked": 17,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 2,
+   "deadlocked": 26,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 6,
+   "deadlocked": 17,
+   "stuck_on_map": 3,
+   "never_departed": 4
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 7,
+   "deadlocked": 22,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 7,
+   "deadlocked": 14,
+   "stuck_on_map": 9,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 3,
+   "deadlocked": 14,
+   "stuck_on_map": 12,
+   "never_departed": 1
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 9,
+   "never_departed": 1
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 10,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 0
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 2
+  },
+  {
+   "policy": "ppo",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 5,
+   "deadlocked": 2,
+   "stuck_on_map": 2,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 2,
+   "stuck_on_map": 4,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 2,
+   "deadlocked": 5,
+   "stuck_on_map": 1,
+   "never_departed": 2
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 6,
+   "never_departed": 2
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 2
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 1,
+   "deadlocked": 2,
+   "stuck_on_map": 6,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 7,
+   "deadlocked": 0,
+   "stuck_on_map": 3,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 8,
+   "never_departed": 2
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 4,
+   "stuck_on_map": 3,
+   "never_departed": 0
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 2,
+   "stuck_on_map": 4,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 2,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 1
+  },
+  {
+   "policy": "bc_ppo",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 7,
+   "deadlocked": 2,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 9,
+   "deadlocked": 0,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 7,
+   "never_departed": 3
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "reactive_avoid",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 8,
+   "deadlocked": 0,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 6,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 5,
+   "deadlocked": 4,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 4,
+   "stuck_on_map": 2,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 2,
+   "stuck_on_map": 5,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 2,
+   "deadlocked": 7,
+   "stuck_on_map": 1,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 0,
+   "deadlocked": 0,
+   "stuck_on_map": 10,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 5,
+   "deadlocked": 0,
+   "stuck_on_map": 5,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 3,
+   "deadlocked": 7,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 4,
+   "deadlocked": 6,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "shortest_path",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 6,
+   "deadlocked": 0,
+   "stuck_on_map": 4,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1000,
+   "n_agents": 100,
+   "arrived": 92,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 8
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1001,
+   "n_agents": 100,
+   "arrived": 90,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 10
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1002,
+   "n_agents": 100,
+   "arrived": 91,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 9
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1003,
+   "n_agents": 100,
+   "arrived": 97,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 3
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1004,
+   "n_agents": 100,
+   "arrived": 100,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1005,
+   "n_agents": 100,
+   "arrived": 95,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 5
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1006,
+   "n_agents": 100,
+   "arrived": 98,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 2
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1007,
+   "n_agents": 100,
+   "arrived": 96,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 4
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1008,
+   "n_agents": 100,
+   "arrived": 98,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 2
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "xlarge",
+   "seed": 1009,
+   "n_agents": 100,
+   "arrived": 100,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1000,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1001,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1002,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1003,
+   "n_agents": 60,
+   "arrived": 57,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 3
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1004,
+   "n_agents": 60,
+   "arrived": 56,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 4
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1005,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1006,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1007,
+   "n_agents": 60,
+   "arrived": 56,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 4
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1008,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "large",
+   "seed": 1009,
+   "n_agents": 60,
+   "arrived": 60,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1000,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1001,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1002,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1003,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1004,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1005,
+   "n_agents": 30,
+   "arrived": 28,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 2
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1006,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1007,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1008,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "medium",
+   "seed": 1009,
+   "n_agents": 30,
+   "arrived": 30,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1000,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1001,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1002,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1003,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1004,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1005,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1006,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1007,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1008,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  },
+  {
+   "policy": "or_pp_sipp",
+   "scenario": "small",
+   "seed": 1009,
+   "n_agents": 10,
+   "arrived": 10,
+   "deadlocked": 0,
+   "stuck_on_map": 0,
+   "never_departed": 0
+  }
+ ]
+}

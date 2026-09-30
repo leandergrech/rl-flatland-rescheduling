@@ -259,7 +259,7 @@ class PrioritizedPlannerPolicy(Policy):
         self,
         orderings: Tuple[str, ...] = ("speed", "slack", "departure", "short"),
         n_random_orderings: int = 4,
-        time_budget_s: float = 20.0,
+        time_budget_s: Optional[float] = None,
         retry_every: int = 10,
         seed: int = 0,
     ):
@@ -283,7 +283,9 @@ class PrioritizedPlannerPolicy(Policy):
         best = None
         self.orderings_tried = 0
         for order in candidates:
-            if self.orderings_tried > 0 and time.perf_counter() - t_start > self.time_budget_s:
+            # Optional wall-clock cap (as a competition would impose). Off by default, because a cap
+            # makes the plan, and so every result, depend on how busy the machine is.
+            if self.time_budget_s is not None and self.orderings_tried > 0 and time.perf_counter() - t_start > self.time_budget_s:
                 break
             rt, paths = plan_all(self.graph, self.infos, order, self.horizon)
             q = plan_quality(paths, self.infos)
