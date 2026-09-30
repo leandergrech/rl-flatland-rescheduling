@@ -77,6 +77,7 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--random-episodes", type=int, default=200)
+    p.add_argument("--scenarios", nargs="+", default=None, help="restrict the PROCEED-only check")
     args = p.parse_args()
     import subprocess
 
@@ -85,7 +86,7 @@ def main() -> None:
     stored = {}
     for r in json.loads((ROOT / "data" / "results" / "or.json").read_text())["rows"]:
         stored[(r["scenario"], r["split"] == "test_malfunction", r["seed"])] = r
-    jobs = [(sc, seed, malf) for sc in SCENARIOS for malf in (False, True) for seed in TEST_SEEDS]
+    jobs = [(sc, seed, malf) for sc in (args.scenarios or SCENARIOS) for malf in (False, True) for seed in TEST_SEEDS]
     jobs.sort(key=lambda j: -SCENARIOS[j[0]].n_agents)
     t0 = time.perf_counter()
     with ProcessPoolExecutor(max_workers=args.workers) as ex:
@@ -102,6 +103,12 @@ def main() -> None:
                                rows=[{k: v for k, v in r.items() if k != "occupancy"} for r in rows])
     occ = {f"{r['scenario']}|{int(r['malfunctions'])}|{r['seed']}": r["occupancy"] for r in rows}
     print(f"PROCEED-only: {len(rows)} episodes, {len(mismatches)} mismatches against main's OR reference")
+    for m in mismatches:
+        print("  mismatch", m)
+    d = ROOT / "data" / "tada"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "verify.json").write_text(json.dumps(out, indent=1))
+    (d / "occupancy_proceed_only.json").write_text(json.dumps(occ))
 
     rjobs = []
     for i in range(args.random_episodes):
@@ -116,10 +123,7 @@ def main() -> None:
         wall_s=round(time.perf_counter() - t0, 1), rows=rrows)
     print(f"random clearances: {len(rrows)} episodes, {out['random_clearances']['commits']} committed edits, "
           f"{len(bad)} episodes with a deadlock, violation or deviation")
-    d = ROOT / "data" / "tada"
-    d.mkdir(parents=True, exist_ok=True)
     (d / "verify.json").write_text(json.dumps(out, indent=1))
-    (d / "occupancy_proceed_only.json").write_text(json.dumps(occ))
     sys.exit(1 if (mismatches or bad) else 0)
 
 
