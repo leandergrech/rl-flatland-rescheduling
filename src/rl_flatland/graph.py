@@ -76,6 +76,10 @@ class RailGraph:
                     self.is_switch[r, c] = True
         # Distance-to-target per agent: shape (n_agents, h, w, 4), inf where unreachable.
         self.dist = env.distance_map.get()
+        # Static per episode, so cached: ranked successors per (train, configuration) and the
+        # shortest-path look-ahead used by the compact observation.
+        self._ranked: Dict[Tuple[int, Config], List[Tuple[Config, float]]] = {}
+        self._ahead: Dict[tuple, list] = {}
 
     def successors(self, cfg: Config) -> List[Config]:
         s = self._succ.get(cfg)
@@ -89,9 +93,38 @@ class RailGraph:
         return float(self.dist[handle, cfg[0], cfg[1], cfg[2]])
 
     def ranked_successors(self, handle: int, cfg: Config) -> List[Tuple[Config, float]]:
-        """Successors of ``cfg`` sorted by the agent's remaining distance to target."""
-        out = [(s, self.distance(handle, s)) for s in self.successors(cfg)]
-        out.sort(key=lambda x: x[1])
+        """Successors of ``cfg`` sorted by the agent's remaining distance to target (cached)."""
+        key = (handle, cfg)
+        out = self._ranked.get(key)
+        if out is None:
+            out = [(s, self.distance(handle, s)) for s in self.successors(cfg)]
+            out.sort(key=lambda x: x[1])
+            self._ranked[key] = out
+        return out
+
+    def lookahead(self, handle: int, prev: Config, first: Config, n: int) -> list:
+        """Up to n steps along the shortest path from ``first``: (cell, previous cell, is switch).
+
+        Stops after the target cell. Cached, because it depends only on the static network.
+        """
+        key = (handle, prev[:2], first, n)
+        out = self._ahead.get(key)
+        if out is not None:
+            return out
+        out = []
+        prev_cell = (prev[0], prev[1])
+        cur = first
+        for _ in range(n):
+            cell = (cur[0], cur[1])
+            out.append((cell, prev_cell, bool(self.is_switch[cell[0], cell[1]]), cur))
+            if self.distance(handle, cur) == 0:
+                break
+            ranked = self.ranked_successors(handle, cur)
+            if not ranked or not np.isfinite(ranked[0][1]):
+                break
+            prev_cell = cell
+            cur = ranked[0][0]
+        self._ahead[key] = out
         return out
 
     def is_decision_config(self, cfg: Config) -> bool:

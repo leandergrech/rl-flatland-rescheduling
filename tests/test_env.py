@@ -15,8 +15,15 @@ def test_scenarios_are_mid_size():
     for sc in SCENARIOS.values():
         assert 30 <= sc.width <= 100 and 30 <= sc.height <= 100
         assert 10 <= sc.n_agents <= 100
-    assert not set(TEST_SEEDS) & set(TEST_MALFUNCTION_SEEDS)
-    assert max(TEST_SEEDS + TEST_MALFUNCTION_SEEDS) >= 1000  # disjoint from training seeds 0..999
+    assert TEST_MALFUNCTION_SEEDS == TEST_SEEDS  # paired: same instances, malfunctions on/off
+    assert min(TEST_SEEDS) >= 1000  # disjoint from training seeds 0..999
+
+
+def test_malfunctions_do_not_change_the_instance():
+    a, b = make_env("medium", 1003, malfunctions=False), make_env("medium", 1003, malfunctions=True)
+    assert np.array_equal(a.rail.grid, b.rail.grid)
+    assert [(x.initial_configuration, x.earliest_departure, x.latest_arrival) for x in a.agents] == \
+           [(x.initial_configuration, x.earliest_departure, x.latest_arrival) for x in b.agents]
 
 
 def test_make_env_is_deterministic():

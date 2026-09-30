@@ -57,9 +57,12 @@ SCENARIOS: Dict[str, Scenario] = {
 }
 
 # Seed splits. Training code may use any seed in TRAIN_SEEDS; evaluation uses the held-out sets.
+# The malfunction split reuses the held-out seeds: enabling malfunctions leaves the network, lines
+# and timetable unchanged (the malfunction RNG is drawn after reset), so the two splits are paired
+# and their difference isolates the effect of malfunctions.
 TRAIN_SEEDS = range(0, 1000)
 TEST_SEEDS: List[int] = list(range(1000, 1010))
-TEST_MALFUNCTION_SEEDS: List[int] = list(range(2000, 2010))
+TEST_MALFUNCTION_SEEDS: List[int] = list(TEST_SEEDS)
 
 SEED_SPLITS = {
     "test": (TEST_SEEDS, False),

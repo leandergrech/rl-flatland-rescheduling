@@ -88,30 +88,19 @@ def _scan_branch(graph: RailGraph, occ: _Occupancy, handle: int, prev: Config, f
     L = float(LOOKAHEAD)
     dist_opp, n_opp, dist_same, opp_malf, seg_len = L, 0, L, 0.0, L
     first_occupied = float((first[0], first[1]) in occ.at)
-    prev_cell = (prev[0], prev[1])
-    cur = first
-    for step in range(1, LOOKAHEAD + 1):
-        cell = (cur[0], cur[1])
-        if seg_len == L and graph.is_switch[cell[0], cell[1]] and step > 1:
+    for step, (cell, prev_cell, is_switch, _) in enumerate(graph.lookahead(handle, prev, first, LOOKAHEAD), start=1):
+        if seg_len == L and is_switch and step > 1:
             seg_len = float(step - 1)
         hit = occ.at.get(cell)
         if hit is not None and hit[0] != handle:
             other, ocfg = hit
-            other_next = {(s[0], s[1]) for s in graph.successors(ocfg)}
-            if prev_cell in other_next:
+            if any((s[0], s[1]) == prev_cell for s in graph.successors(ocfg)):
                 n_opp += 1
                 if dist_opp == L:
                     dist_opp = float(step)
                     opp_malf = float(graph.env.agents[other].malfunction_handler.in_malfunction)
             elif dist_same == L:
                 dist_same = float(step)
-        if graph.distance(handle, cur) == 0:
-            break
-        ranked = graph.ranked_successors(handle, cur)
-        if not ranked or not np.isfinite(ranked[0][1]):
-            break
-        prev_cell = cell
-        cur = ranked[0][0]
     return np.array(
         [1.0, dist_opp / L, min(n_opp / 5.0, 1.0), dist_same / L, first_occupied, opp_malf, seg_len / L],
         dtype=np.float32,
