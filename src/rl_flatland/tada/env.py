@@ -9,7 +9,12 @@ its (possibly edited) plan through the env step, and the loop runs on to the nex
 Episode ends:
 * **termination** (terminal value 0): a deadlock (``rl_flatland.deadlock.find_deadlocked``) or a
   reservation violation (two trains in one cell; asserted by flatland, logged here). With a correct
-  executor neither should ever happen.
+  executor neither should ever happen. main's detector also flags a ring of trains that the plan
+  rotates through a block of switches in one step (MotionCheck allows rotations of three or more);
+  such a scheduled rotation is counted (``rotation_flags``) but does not terminate.
+  Flatland charges a train that misses its target only at the horizon, so on termination every
+  unfinished train is charged that end-of-episode penalty as if it stayed where it is until T.
+  Otherwise ending the episode early would score better than running it out.
 * **truncation** (bootstrap): the horizon T.
 
 Reward per env step is Flatland 3's ``DefaultRewards`` summed over trains, scaled by
@@ -144,7 +149,7 @@ class DispatchEnv:
         except AssertionError:
             self.stats["reservation_violations"] += 1
             self.done = self.terminated = True
-            return 0.0
+            return self._terminal_penalty()
         ex.observe(env)
         r = 0.0
         for i, v in rewards.items():
@@ -153,13 +158,51 @@ class DispatchEnv:
         r *= self.cfg.reward_scale * self._norm()
         if self.cfg.shaping:
             r += self.cfg.reward_scale * self._norm() * (self._window_slack(members) - s0)
-        if find_deadlocked(env, ex.graph):
+        if self._deadlock():
             self.stats["deadlock_terminations"] += 1
             self.done = self.terminated = True
+            r += self._terminal_penalty()
         elif dones["__all__"]:
             self.done = self.truncated = True
         self._point_members = []
         return r
+
+    def _deadlock(self) -> bool:
+        """find_deadlocked, minus rotations the plan has scheduled.
+
+        Follow each flagged train to the holder of its planned next cell, and on from there. A train
+        is waiting on a scheduled rotation if that walk closes a cycle of three or more trains; a
+        2-cycle is a swap (a real head-on), and a train without a planned next cell is stuck."""
+        env, ex = self.env, self.ex
+        dl = find_deadlocked(env, ex.graph)
+        if not dl:
+            return False
+        holder = {tuple(env.agents[h].current_configuration[0]): h for h in dl}
+        nxt = {}
+        for h in dl:
+            p, j = ex.paths.get(h), ex.progress.get(h, -1)
+            if not p or j + 1 >= len(p):
+                return True  # no planned move left
+            nxt[h] = holder.get(tuple(p[j + 1][0][:2]))  # None: that cell is not held by a flagged train
+        for h in dl:
+            seen = [h]
+            while nxt[seen[-1]] is not None and nxt[seen[-1]] not in seen:
+                seen.append(nxt[seen[-1]])
+            last = nxt[seen[-1]]
+            if last is not None and len(seen) - seen.index(last) < 3:
+                return True
+        self.stats["rotation_flags"] += 1
+        return False
+
+    def _terminal_penalty(self) -> float:
+        env = self.env
+        r = 0.0
+        for a in env.agents:
+            if a.state != TrainState.DONE:
+                v = float(env.rewards.end_of_episode_reward(a, env.distance_map, env._max_episode_steps))
+                self.cum[a.handle] += v
+                r += v
+        return r * self.cfg.reward_scale * self._norm()
 
     # ------------------------------------------------------------------ clearances
     def action_mask(self, slot: int) -> Tuple[np.ndarray, Dict[int, np.ndarray]]:
@@ -227,6 +270,7 @@ class DispatchEnv:
             terminated=bool(self.terminated),
             truncated=bool(self.truncated),
             deadlock_terminations=int(self.stats["deadlock_terminations"]),
+            rotation_flags=int(self.stats["rotation_flags"]),
             reservation_violations=int(self.stats["reservation_violations"]),
             deviations=int(self.ex.deviations),
             commits=int(self.stats["commits"]),
