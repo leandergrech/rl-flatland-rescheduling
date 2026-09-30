@@ -136,3 +136,14 @@ def test_policy_smoke_200_steps():
     out = _worker((net.state_dict(), asdict(cfg), 3))
     stats = ppo_update(net, torch.optim.Adam(net.parameters(), 3e-4), out["batch"], cfg, dc.budget)
     assert all(np.isfinite(v) for v in stats.values())
+
+
+def test_empty_window_value_is_finite():
+    import torch
+
+    from rl_flatland.tada.policy import DispatcherNet
+
+    net = DispatcherNet(14, 6).eval()
+    with torch.no_grad():
+        g, _ = net.encode(torch.zeros(1, 8, 14), torch.zeros(1, 8), torch.zeros(1, 6), torch.zeros(1, 8), torch.tensor([0.0]))
+    assert torch.isfinite(net.value(g)).all()

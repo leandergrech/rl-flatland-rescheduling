@@ -28,6 +28,11 @@ from rl_flatland.tada.executor import N_ACTIONS, PROCEED, YIELD_TO
 
 NEG = -1e9
 
+# PyTorch's inference fast path for TransformerEncoder returns NaN when every train token is padded
+# (an empty window, as at the final bootstrap state), even though the global token is not. The
+# regular path is exact, and at these sizes the speed difference is negligible.
+torch.backends.mha.set_fastpath_enabled(False)
+
 
 class DispatcherNet(nn.Module):
     def __init__(self, n_feat: int, n_glob: int, d: int = 64, heads: int = 4, layers: int = 1):
