@@ -15,7 +15,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Dict, List, Optional
 
-from flatland.core.env_observation_builder import ObservationBuilder
+from flatland.core.env_observation_builder import DummyObservationBuilder, ObservationBuilder
 from flatland.envs.line_generators import sparse_line_generator
 from flatland.envs.malfunction_generators import MalfunctionParameters, ParamMalfunctionGen
 from flatland.envs.rail_env import RailEnv
@@ -72,12 +72,14 @@ def make_env(
     seed: int,
     malfunctions: bool = False,
     obs_builder: Optional[ObservationBuilder] = None,
+    rewards=None,
 ) -> RailEnv:
     """Build and reset a RailEnv for ``scenario`` and ``seed``.
 
     The returned env has already been reset with ``random_seed=seed``, so ``env.agents``,
     ``env.rail`` and the timetable are populated. The initial observations are available as
-    ``env.obs_dict``.
+    ``env.obs_dict``. ``rewards`` swaps the scoring function (default: flatland's DefaultRewards,
+    i.e. Flatland 3 scoring; e.g. ``flatland.envs.rewards.ECML2026Rewards()``).
     """
     sc = SCENARIOS[scenario] if isinstance(scenario, str) else scenario
     malfunction_generator = None
@@ -89,9 +91,12 @@ def make_env(
                 max_duration=sc.malfunction_max_duration,
             )
         )
-    kwargs = {}
-    if obs_builder is not None:
-        kwargs["obs_builder_object"] = obs_builder
+    # RailEnv's default builder (GlobalObsForRailEnv) builds full-grid tensors for every train on
+    # every step. Nothing here reads them, so use a dummy unless a builder is asked for. It uses no
+    # randomness, so dynamics and results are identical either way; only env.step gets faster.
+    kwargs = {"obs_builder_object": obs_builder if obs_builder is not None else DummyObservationBuilder()}
+    if rewards is not None:
+        kwargs["rewards"] = rewards
     env = RailEnv(
         width=sc.width,
         height=sc.height,
