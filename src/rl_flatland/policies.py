@@ -63,3 +63,43 @@ class ShortestPathPolicy(Policy):
             else:
                 actions[a.handle] = MOVE_FORWARD
         return actions
+
+
+class ReactiveAvoidPolicy(Policy):
+    """Rule-based reference on the RL wrapper's decisions and compact features.
+
+    At each decision point: take the shortest-path branch if no opposing train is within the
+    30-cell look-ahead, else the alternative branch if that one is clear, else wait. Off-map
+    trains depart only if the look-ahead from their start cell is clear. It shows how far the
+    compact observation gets you without learning, like the flatland-baselines deadlock-avoidance
+    heuristic but on our features.
+    """
+
+    name = "reactive_avoid"
+
+    def reset(self, env: RailEnv) -> None:
+        from rl_flatland.env import DecisionEnv
+
+        self.helper = DecisionEnv("compact")
+        self.helper.attach(env)
+        self.graph = self.helper.graph
+        self.setup_s = 0.0
+
+    def act(self, env: RailEnv) -> Dict[int, int]:
+        from rl_flatland.env import GO_ALT, GO_BEST, WAIT
+
+        h = self.helper
+        meta = {}
+        if h.decision_agents:
+            obs, masks = h.observations(), h.action_masks()
+            for i in h.decision_agents:
+                o = obs[i]
+                # compact layout: own 0-11; best branch 12-19 and alternative 20-27, each
+                # [extra distance, exists, dist to opposing, n opposing, dist same-dir, first cell occupied, opposing broken, segment length]
+                best_clear = o[13] > 0 and o[14] >= 1.0 and o[17] < 0.5
+                alt_clear = masks[i][2] > 0 and o[21] > 0 and o[22] >= 1.0 and o[25] < 0.5
+                meta[i] = GO_BEST if best_clear else (GO_ALT if alt_clear else WAIT)
+        return {i: h.native_action(i, meta.get(i)) for i in range(h.n)}
+
+    def observe(self, env: RailEnv) -> None:
+        self.helper._refresh()
