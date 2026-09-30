@@ -1,0 +1,97 @@
+/* Site theme "Departure board": amber on near-black, like a station departure board. */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+
+:root {
+  --pr-display-font: "Space Mono", "IBM Plex Mono", monospace;
+}
+
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #15171c;
+  --md-primary-fg-color--light: #2a2d35;
+  --md-primary-fg-color--dark: #0b0c0f;
+  --md-primary-bg-color: #ffc93c;
+  --md-primary-bg-color--light: #ffe08a;
+  --md-accent-fg-color: #c77700;
+  --md-accent-fg-color--transparent: rgba(199, 119, 0, 0.1);
+  --md-default-bg-color: #f8f6f1;
+  --md-default-fg-color: rgba(22, 22, 20, 0.9);
+  --md-typeset-a-color: #9b5a00;
+  --md-code-bg-color: #efece4;
+  --md-footer-bg-color: #15171c;
+  --md-footer-bg-color--dark: #0b0c0f;
+  --md-footer-fg-color: #ffc93c;
+  --md-mermaid-node-bg-color: #fff3d1;
+  --md-mermaid-node-fg-color: #15171c;
+  --md-mermaid-edge-color: #9b5a00;
+  --md-mermaid-label-fg-color: #15171c;
+  --pr-tile-bg: #15171c;
+  --pr-tile-fg: #f4f1e8;
+  --pr-tile-border: #15171c;
+  --pr-tile-muted: #a7a399;
+  --pr-or: #ffc93c;
+  --pr-rl: #d9d5ca;
+  --pr-track: #2c2f37;
+  --pr-th-bg: #15171c;
+  --pr-th-fg: #ffc93c;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-hue: 225;
+  --md-primary-fg-color: #07080a;
+  --md-primary-fg-color--light: #1a1c22;
+  --md-primary-fg-color--dark: #000000;
+  --md-primary-bg-color: #ffc93c;
+  --md-primary-bg-color--light: #ffe08a;
+  --md-accent-fg-color: #ffd866;
+  --md-default-bg-color: #0f1115;
+  --md-default-fg-color: rgba(236, 233, 224, 0.88);
+  --md-typeset-a-color: #ffc93c;
+  --md-code-bg-color: #171a20;
+  --md-footer-bg-color: #07080a;
+  --md-footer-bg-color--dark: #000000;
+  --md-mermaid-node-bg-color: #1c1f26;
+  --md-mermaid-node-fg-color: #f4f1e8;
+  --md-mermaid-edge-color: #ffc93c;
+  --md-mermaid-label-fg-color: #f4f1e8;
+  --pr-tile-bg: #07080a;
+  --pr-tile-fg: #f4f1e8;
+  --pr-tile-border: #2a2d35;
+  --pr-tile-muted: #8f8b82;
+  --pr-or: #ffc93c;
+  --pr-rl: #cfcabd;
+  --pr-track: #22252c;
+  --pr-th-bg: #07080a;
+  --pr-th-fg: #ffc93c;
+}
+
+.md-header__title,
+.md-typeset h1,
+.md-typeset h2 {
+  font-family: var(--pr-display-font);
+  letter-spacing: -0.01em;
+}
+
+.md-header__title { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+.md-typeset h1 { font-weight: 700; color: var(--md-default-fg-color); }
+.md-typeset h2 { font-weight: 700; border-bottom: 2px solid var(--pr-or); padding-bottom: 0.2rem; display: inline-block; }
+
+.md-typeset table:not([class]) th {
+  background: var(--pr-th-bg);
+  color: var(--pr-th-fg);
+  font-family: var(--pr-display-font);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.md-typeset table:not([class]) tr:hover { background: rgba(255, 201, 60, 0.08); }
+
+.md-typeset .admonition.note,
+.md-typeset details.note { border-color: var(--pr-or); }
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary { background: rgba(255, 201, 60, 0.14); }
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before { background-color: #c77700; }
+
+.gap-val { font-size: 1.25rem; }
+.gap-round { font-size: 0.74rem; }

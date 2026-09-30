@@ -14,6 +14,41 @@ Six years later, OR still wins: the ECML 2026 challenge ended with 20.84 for the
 entry against 9.42 for the RL baseline
 ([results](https://flatland-association.github.io/flatland-book/challenges/ecml2026/post-competition_analysis.html)).
 
+<div class="gap-tiles">
+  <a class="gap-tile" href="http://proceedings.mlr.press/v133/laurent21a/laurent21a.pdf" title="Laurent et al. 2021, Table 1">
+    <span class="gap-round">NeurIPS 2020</span>
+    <span class="gap-metric">trains arrived</span>
+    <span class="gap-row"><span class="gap-who">OR</span><span class="gap-val or">98.6%</span></span>
+    <span class="gap-bar"><span class="or" style="width:98.6%"></span></span>
+    <span class="gap-row"><span class="gap-who">RL</span><span class="gap-val rl">78.5%</span></span>
+    <span class="gap-bar"><span class="rl" style="width:78.5%"></span></span>
+  </a>
+  <a class="gap-tile" href="https://arxiv.org/abs/2306.06455" title="Chen et al. 2023">
+    <span class="gap-round">Flatland 3, 2021</span>
+    <span class="gap-metric">competition score</span>
+    <span class="gap-row"><span class="gap-who">OR</span><span class="gap-val or">135.5</span></span>
+    <span class="gap-bar"><span class="or" style="width:100%"></span></span>
+    <span class="gap-row"><span class="gap-who">RL</span><span class="gap-val rl">27.9</span></span>
+    <span class="gap-bar"><span class="rl" style="width:20.6%"></span></span>
+  </a>
+  <a class="gap-tile" href="https://flatland-association.github.io/flatland-book/challenges/ecml2026/post-competition_analysis.html" title="ECML 2026 post-competition analysis">
+    <span class="gap-round">ECML 2026</span>
+    <span class="gap-metric">competition score</span>
+    <span class="gap-row"><span class="gap-who">OR</span><span class="gap-val or">20.84</span></span>
+    <span class="gap-bar"><span class="or" style="width:100%"></span></span>
+    <span class="gap-row"><span class="gap-who">RL</span><span class="gap-val rl">9.42</span></span>
+    <span class="gap-bar"><span class="rl" style="width:45.2%"></span></span>
+  </a>
+  <a class="gap-tile" href="04-designs/#results-on-our-scenarios" title="This repository, xlarge scenario">
+    <span class="gap-round">This repo, 100×100</span>
+    <span class="gap-metric">trains arrived, 100 trains</span>
+    <span class="gap-row"><span class="gap-who">OR</span><span class="gap-val or">95.7%</span></span>
+    <span class="gap-bar"><span class="or" style="width:95.7%"></span></span>
+    <span class="gap-row"><span class="gap-who">RL</span><span class="gap-val rl">16.0%</span></span>
+    <span class="gap-bar"><span class="rl" style="width:16%"></span></span>
+  </a>
+</div>
+
 !!! note "Scope"
     The code targets **mid-size grids: 30×30 to 100×100 cells, 10 to 100 trains**, so every
     baseline trains and evaluates on a laptop CPU in under an hour. The competitions went up to

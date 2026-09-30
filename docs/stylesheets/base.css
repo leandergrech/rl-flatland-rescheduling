@@ -1,0 +1,85 @@
+/* Layout shared by every theme option. Colours and fonts live in the theme file. */
+
+.md-typeset table:not([class]) {
+  font-variant-numeric: tabular-nums;
+}
+
+.gap-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.8rem;
+  margin: 1.4rem 0 1.8rem;
+}
+
+.md-typeset a.gap-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 0.95rem 0.95rem;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  color: var(--pr-tile-fg);
+  background: var(--pr-tile-bg);
+  border: 1px solid var(--pr-tile-border);
+  transition: transform 120ms ease, border-color 120ms ease;
+}
+
+.md-typeset a.gap-tile:hover {
+  transform: translateY(-2px);
+  border-color: var(--pr-or);
+}
+
+.gap-round {
+  font-family: var(--pr-display-font);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.gap-metric {
+  font-size: 0.62rem;
+  color: var(--pr-tile-muted);
+  margin-bottom: 0.35rem;
+}
+
+.gap-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 0.25rem;
+}
+
+.gap-who {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--pr-tile-muted);
+}
+
+.gap-val {
+  font-family: var(--pr-display-font);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.gap-val.or { color: var(--pr-or); }
+.gap-val.rl { color: var(--pr-rl); }
+
+.gap-bar {
+  display: block;
+  height: 0.28rem;
+  border-radius: 0.14rem;
+  background: var(--pr-track);
+  overflow: hidden;
+}
+
+.gap-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 0.14rem;
+}
+
+.gap-bar > .or { background: var(--pr-or); }
+.gap-bar > .rl { background: var(--pr-rl); }
