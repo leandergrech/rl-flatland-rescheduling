@@ -25,7 +25,7 @@ cd rl-flatland-rescheduling
 python3.12 -m venv .venv && source .venv/bin/activate      # or: uv venv --python 3.12 .venv
 pip install torch --index-url https://download.pytorch.org/whl/cpu   # CPU-only torch, optional
 pip install -e ".[dev]"
-pytest                                   # 17 tests, about 20 s
+pytest                                   # 19 tests, about 1 min
 bash scripts/reproduce.sh                # re-evaluate stored baselines on small+medium, compare with data/results
 mkdocs serve                             # the literature review locally
 ```
