@@ -1,0 +1,37 @@
+{
+ "dispatch": {
+  "window": {
+   "H": 30,
+   "D": 3,
+   "M": 8,
+   "features": "slack",
+   "allow_yield": true,
+   "allow_hold": true,
+   "allow_reroute": true
+  },
+  "budget": 2,
+  "shaping": false,
+  "hold_steps": 5,
+  "exact_action_masks": true,
+  "reward_scale": 100.0
+ },
+ "scenario": "medium",
+ "malfunctions": true,
+ "d_model": 64,
+ "layers": 1,
+ "gamma": 0.99,
+ "lam": 0.95,
+ "clip": 0.2,
+ "lr": 0.0003,
+ "epochs": 4,
+ "minibatch": 512,
+ "ent_coef": 0.001,
+ "vf_coef": 0.5,
+ "max_grad_norm": 0.5,
+ "episodes_per_iter": 8,
+ "iterations": 120,
+ "time_budget_s": 3300.0,
+ "workers": 8,
+ "seed": 0,
+ "save_every": 20
+}
