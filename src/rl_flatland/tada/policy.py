@@ -48,10 +48,12 @@ class DispatcherNet(nn.Module):
         self.k = nn.Linear(d, d)
         self.cont = nn.Sequential(nn.Linear(2 * d + N_ACTIONS, d), nn.Tanh(), nn.Linear(d, 1))
         self.value = nn.Sequential(nn.Linear(d, d), nn.Tanh(), nn.Linear(d, 1))
-        # prior: follow the plan, and stop after one clearance
+        # prior: follow the plan (P(PROCEED) ~ 0.87 when all four actions are legal), and stop after
+        # one clearance. A train is in the window at almost every step, so a weaker prior makes the
+        # untrained dispatcher edit plans hundreds of times per episode and start well below the executor.
         with torch.no_grad():
             self.act[-1].bias.zero_()
-            self.act[-1].bias[PROCEED] = 2.0
+            self.act[-1].bias[PROCEED] = 3.0
             self.cont[-1].bias.fill_(-1.0)
 
     def encode(self, feats, mask, glob, chosen, n_frac):

@@ -1,6 +1,6 @@
 """Train the TADA dispatcher with PPO. Writes data/tada/checkpoints/<name>/.
 
-    python scripts/tada_train.py --name main                    # B=2, M=8, slack features, all actions
+    python scripts/tada_train.py --name main                    # B=2, M=8, slack features, all actions; 120 x 8 episodes
     python scripts/tada_train.py --name B1 --budget 1
     python scripts/tada_train.py --name noyield --no-yield
     python scripts/tada_train.py --name M16 --M 16
@@ -51,7 +51,8 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--name", required=True)
     p.add_argument("--scenario", default="medium")
-    p.add_argument("--budget-s", type=float, default=1800.0)
+    p.add_argument("--budget-s", type=float, default=3300.0, help="wall-clock cap (the brief allows under an hour)")
+    p.add_argument("--iterations", type=int, default=120, help="PPO iterations; every run gets the same sample budget")
     p.add_argument("--episodes-per-iter", type=int, default=8)
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--seed", type=int, default=0)
@@ -60,7 +61,7 @@ def main() -> None:
     torch.set_num_threads(2)
     dc = dispatch_config(a)
     cfg = TadaPPOConfig(dispatch=dc.to_dict(), scenario=a.scenario, malfunctions=True, time_budget_s=a.budget_s,
-                        episodes_per_iter=a.episodes_per_iter, workers=a.workers, seed=a.seed)
+                        episodes_per_iter=a.episodes_per_iter, workers=a.workers, seed=a.seed, iterations=a.iterations)
     out = ROOT / "data" / "tada" / "checkpoints" / a.name
     t0 = time.perf_counter()
     train(cfg, out, log_name=a.name)
