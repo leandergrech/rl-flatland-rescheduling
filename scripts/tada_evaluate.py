@@ -2,6 +2,7 @@
 
     python scripts/tada_evaluate.py --name main                          # medium, malfunctions off and on
     python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general
+    python scripts/tada_evaluate.py --name executor                      # every clearance PROCEED (no policy)
 """
 
 from __future__ import annotations
@@ -35,12 +36,34 @@ def _job(args) -> dict:
     from rl_flatland.tada.ppo import TadaPPOConfig, make_net, run_episode
 
     torch.set_num_threads(1)
+    if Path(ckpt_dir).name == "executor":
+        return _executor_only(scenario, seed, malf)
     cfg = TadaPPOConfig(**json.loads((Path(ckpt_dir) / "config.json").read_text()))
     net = make_net(cfg)
     net.load_state_dict(torch.load(Path(ckpt_dir) / "model.pt", map_location="cpu"))
     net.eval()
     dc = DispatchConfig.from_dict(cfg.dispatch)
     _, _, _, _, _, s = run_episode(net, dc, scenario, seed, malf, cfg.gamma, True)
+    s["cpu_mhz"] = cpu_mhz()
+    return s
+
+
+def _executor_only(scenario: str, seed: int, malf: bool) -> dict:
+    import numpy as np
+
+    from rl_flatland.tada.env import DispatchConfig, DispatchEnv
+    from rl_flatland.tada.executor import PROCEED
+
+    t0 = time.perf_counter()
+    de = DispatchEnv(DispatchConfig())
+    w, _ = de.reset(scenario, seed, malf)
+    while w is not None:
+        de.apply(int(np.argmax(w.choosable)), PROCEED)
+        w, _ = de.advance()
+    s = de.summary()
+    s["wall_s"] = time.perf_counter() - t0
+    s["decision_ms_per_step"] = 1000 * s["wall_s"] / max(1, s["steps"])
+    s["policy_ms_per_step"] = 0.0
     s["cpu_mhz"] = cpu_mhz()
     return s
 
