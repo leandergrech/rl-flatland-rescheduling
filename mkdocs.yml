@@ -43,6 +43,7 @@ nav:
   - 5. Limitations: 05-limitations.md
   - 6. Open questions: 06-open-questions.md
   - 7. References: 07-references.md
+  - 8. TADA on rails: 08-tada-dispatcher.md
 
 markdown_extensions:
   - admonition
