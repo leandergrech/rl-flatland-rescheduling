@@ -407,6 +407,8 @@ python scripts/tada_verify.py --workers 8                 # step 1 checks -> dat
 python scripts/tada_train.py --name main                  # step 3, 120 x 8 medium episodes
 python scripts/tada_evaluate.py --name executor           # executor alone, medium
 python scripts/tada_evaluate.py --name main               # learned dispatcher, medium
+python scripts/tada_evaluate.py --name executor --train-seeds 960 --out executor_train_seeds   # training-curve reference
+python scripts/tada_train.py --name main_ent01_stopped --ent-coef 0.01 --iterations 32   # the drifting first run (stopped by hand)
 bash scripts/tada_ablations.sh                            # step 4 (trains and evaluates every ablation)
 python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general   # step 5
 python scripts/tada_continuous.py --controllers executor --out continuous_executor   # step 6
