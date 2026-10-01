@@ -3,6 +3,7 @@
     python scripts/tada_evaluate.py --name main                          # medium, malfunctions off and on
     python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general
     python scripts/tada_evaluate.py --name executor                      # every clearance PROCEED (no policy)
+    python scripts/tada_evaluate.py --name main --model model_it60.pt --out main_it60   # an intermediate checkpoint
 """
 
 from __future__ import annotations
@@ -29,7 +30,7 @@ def cpu_mhz() -> float:
 
 
 def _job(args) -> dict:
-    ckpt_dir, scenario, seed, malf = args
+    ckpt_dir, scenario, seed, malf, model = args
     import torch
 
     from rl_flatland.tada.env import DispatchConfig
@@ -40,7 +41,7 @@ def _job(args) -> dict:
         return _executor_only(scenario, seed, malf)
     cfg = TadaPPOConfig(**json.loads((Path(ckpt_dir) / "config.json").read_text()))
     net = make_net(cfg)
-    net.load_state_dict(torch.load(Path(ckpt_dir) / "model.pt", map_location="cpu"))
+    net.load_state_dict(torch.load(Path(ckpt_dir) / model, map_location="cpu"))
     net.eval()
     dc = DispatchConfig.from_dict(cfg.dispatch)
     _, _, _, _, _, s = run_episode(net, dc, scenario, seed, malf, cfg.gamma, True)
@@ -77,15 +78,16 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--n-seeds", type=int, default=10)
     p.add_argument("--out", default=None)
+    p.add_argument("--model", default="model.pt", help="checkpoint file inside the run directory")
     a = p.parse_args()
     ckpt = ROOT / "data" / "tada" / "checkpoints" / a.name
-    jobs = [(str(ckpt), sc, s, m) for sc in a.scenarios for m in (False, True) for s in TEST_SEEDS[: a.n_seeds]]
+    jobs = [(str(ckpt), sc, s, m, a.model) for sc in a.scenarios for m in (False, True) for s in TEST_SEEDS[: a.n_seeds]]
     t0 = time.perf_counter()
     with ProcessPoolExecutor(max_workers=a.workers) as ex:
         rows = list(ex.map(_job, jobs))
     out = ROOT / "data" / "tada" / "results" / f"{a.out or a.name}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps({"checkpoint": a.name, "eval_wall_s": round(time.perf_counter() - t0, 1), "rows": rows}, indent=1))
+    out.write_text(json.dumps({"checkpoint": a.name, "model": a.model, "eval_wall_s": round(time.perf_counter() - t0, 1), "rows": rows}, indent=1))
     import numpy as np
 
     for sc in a.scenarios:

@@ -1,9 +1,10 @@
 """Continuous Flatland: sweep the injection rate for the executor alone and for a trained dispatcher.
 
 Each run is one medium map (map seed 5000) with a Poisson stream of trains, truncated at the step
-budget. Writes data/tada/results/continuous.json.
+budget. Writes data/tada/results/<out>.json.
 
-    python scripts/tada_continuous.py --name main --rates 0.02 0.05 0.1 0.15 0.2 0.3 0.4 --budget 1000
+    python scripts/tada_continuous.py --controllers executor --out continuous_executor
+    python scripts/tada_continuous.py --controllers learned --name main --out continuous_learned
 """
 
 from __future__ import annotations

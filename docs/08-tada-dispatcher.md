@@ -139,11 +139,11 @@ until T, so ending an episode early can never score better than running it out.
 
 <!-- TADA_VERIFY:START -->
 With every clearance forced to PROCEED, the dispatch loop (window, masks, re-timing, termination
-checks) must leave main's OR reference untouched. Over all 80 held-out episodes it matches the stored
-results ([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)) in arrived trains, deadlocked trains, episode length
-and normalised reward to 1e-9: **80 of
-80 episodes identical, 0 mismatching fields** ([verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json),
-commit `5c667ed`).
+checks) must leave main's OR reference untouched. Over all 80 held-out episodes it is compared with
+the stored results ([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)) on arrived trains, deadlocked trains,
+episode length and normalised reward (to 1e-9).
+**80 of 80 episodes are identical, with 0 mismatching fields**
+([verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json), commit `5c667ed`).
 
 | Scenario | Malfunctions | Episodes | Arrived (executor) | Arrived (main's OR) | Identical (arrived, deadlocked, steps, normalised reward) | Terminated | Rotation flags |
 |---|---|---|---|---|---|---|---|
@@ -162,11 +162,12 @@ plan rotates through a block of switches in one step (see [What did not work](#w
 The second check drives the dispatcher with a random policy: at every decision point it picks
 random choosable trains and, half the time, a random legal clearance (up to B = 2), on
 200 episodes (small and medium, half with malfunctions, seeds 3000 to 3199).
-That committed **28,705 plan edits** (144 per episode) with
-**0 episodes** showing a deadlock, a reservation violation or a train leaving its
-plan. Arrival under random edits was 98.7%
-on small and 98.5% on medium: random edits are safe
-but not free.
+That committed **28,705 plan edits** (144 per episode).
+**0 episodes** showed a deadlock, a reservation violation or a train leaving its plan.
+Arrival under random edits was 98.7% on small and
+98.5% on medium, against
+100.0% and 98.7% for the
+executor alone on the held-out seeds (different seeds, so only indicative): random edits are safe but not free.
 <!-- TADA_VERIFY:END -->
 
 ## Step 2: window occupancy
@@ -226,6 +227,7 @@ python scripts/tada_evaluate.py --name executor           # executor alone, medi
 python scripts/tada_evaluate.py --name main               # learned dispatcher, medium
 bash scripts/tada_ablations.sh                            # step 4 (trains and evaluates every ablation)
 python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general   # step 5
-python scripts/tada_continuous.py --name main             # step 6
+python scripts/tada_continuous.py --controllers executor --out continuous_executor   # step 6
+python scripts/tada_continuous.py --controllers learned --name main --out continuous_learned
 python scripts/tada_report.py                             # tables and figures on this page
 ```

@@ -24,7 +24,7 @@ FIG = ROOT / "docs" / "assets" / "figures"
 GH = "https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/"
 
 ABLATIONS = [  # name, what changes against main (B=2, M=8, slack features, all actions, no shaping)
-    ("main", "B = 2, M = 8, set (i), all actions"),
+    ("main_it60", "main run at 60 iterations: B = 2, M = 8, set (i), all actions"),
     ("B1", "B = 1"),
     ("B4", "B = 4"),
     ("noyield", "YIELD_TO disabled"),
@@ -211,6 +211,13 @@ episodes: {mix}.
 
 
 # ---------------------------------------------------------------------------------------------- step 4
+def _wall(n: str) -> dict:
+    if n == "main_it60":  # the main run's checkpoint at 60 iterations: wall-clock read off its log
+        log = [json.loads(l) for l in (DATA / "checkpoints" / "main" / "train_log.jsonl").read_text().splitlines() if l.strip()]
+        return {"iterations_done": 60, "iterations_planned": 60, "train_wall_s": log[59]["wall_s"]}
+    return json.loads((DATA / "checkpoints" / n / "wall_clock.json").read_text())
+
+
 def ablations() -> None:
     have = [(n, d) for n, d in ABLATIONS if load(f"results/{n}.json")]
     if len(have) < 2:
@@ -221,7 +228,7 @@ def ablations() -> None:
     for n, d in have:
         rows = load(f"results/{n}.json")["rows"]
         a, b = pick(rows, "medium", False), pick(rows, "medium", True)
-        wc = json.loads((DATA / "checkpoints" / n / "wall_clock.json").read_text())
+        wc = _wall(n)
         lines.append(f"| `{n}` | {d} | {pct(a)} | {pct(b)} | {num(b, 'normalized_reward')} | {sum(r['terminated'] for r in a + b)} | "
                      f"{sum(r['truncated'] for r in a + b)} | {np.mean([r['commits'] for r in a + b]):.1f} | "
                      f"{np.mean([r['decision_ms_per_step'] for r in a + b]):.1f} | {wc.get('iterations_done', '?')}/{wc.get('iterations_planned', '?')} | "
@@ -231,9 +238,11 @@ def ablations() -> None:
     bars = figure("tada-ablations", tf.grouped_bars([n for n, _ in have], {"no malfunctions": series_a, "malfunctions": series_b}, {},
                                                     "Ablations: trains arrived on medium (%)", "arrived (%)", ylim=(0, 105)),
                   "Ablation results on medium")
-    txt = f"""Every run uses the same sample budget (up to 120 iterations of 8 medium episodes with malfunctions)
-with a 55-minute wall-clock cap, and is evaluated like the main run (10 seeds × malfunctions off/on,
-greedy). "Iterations done" shows where the cap cut a run short.
+    txt = f"""Every ablation trains for 60 iterations of 8 medium episodes with malfunctions (half the main run's
+budget, so the grid fits), with a 55-minute wall-clock cap. The baseline row is the main run's own
+checkpoint after 60 iterations, so every row has seen the same number of episodes. All rows are
+evaluated like the main run (10 seeds × malfunctions off/on, greedy). "Iterations done" shows where
+the cap cut a run short.
 
 {chr(10).join(lines)}
 
@@ -269,10 +278,12 @@ Sources: {link('results/main_general.json')}, {link('verify.json')}."""
 
 # ---------------------------------------------------------------------------------------------- step 6
 def continuous() -> None:
-    c = load("results/continuous.json")
-    if not c:
+    parts = [load(f"results/{n}.json") for n in ("continuous_executor", "continuous_learned")]
+    parts = [x for x in parts if x]
+    if not parts:
         return
-    rows = c["rows"]
+    c = parts[0]
+    rows = [r for x in parts for r in x["rows"]]
     ctrls = [x for x in ["executor", "learned"] if any(r["controller"] == x for r in rows)]
     rates = sorted({r["rate"] for r in rows})
     lines = ["| Rate (trains/step) | Controller | Injected | Throughput (arrivals/1000 steps) | Mean delay vs LA (steps) | On time (%) | Waiting off-map at end | Deadlock terminations | Mean window occupancy | Wall-clock per step (ms) |",
@@ -298,7 +309,7 @@ the delay of the backlog, which is reported separately.
 
 {chr(10).join(lines)}
 
-Source: {link('results/continuous.json')} (`scripts/tada_continuous.py`).
+Sources: {link('results/continuous_executor.json')}, {link('results/continuous_learned.json')} (`scripts/tada_continuous.py`).
 
 {fig}"""
     inject("TADA_CONTINUOUS", txt)

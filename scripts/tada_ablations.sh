@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Step 4: train and evaluate every ablation, prioritised as the brief asks (B and YIELD_TO first).
-# Each run: up to 120 iterations x 8 medium episodes with malfunctions, capped at 55 minutes.
+# Each run: 60 iterations x 8 medium episodes with malfunctions (half the main run), capped at 55
+# minutes; the baseline row is the main run's 60-iteration checkpoint (model_it60.pt).
 #   bash scripts/tada_ablations.sh            # all
 #   bash scripts/tada_ablations.sh B1 noyield # a subset
 set -euo pipefail
@@ -18,6 +19,9 @@ declare -A ARGS=(
 RUNS=("$@")
 [ ${#RUNS[@]} -eq 0 ] && RUNS=(B1 B4 noyield M4 M16 shaping tree)
 for n in "${RUNS[@]}"; do
-  $PY scripts/tada_train.py --name "$n" ${ARGS[$n]}
+  $PY scripts/tada_train.py --name "$n" --iterations 60 ${ARGS[$n]}
   $PY scripts/tada_evaluate.py --name "$n"
 done
+if [ -f data/tada/checkpoints/main/model_it60.pt ] && [ ! -f data/tada/results/main_it60.json ]; then
+  $PY scripts/tada_evaluate.py --name main --model model_it60.pt --out main_it60
+fi
