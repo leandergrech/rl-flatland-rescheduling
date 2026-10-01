@@ -193,6 +193,38 @@ def medium() -> None:
     names = {"clr_0": "PROCEED", "clr_1": "HOLD", "clr_2": "YIELD_TO", "clr_3": "REROUTE"}
     tot = sum(clr.values()) or 1
     mix = ", ".join(f"{names[k]} {100 * clr.get(k, 0) / tot:.1f}%" for k in sorted(names))
+    # paired, per held-out seed
+    exk = {(r["seed"], r["malfunctions"]): r for r in ex["rows"]}
+    paired = []
+    for m in (False, True):
+        lr = pick(le["rows"], "medium", m)
+        da = [r["arrived"] - exk[(r["seed"], m)]["arrived"] for r in lr]
+        dn = np.array([r["normalized_reward"] - exk[(r["seed"], m)]["normalized_reward"] for r in lr])
+        paired.append(f"{'with' if m else 'without'} malfunctions, {sum(x > 0 for x in da)} seeds gain a train and "
+                      f"{sum(x < 0 for x in da)} lose one (net {sum(da):+d} of {sum(r['n_agents'] for r in lr)}), normalised reward "
+                      f"{dn.mean():+.4f} ± {dn.std(ddof=1) / np.sqrt(len(dn)):.4f}")
+    # paired, per training iteration (the executor on the same 8 maps)
+    ref = load("results/executor_train_seeds.json")
+    train_txt = ""
+    if ref:
+        by = {r["seed"]: r for r in ref["rows"]}
+        its = tf.train_seeds(len(log))
+        da = np.array([r["arrival_rate"] - np.mean([by[x]["arrival_rate"] for x in it]) for r, it in zip(log, its)])
+        dn = np.array([r["normalized_reward"] - np.mean([by[x]["normalized_reward"] for x in it]) for r, it in zip(log, its)])
+
+        def seg(lo, hi):
+            a_, n_ = da[lo:hi], dn[lo:hi]
+            return (f"{100 * a_.mean():+.2f} ± {100 * a_.std(ddof=1) / np.sqrt(len(a_)):.2f} points of arrival and "
+                    f"{n_.mean():+.4f} ± {n_.std(ddof=1) / np.sqrt(len(n_)):.4f} normalised reward")
+        train_txt = f"""
+On the training maps the comparison has more headroom: they are harder than the held-out seeds (the
+executor delivers {100 * np.mean([r['arrival_rate'] for r in ref['rows']]):.1f}% on the {len(ref['rows'])} distinct maps the run drew,
+[executor_train_seeds.json]({GH}data/tada/results/executor_train_seeds.json)). Paired with the executor on the
+same eight maps per iteration, the stochastic training policy scored {seg(0, len(log))} over all
+{len(log)} iterations ({int((da > 0).sum())} iterations ahead on arrival). Split by phase: iterations 1–20 {seg(0, 20)};
+iterations 61–{len(log)} {seg(60, len(log))}. The arrival gain is present from the first iterations, so it
+comes from issuing edits at all, not from learning which ones; what training changed is the delay those
+edits cost, which shrank to about zero."""
     txt = f"""Medium (50×50, 30 trains), 10 held-out seeds (1000 to 1009), each with malfunctions off and on,
 greedy policy. Arrival is mean ± standard error over seeds. Terminations and truncations are summed
 over the 20 episodes. Wall-clock per step covers everything: window, masks, policy, plan edits and
@@ -202,6 +234,10 @@ the env step.
 
 Sources: {link('results/executor.json')}, {link('results/main.json')} (`scripts/tada_evaluate.py`),
 main's PPO from [ppo.json]({GH}data/results/ppo.json).
+
+Paired by seed against the executor: {paired[0]}; {paired[1]}. On held-out medium the learned layer
+is indistinguishable from the plan it sits on.
+{train_txt}
 
 {bars}
 

@@ -194,6 +194,43 @@ episode, so ranking by slack is doing real selection there.
 ## Results on medium
 
 <!-- TADA_MEDIUM:START -->
+Medium (50×50, 30 trains), 10 held-out seeds (1000 to 1009), each with malfunctions off and on,
+greedy policy. Arrival is mean ± standard error over seeds. Terminations and truncations are summed
+over the 20 episodes. Wall-clock per step covers everything: window, masks, policy, plan edits and
+the env step.
+
+| Controller | Arrival, no malf. (%) | Arrival, malf. (%) | Norm. reward, no malf. | Norm. reward, malf. | Terminations | Truncations | Wall-clock per step (ms) |
+|---|---|---|---|---|---|---|---|
+| Executor only (main's OR, every clearance PROCEED) | 99.3 ± 0.7 | 98.0 ± 1.4 | 0.991 | 0.984 | 0 | 20 | 8.5 |
+| Learned dispatcher (TADA on rails) | 99.3 ± 0.7 | 98.3 ± 1.0 | 0.990 | 0.984 | 0 | 20 | 11.0 |
+| main's best learned baseline (PPO, compact obs.) | 35.0 ± 8.7 | 36.0 ± 8.3 | 0.724 | 0.729 | – | – | – |
+
+Sources: [executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json), [main.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/main.json) (`scripts/tada_evaluate.py`),
+main's PPO from [ppo.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/ppo.json).
+
+Paired by seed against the executor: without malfunctions, 0 seeds gain a train and 0 lose one (net +0 of 300), normalised reward -0.0007 ± 0.0005; with malfunctions, 2 seeds gain a train and 1 lose one (net +1 of 300), normalised reward +0.0009 ± 0.0014. On held-out medium the learned layer
+is indistinguishable from the plan it sits on.
+
+On the training maps the comparison has more headroom: they are harder than the held-out seeds (the
+executor delivers 95.9% on the 606 distinct maps the run drew,
+[executor_train_seeds.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor_train_seeds.json)). Paired with the executor on the
+same eight maps per iteration, the stochastic training policy scored +0.84 ± 0.10 points of arrival and -0.0015 ± 0.0004 normalised reward over all
+115 iterations (79 iterations ahead on arrival). Split by phase: iterations 1–20 +0.79 ± 0.19 points of arrival and -0.0037 ± 0.0008 normalised reward;
+iterations 61–115 +0.82 ± 0.15 points of arrival and -0.0005 ± 0.0004 normalised reward. The arrival gain is present from the first iterations, so it
+comes from issuing edits at all, not from learning which ones; what training changed is the delay those
+edits cost, which shrank to about zero.
+
+![Arrival on medium by controller](assets/figures/tada-medium-light.svg#only-light)
+![Arrival on medium by controller](assets/figures/tada-medium-dark.svg#only-dark)
+
+Training: 115 PPO iterations of 8 medium episodes with malfunctions
+(529,521 env steps) in 55 minutes on 8 worker processes,
+CPU clock 400 to 2901 MHz across iterations (median 1664).
+Log: [train_log.jsonl](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/checkpoints/main/train_log.jsonl). Clearances issued by the greedy policy on the 20 evaluation
+episodes: PROCEED 97.5%, HOLD 2.4%, YIELD_TO 0.1%, REROUTE 0.0%.
+
+![Training curves of the dispatcher](assets/figures/tada-training-light.svg#only-light)
+![Training curves of the dispatcher](assets/figures/tada-training-dark.svg#only-dark)
 <!-- TADA_MEDIUM:END -->
 
 ## Ablations
@@ -209,6 +246,26 @@ episode, so ranking by slack is doing real selection there.
 ## Continuous Flatland
 
 <!-- TADA_CONTINUOUS:START -->
+One medium map (seed 5000), a pool of 400 trains whose earliest departures follow a Poisson process at
+the given rate, latest arrival = injection + ceil(1.3 τ + 0.2 τ̄) (Flatland 3's allowance), malfunctions
+on, truncated at 1000 steps; 3 arrival seeds per rate. Both controllers plan a train only once
+it appears (`OnlineExecutor`). Delay is measured on trains that arrived, so at high rates it understates
+the delay of the backlog, which is reported separately.
+
+| Rate (trains/step) | Controller | Injected | Throughput (arrivals/1000 steps) | Mean delay vs LA (steps) | On time (%) | Waiting off-map at end | Deadlock terminations | Mean window occupancy | Wall-clock per step (ms) |
+|---|---|---|---|---|---|---|---|---|---|
+| 0.02 | executor | 19 | 16.0 | 1.1 | 96 | 0 | 0/3 | 1.18 | 11 |
+| 0.05 | executor | 45 | 38.3 | 0.2 | 97 | 0 | 0/3 | 3.75 | 10 |
+| 0.1 | executor | 97 | 77.7 | 10.1 | 77 | 1 | 0/3 | 7.24 | 14 |
+| 0.15 | executor | 142 | 112.0 | 32.7 | 46 | 3 | 0/3 | 7.71 | 19 |
+| 0.2 | executor | 189 | 120.0 | 100.7 | 27 | 33 | 0/3 | 7.79 | 30 |
+| 0.3 | executor | 298 | 144.3 | 140.2 | 21 | 106 | 0/3 | 7.85 | 76 |
+| 0.4 | executor | 388 | 139.7 | 196.7 | 18 | 202 | 0/3 | 7.89 | 452 |
+
+Sources: [continuous_executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_executor.json), [continuous_learned.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_learned.json) (`scripts/tada_continuous.py`).
+
+![Throughput and delay against injection rate](assets/figures/tada-continuous-light.svg#only-light)
+![Throughput and delay against injection rate](assets/figures/tada-continuous-dark.svg#only-dark)
 <!-- TADA_CONTINUOUS:END -->
 
 ## What did not work
