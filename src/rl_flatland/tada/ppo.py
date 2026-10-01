@@ -49,6 +49,15 @@ class TadaPPOConfig:
     seed: int = 0
 
 
+def cpu_mhz() -> float:
+    """Mean current clock over all cores (logged because this machine throttles between 400 MHz and 2.2 GHz)."""
+    try:
+        v = [float(l.split(":")[1]) for l in open("/proc/cpuinfo") if l.startswith("cpu MHz")]
+        return round(sum(v) / len(v), 0)
+    except Exception:
+        return float("nan")
+
+
 def make_net(cfg: TadaPPOConfig) -> DispatcherNet:
     dc = DispatchConfig.from_dict(cfg.dispatch)
     return DispatcherNet(dc.window.n_features, GLOBAL_FEATURES, d=cfg.d_model, layers=cfg.layers)
@@ -157,6 +166,7 @@ def train(cfg: TadaPPOConfig, out_dir: str | Path, log_name: str = "tada") -> Di
     log = open(out_dir / "train_log.jsonl", "w")
     t0 = time.perf_counter()
     steps = 0
+    done_iters = 0
     with ProcessPoolExecutor(max_workers=cfg.workers) as pool:
         for it in range(cfg.iterations):
             if time.perf_counter() - t0 > cfg.time_budget_s:
@@ -179,12 +189,14 @@ def train(cfg: TadaPPOConfig, out_dir: str | Path, log_name: str = "tada") -> Di
                        arrival_rate=float(np.mean([s["arrival_rate"] for s in summ])),
                        normalized_reward=float(np.mean([s["normalized_reward"] for s in summ])),
                        terminations=int(sum(s["terminated"] for s in summ)), commits=int(sum(s["commits"] for s in summ)),
-                       rejected=int(sum(s["rejected"] for s in summ)), clearances=dict(clr), **upd)
+                       rejected=int(sum(s["rejected"] for s in summ)), clearances=dict(clr), cpu_mhz=cpu_mhz(), **upd)
+            done_iters += 1
             log.write(json.dumps(row) + "\n")
             log.flush()
             print(f"[{log_name}] it={it} t={row['wall_s']}s arr={row['arrival_rate']:.3f} nr={row['normalized_reward']:.4f} "
                   f"term={row['terminations']} commits={row['commits']} ent={row.get('ent', 0):.3f}", flush=True)
     log.close()
     torch.save(net.state_dict(), out_dir / "model.pt")
-    (out_dir / "wall_clock.json").write_text(json.dumps({"train_wall_s": round(time.perf_counter() - t0, 1), "workers": cfg.workers}))
+    (out_dir / "wall_clock.json").write_text(json.dumps({"train_wall_s": round(time.perf_counter() - t0, 1), "workers": cfg.workers,
+                                                         "iterations_done": done_iters, "iterations_planned": cfg.iterations, "env_steps": steps}))
     return net
