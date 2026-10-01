@@ -21,11 +21,12 @@ log:
 
 ## TADA dispatcher
 branch: feat/tada-dispatcher
-step: 1
+step: 3
 state: running
-updated: 2026-10-01T00:00:20Z
+updated: 2026-10-01T00:38:48Z
 blockers: none
-next: step 1: finish PROCEED-only check on large/xlarge (48 mismatches in the first full run, cause under investigation), then 200 random-clearance episodes
+next: step 3: main PPO run (medium, malfunctions, 120 x 8 episodes, cap 55 min) started 02:37; then evaluate on held-out seeds with/without malfunctions
 log:
 - 2026-09-30T22:56:40Z step 0: branch feat/tada-dispatcher created. Brief correction: on the current paired malfunction split the OR reference is 100/98.0/93.8/89.1% (not 96.3/93.2/89.6, which were the old unpaired seeds 2000-2009); malfunction gap is 0/1.3/4.4/6.6 points small/medium/large/xlarge, so medium has the smallest non-zero gap. Training stays on medium as specified (CPU ceiling); large/xlarge covered by step 5. Design note: with ordered execution a malfunction never makes a plan order-infeasible, only late, so replanning is triggered by clearances only; this is what makes step 1's exact reproduction possible.
 - 2026-10-01T00:00:20Z step 1 in progress: executor, window, env, policy, PPO committed. PROCEED-only matches main's OR exactly on all 20 small and 20 medium episodes and large seeds 1000-1002; first full run reported 48 field mismatches, all on large/xlarge (re-running with per-episode output). Fixed: YIELD_TO planned the second train against a table missing the first train's current cell (caught by retime as an order cycle); find_deadlocked flags plan-scheduled 2x2 rotations (now exempt, counted as rotation_flags); terminations now charge the horizon penalty to unfinished trains; NaN bootstrap on empty windows (PyTorch MHA fast path). CPU was pinned at 400 MHz (thermal) from ~01:00 to ~01:55 UTC+2; now ~2.2 GHz.
+- 2026-10-01T00:38:48Z steps 1-2 done. PROCEED-only = main's OR on 80/80 held-out episodes (arrived, deadlocked, steps, normalised reward to 1e-9; data/tada/verify.json, commit 5c667ed). 200 random-clearance episodes: 28,705 committed edits, 0 deadlocks/violations/deviations. Earlier 48 mismatches were all early terminations: main's find_deadlocked flags plan-scheduled 2x2 rotations (12 large/xlarge episodes); exempted. Window occupancy (no malfunctions, M=8): mean 5.9/6.6/7.3/7.5 trains, full on 47/71/86/90% of steps small..xlarge (docs/assets/figures/tada-occupancy-*.svg). Executor-only on medium through the loop: 99.3/98.0% arrival (data/tada/results/executor.json).
