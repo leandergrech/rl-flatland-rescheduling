@@ -56,12 +56,14 @@ def main() -> None:
     p.add_argument("--episodes-per-iter", type=int, default=8)
     p.add_argument("--workers", type=int, default=8)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--ent-coef", type=float, default=0.001)
     add_args(p)
     a = p.parse_args()
     torch.set_num_threads(2)
     dc = dispatch_config(a)
     cfg = TadaPPOConfig(dispatch=dc.to_dict(), scenario=a.scenario, malfunctions=True, time_budget_s=a.budget_s,
-                        episodes_per_iter=a.episodes_per_iter, workers=a.workers, seed=a.seed, iterations=a.iterations)
+                        episodes_per_iter=a.episodes_per_iter, workers=a.workers, seed=a.seed, iterations=a.iterations,
+                        ent_coef=a.ent_coef)
     out = ROOT / "data" / "tada" / "checkpoints" / a.name
     t0 = time.perf_counter()
     train(cfg, out, log_name=a.name)
