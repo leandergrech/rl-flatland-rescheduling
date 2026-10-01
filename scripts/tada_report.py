@@ -298,22 +298,32 @@ def general() -> None:
     g, v = load("results/main_general.json"), load("verify.json")
     if not g or not v:
         return
-    lines = ["| Scenario | Executor arrival, no malf. (%) | Learned, no malf. (%) | Executor arrival, malf. (%) | Learned, malf. (%) | Learned terminations | Learned truncations | Wall-clock per step (ms) |",
-             "|---|---|---|---|---|---|---|---|"]
+    lines = ["| Scenario | Malfunctions | Executor arrival (%) | Learned arrival (%) | Trains gained / lost (paired seeds) | Norm. reward, executor | Norm. reward, learned | Edits per episode | Terminations | Truncations | Wall-clock per step (ms) |",
+             "|---|---|---|---|---|---|---|---|---|---|---|"]
+    exk = {(r["scenario"], r["seed"], r["malfunctions"]): r for r in v["proceed_only"]["rows"]}
     for sc in ["small", "large", "xlarge"]:
-        ea, eb = pick(v["proceed_only"]["rows"], sc, False), pick(v["proceed_only"]["rows"], sc, True)
-        la, lb = pick(g["rows"], sc, False), pick(g["rows"], sc, True)
-        if not la:
-            continue
-        lines.append(f"| {sc} | {pct(ea)} | {pct(la)} | {pct(eb)} | {pct(lb)} | {sum(r['terminated'] for r in la + lb)} | "
-                     f"{sum(r['truncated'] for r in la + lb)} | {np.mean([r['decision_ms_per_step'] for r in la + lb]):.1f} |")
+        for m in (False, True):
+            e, l = pick(v["proceed_only"]["rows"], sc, m), pick(g["rows"], sc, m)
+            if not l:
+                continue
+            d = [r["arrived"] - exk[(sc, r["seed"], m)]["arrived"] for r in l]
+            lines.append(f"| {sc} | {'on' if m else 'off'} | {pct(e)} | {pct(l)} | +{sum(x for x in d if x > 0)} / -{-sum(x for x in d if x < 0)} | "
+                         f"{num(e, 'normalized_reward', '{:.4f}')} | {num(l, 'normalized_reward', '{:.4f}')} | {np.mean([r['commits'] for r in l]):.0f} | "
+                         f"{sum(r['terminated'] for r in l)} | {sum(r['truncated'] for r in l)} | {np.mean([r['decision_ms_per_step'] for r in l]):.0f} |")
     txt = f"""The policy trained on medium, evaluated without retraining on the other three scenarios (10
 held-out seeds each, malfunctions off and on). The executor columns are the PROCEED-only runs from
 step 1.
 
 {chr(10).join(lines)}
 
-Sources: {link('results/main_general.json')}, {link('verify.json')}."""
+Sources: {link('results/main_general.json')}, {link('verify.json')}.
+
+Without malfunctions the learned layer changes nothing that matters on any map: it edits plans
+but never gains or loses a train. With malfunctions it gains a few trains on the larger maps, where
+the executor loses the most, at unchanged normalised reward: the trains it saves arrive late. The
+edit count grows with map size and malfunctions, which is where the window is full most of the time.
+Wall-clock per step here mixes runs at 400 MHz and 2.5 GHz (the evaluation shared the CPU with
+ablation training), so compare it only within a row."""
     inject("TADA_GENERAL", txt)
 
 

@@ -236,11 +236,47 @@ episodes: PROCEED 97.5%, HOLD 2.4%, YIELD_TO 0.1%, REROUTE 0.0%.
 ## Ablations
 
 <!-- TADA_ABLATIONS:START -->
+Every ablation trains for 60 iterations of 8 medium episodes with malfunctions (half the main run's
+budget, so the grid fits), with a 55-minute wall-clock cap. The baseline row is the main run's own
+checkpoint after 60 iterations, so every row has seen the same number of episodes. All rows are
+evaluated like the main run (10 seeds × malfunctions off/on, greedy). "Iterations done" shows where
+the cap cut a run short.
+
+| Run | Change | Arrival, no malf. (%) | Arrival, malf. (%) | Norm. reward, malf. | Terminations | Truncations | Edits per episode | Wall-clock per step (ms) | Iterations done | Training (min) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `main_it60` | main run at 60 iterations: B = 2, M = 8, set (i), all actions | 99.3 ± 0.7 | 98.3 ± 1.1 | 0.983 | 0 | 20 | 4.8 | 11.5 | 60/60 | 35 |
+| `B1` | B = 1 | 99.3 ± 0.7 | 98.7 ± 1.0 | 0.986 | 0 | 20 | 1.0 | 14.8 | 60/60 | 29 |
+
+Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run.
+
+![Ablation results on medium](assets/figures/tada-ablations-light.svg#only-light)
+![Ablation results on medium](assets/figures/tada-ablations-dark.svg#only-dark)
 <!-- TADA_ABLATIONS:END -->
 
 ## Generalisation without retraining
 
 <!-- TADA_GENERAL:START -->
+The policy trained on medium, evaluated without retraining on the other three scenarios (10
+held-out seeds each, malfunctions off and on). The executor columns are the PROCEED-only runs from
+step 1.
+
+| Scenario | Malfunctions | Executor arrival (%) | Learned arrival (%) | Trains gained / lost (paired seeds) | Norm. reward, executor | Norm. reward, learned | Edits per episode | Terminations | Truncations | Wall-clock per step (ms) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| small | off | 100.0 ± 0.0 | 100.0 ± 0.0 | +0 / -0 | 0.9948 | 0.9937 | 2 | 0 | 10 | 5 |
+| small | on | 100.0 ± 0.0 | 100.0 ± 0.0 | +0 / -0 | 0.9906 | 0.9880 | 4 | 0 | 10 | 4 |
+| large | off | 98.2 ± 0.9 | 98.2 ± 0.9 | +0 / -0 | 0.9716 | 0.9707 | 51 | 0 | 10 | 97 |
+| large | on | 93.8 ± 1.6 | 94.0 ± 1.7 | +2 / -1 | 0.9521 | 0.9508 | 140 | 0 | 10 | 46 |
+| xlarge | off | 95.7 ± 1.1 | 95.7 ± 1.1 | +0 / -0 | 0.9532 | 0.9524 | 102 | 0 | 10 | 139 |
+| xlarge | on | 89.1 ± 2.2 | 89.6 ± 2.1 | +9 / -4 | 0.9219 | 0.9219 | 395 | 0 | 10 | 205 |
+
+Sources: [main_general.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/main_general.json), [verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json).
+
+Without malfunctions the learned layer changes nothing that matters on any map: it edits plans
+but never gains or loses a train. With malfunctions it gains a few trains on the larger maps, where
+the executor loses the most, at unchanged normalised reward: the trains it saves arrive late. The
+edit count grows with map size and malfunctions, which is where the window is full most of the time.
+Wall-clock per step here mixes runs at 400 MHz and 2.5 GHz (the evaluation shared the CPU with
+ablation training), so compare it only within a row.
 <!-- TADA_GENERAL:END -->
 
 ## Continuous Flatland
