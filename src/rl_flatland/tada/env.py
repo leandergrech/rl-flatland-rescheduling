@@ -88,6 +88,7 @@ class DispatchEnv:
         self.window: Optional[Window] = None
         self._clr_this_point = 0
         self._at_point = False
+        self._spec = (None, {})  # speculative plans from action_mask, keyed by (step, plan version)
         return self.advance()
 
     def _norm(self) -> float:
@@ -218,12 +219,21 @@ class DispatchEnv:
             return mask, {YIELD_TO: partner_mask}
         now = self.env._elapsed_steps
         rt = self.ex.live_table(now)
+        if self._spec[0] != (now, self.ex.version):
+            self._spec = ((now, self.ex.version), {})
+        cache = self._spec[1]
+
+        def plan(c):
+            if c not in cache:
+                cache[c] = self.ex.plan_clearance(c, rt, now, self.cfg.window.D)
+            return cache[c]
+
         for kind in (HOLD, REROUTE):
-            if mask[kind] and self.ex.plan_clearance(Clearance(h, kind), rt, now, self.cfg.window.D) is None:
+            if mask[kind] and plan(Clearance(h, kind)) is None:
                 mask[kind] = 0
         if mask[YIELD_TO]:
             for j in w.partners_after.get(slot, []):
-                if self.ex.plan_clearance(Clearance(h, YIELD_TO, w.trains[j]), rt, now, self.cfg.window.D) is not None:
+                if plan(Clearance(h, YIELD_TO, w.trains[j])) is not None:
                     partner_mask[j] = 1
             if partner_mask.sum() == 0:
                 mask[YIELD_TO] = 0
@@ -239,8 +249,11 @@ class DispatchEnv:
             return True
         partner = w.trains[partner_slot] if (kind == YIELD_TO and partner_slot is not None) else None
         now = self.env._elapsed_steps
-        rt = self.ex.live_table(now)
-        new = self.ex.plan_clearance(Clearance(h, kind, partner), rt, now, self.cfg.window.D)
+        c = Clearance(h, kind, partner)
+        if self._spec[0] == (now, self.ex.version) and c in self._spec[1]:
+            new = self._spec[1][c]  # planned by action_mask against this very table
+        else:
+            new = self.ex.plan_clearance(c, self.ex.live_table(now), now, self.cfg.window.D)
         if new is None:
             self.stats["rejected"] += 1
             return False
