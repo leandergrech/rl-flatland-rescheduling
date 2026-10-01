@@ -271,6 +271,52 @@ Sources: [continuous_executor.json](https://github.com/leandergrech/rl-flatland-
 ## What did not work
 
 <!-- TADA_FAILED:START -->
+**Main's deadlock detector flags rotations the plan relies on.** `find_deadlocked` treats two trains
+that sit in each other's successor cells as a head-on pair. In a 2×2 block of switches, a ring of
+four trains can be in exactly that position while the plan rotates them one cell each in a single
+step, which flatland allows. With termination on every flag, 12 of the 80 executor-only
+episodes (large, xlarge) would have ended at their first flag, and step 1 could
+not pass. The dispatcher now follows each flagged train's planned next cell and terminates only if
+that chain closes in a swap or reaches a train with no plan; the 38 flagged steps
+are logged instead. Main's detector is unchanged and still right where it was used: at the end of
+an episode.
+
+**Early termination was rewarded.** Flatland charges a train for missing its target only at the
+horizon, so an episode cut short by a termination skipped every penalty. The first episode that hit
+one (a false rotation flag, before the fix above) ended a third of the way in with most trains still
+out and a normalised reward of 1.0, a better score than running it out. Termination now charges every
+unfinished train its horizon penalty, as if it stayed put until T.
+
+**A YIELD_TO bug that only the re-timing caught.** YIELD_TO replans two trains in sequence. The
+first was lifted out of the table, current cell included, and only its new future put back, so the
+second could be routed head-on through the first train's cell. Nothing failed at plan time; the
+next re-timing found a positive cycle in the visiting order and raised. The executor now reserves the
+first train's current cell while the second is planned, and the 200 random-clearance episodes in
+step 1 exercise exactly this path.
+
+**The entropy bonus outweighed the signal.** With coefficient 0.01 on the summed entropy of the
+autoregressive heads, entropy rose from 1.77 to 2.08 in 32 iterations and plan
+edits per episode from 31 to 152, while reward did not improve. That run was
+stopped and kept ([log](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/checkpoints/main_ent01_stopped/train_log.jsonl)); the main run uses 0.001.
+
+**The window is rarely selective, and decisions are everywhere.** Rules (a) to (d) admit almost
+every train that is near another one, so with M = 8 the window is full on 47%, 71%,
+86% and 90% of steps on small to xlarge. A decision point occurs on
+89% of env steps in training (472,882 decisions in 529,521 steps), and almost all
+of them change nothing. PPO has to find the few edits that matter among hundreds of no-ops per
+episode, with the reward arriving at the horizon. TADA's window was narrower because its rule picked
+the aircraft that mattered next; the rail rules here are a safety filter more than a relevance filter.
+
+**Medium had no room to improve.** The brief chose medium as the scenario with the largest
+malfunction gap. On the current paired seeds the executor loses 0.0, 1.3, 4.3 and
+6.6 points of arrival to malfunctions on small, medium, large and xlarge
+([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)), so medium has the smallest non-zero gap, and the executor
+already delivers 98–99% of trains on its held-out seeds. A learned layer can at most recover a
+handful of trains there.
+
+**The machine.** The CPU switched between 400 MHz and about 2.5 GHz throughout (main run: 400
+to 2901 MHz per iteration). The 55-minute cap cut the main run at 115 of
+120 iterations, and wall-clock figures on this page are only comparable within a run.
 <!-- TADA_FAILED:END -->
 
 ## Reproduce

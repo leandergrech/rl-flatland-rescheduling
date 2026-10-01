@@ -41,7 +41,8 @@ class TadaPPOConfig:
     minibatch: int = 512
     # The joint entropy sums up to 4 heads per clearance and B clearances, and per-decision advantages
     # are small (most decisions barely matter), so 0.01 let the bonus outweigh the policy gradient:
-    # entropy rose from 1.55 to 2.2 and plan edits tripled with no reward gain (checkpoints/main_ent01_stopped).
+    # entropy rose from 1.77 to 2.08 (peak 2.24) and plan edits per episode from 31 to 152 in 32
+    # iterations with no reward gain (checkpoints/main_ent01_stopped).
     ent_coef: float = 0.001
     vf_coef: float = 0.5
     max_grad_norm: float = 0.5
