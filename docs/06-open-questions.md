@@ -15,6 +15,36 @@ openings that attach learning to a planner (1 to 4) rank above those that try to
 
 *Effort ranges from the sections below, in rank order. "2–3 months" and "2+ months" are drawn as 9 to 13 weeks.*
 
+## Update: what the TADA dispatcher settled and what it opened
+
+[Page 8](08-tada-dispatcher.md) puts a learned, windowed dispatcher on top of the OR reference
+(TADA's structure, transplanted from air traffic control). Three things changed:
+
+- **Question 5 (shielded RL) is half answered.** A re-timed reservation table under the planner
+  made every offered edit safe: no deadlock or reservation violation in any episode, including
+  200 episodes of random edits ([step 1](08-tada-dispatcher.md#step-1-the-executor-reproduces-main-exactly))
+  and the continuous runs that inject up to 400 trains. The other half, how far learning improves on the
+  plan it is shielded by, came out close to zero after 55 minutes of training on 8 cores. On held-out medium the
+  learned layer ties the executor, and its only gains are a few trains on large and xlarge with
+  malfunctions ([results](08-tada-dispatcher.md#results-on-medium),
+  [generalisation](08-tada-dispatcher.md#generalisation-without-retraining)).
+- **Question 1 (learned repair) is sharpened, not closed.** On the harder training maps, editing
+  plans at all (even near-randomly) delivered more trains than the executor; what PPO learned was
+  to stop those edits costing delay, not which edits to make
+  ([training curves](08-tada-dispatcher.md#results-on-medium)). Credit assignment is the
+  bottleneck: a decision point on most env steps, almost all of them no-ops, and a reward at the
+  horizon. That favours question 1's design (decide only when a train is actually held behind a
+  late one, and score the choice with counterfactual rollouts) over PPO on a dense decision stream.
+- **A new, cheap opening: a relevance window.** The context window's rules are a safety filter, so
+  the window is full on most steps ([what did not work](08-tada-dispatcher.md#what-did-not-work)).
+  TADA worked because its rule picked the aircraft that mattered next. The rail equivalent would admit
+  only trains whose plan just slipped behind a late or broken train, which is question 1's trigger.
+  It needs no new machinery on the branch, about one to two weeks.
+
+The ranking below is unchanged. The branch makes questions 1 and 5 cheaper: the executor already
+replans a train from its current position, which question 1 needs and which this page priced at a
+week.
+
 ## 1. Learned repair: when to break the planned order after a malfunction
 
 **Why open.** Every OR winner keeps a plan's cell-visiting order after disruptions (MCP) and then
