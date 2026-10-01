@@ -283,8 +283,8 @@ an episode.
 
 **Early termination was rewarded.** Flatland charges a train for missing its target only at the
 horizon, so an episode cut short by a termination skipped every penalty. The first episode that hit
-one (a false rotation flag, before the fix above) ended a third of the way in with most trains still
-out and a normalised reward of 1.0, a better score than running it out. Termination now charges every
+one (a false rotation flag, before the fix above) ended early with most trains still out and a
+perfect normalised reward, a better score than running it out. Termination now charges every
 unfinished train its horizon penalty, as if it stayed put until T.
 
 **A YIELD_TO bug that only the re-timing caught.** YIELD_TO replans two trains in sequence. The
