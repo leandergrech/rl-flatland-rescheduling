@@ -274,6 +274,7 @@ def ablations() -> None:
     series_a, series_b = [100 * np.mean([r["arrival_rate"] for r in ea])], [100 * np.mean([r["arrival_rate"] for r in eb])]
     spread = []
     gain_seeds = {}
+    paired_nr = {}
     for n, d in have:
         rows = load(f"results/{n}.json")["rows"]
         a, b = pick(rows, "medium", False), pick(rows, "medium", True)
@@ -282,6 +283,8 @@ def ablations() -> None:
         for r, x in zip(b, diff):
             if x > 0:
                 gain_seeds.setdefault(r["seed"], []).append(n)
+        dn = np.array([r["normalized_reward"] - exk[(r["seed"], True)]["normalized_reward"] for r in b])
+        paired_nr[n] = (sum(diff), sorted({r["seed"] for r, x in zip(b, diff) if x > 0}), dn.mean(), dn.std(ddof=1) / np.sqrt(len(dn)))
         wc = _wall(n)
         lines.append(f"| `{n}` | {d} | {pct(a)} | {pct(b)} | +{sum(x for x in diff if x > 0)} / -{-sum(x for x in diff if x < 0)} | "
                      f"{num(a, 'normalized_reward', '{:.4f}')} | {num(b, 'normalized_reward', '{:.4f}')} | {sum(r['terminated'] for r in a + b)} | "
@@ -294,11 +297,17 @@ def ablations() -> None:
                                                     "Ablations: trains arrived on medium (%)", "arrived (%)", ylim=(90, 101)),
                   "Ablation results on medium")
     n_tr = sum(r["n_agents"] for r in eb)
+    lost = sum(r["n_agents"] - r["arrived"] for r in eb)
     top_seed = max(gain_seeds, key=lambda k: len(gain_seeds[k])) if gain_seeds else None
+    best = max(paired_nr, key=lambda k: (paired_nr[k][0], paired_nr[k][2]))
+    bd = paired_nr[best]
+    best_txt = (f" The closest to a difference is `{best}`: {bd[0]:+d} trains with malfunctions (seeds {', '.join(map(str, bd[1]))}) and a paired "
+                f"normalised reward of {bd[2]:+.4f} ± {bd[3]:.4f} against the executor. Denser reward is what the credit-assignment problem "
+                f"under [What did not work](#what-did-not-work) calls for, but at 10 seeds this is not significant.") if bd[0] > 1 else ""
     top_txt = (f" Almost all of it is one train on one map: seed {top_seed} with malfunctions, where the executor delivers "
                f"{exk[(top_seed, True)]['arrived']} of {exk[(top_seed, True)]['n_agents']}, is recovered by {len(gain_seeds[top_seed])} of the "
                f"{len(have)} trained runs ({', '.join('`' + x + '`' for x in gain_seeds[top_seed])}). That is a real, repeatable repair, "
-               f"and also the whole of the effect.") if top_seed is not None else ""
+               f"and most of the effect.") if top_seed is not None else ""
     txt = f"""Every ablation trains for 60 iterations of 8 medium episodes with malfunctions (half the main run's
 budget, so the grid fits), with a 55-minute wall-clock cap. The baseline row is the main run's own
 checkpoint after 60 iterations, so every row has seen the same number of episodes. All rows are
@@ -314,13 +323,13 @@ Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for e
 
 *The y-axis starts at 90%.*
 
-No setting separates from the executor or from the others. Without malfunctions every run delivers
+No setting separates clearly from the executor or from the others at 10 seeds. Without malfunctions every run delivers
 exactly the executor's trains. With malfunctions the net difference to the executor ranges from
 {min(spread):+d} to {max(spread):+d} trains out of {n_tr}.{top_txt} The ablations
 do change how much the policy edits (from {min(np.mean([r['commits'] for r in load(f'results/{n}.json')['rows']]) for n, _ in have):.1f} to
 {max(np.mean([r['commits'] for r in load(f'results/{n}.json')['rows']]) for n, _ in have):.1f} edits per episode), and none of them
-ever terminated an episode. On this scenario, budget, window size, shaping, features and YIELD_TO do
-not matter, because there is almost nothing left to gain."""
+ever terminated an episode.{best_txt} The executor itself loses only {lost} of {n_tr} trains on the
+10 held-out maps with malfunctions, so medium leaves too little to gain to rank these settings."""
     inject("TADA_ABLATIONS", txt)
 
 
