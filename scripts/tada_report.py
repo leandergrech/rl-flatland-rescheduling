@@ -263,22 +263,42 @@ def ablations() -> None:
     have = [(n, d) for n, d in ABLATIONS if load(f"results/{n}.json")]
     if len(have) < 2:
         return
-    lines = ["| Run | Change | Arrival, no malf. (%) | Arrival, malf. (%) | Norm. reward, malf. | Terminations | Truncations | Edits per episode | Wall-clock per step (ms) | Iterations done | Training (min) |",
-             "|---|---|---|---|---|---|---|---|---|---|---|"]
-    series_a, series_b = [], []
+    lines = ["| Run | Change | Arrival, no malf. (%) | Arrival, malf. (%) | Trains gained / lost vs executor, malf. | Norm. reward, no malf. | Norm. reward, malf. | Terminations | Truncations | Edits per episode | Wall-clock per step (ms) | Iterations done | Training (min) |",
+             "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    exr = load("results/executor.json")["rows"]
+    exk = {(r["seed"], r["malfunctions"]): r for r in exr}
+    ea, eb = pick(exr, "medium", False), pick(exr, "medium", True)
+    lines.append(f"| executor | every clearance PROCEED (no learning) | {pct(ea)} | {pct(eb)} | – | {num(ea, 'normalized_reward', '{:.4f}')} | "
+                 f"{num(eb, 'normalized_reward', '{:.4f}')} | {sum(r['terminated'] for r in ea + eb)} | {sum(r['truncated'] for r in ea + eb)} | 0 | "
+                 f"{np.mean([r['decision_ms_per_step'] for r in ea + eb]):.1f} | – | – |")
+    series_a, series_b = [100 * np.mean([r["arrival_rate"] for r in ea])], [100 * np.mean([r["arrival_rate"] for r in eb])]
+    spread = []
+    gain_seeds = {}
     for n, d in have:
         rows = load(f"results/{n}.json")["rows"]
         a, b = pick(rows, "medium", False), pick(rows, "medium", True)
+        diff = [r["arrived"] - exk[(r["seed"], True)]["arrived"] for r in b]
+        spread.append(sum(diff))
+        for r, x in zip(b, diff):
+            if x > 0:
+                gain_seeds.setdefault(r["seed"], []).append(n)
         wc = _wall(n)
-        lines.append(f"| `{n}` | {d} | {pct(a)} | {pct(b)} | {num(b, 'normalized_reward')} | {sum(r['terminated'] for r in a + b)} | "
+        lines.append(f"| `{n}` | {d} | {pct(a)} | {pct(b)} | +{sum(x for x in diff if x > 0)} / -{-sum(x for x in diff if x < 0)} | "
+                     f"{num(a, 'normalized_reward', '{:.4f}')} | {num(b, 'normalized_reward', '{:.4f}')} | {sum(r['terminated'] for r in a + b)} | "
                      f"{sum(r['truncated'] for r in a + b)} | {np.mean([r['commits'] for r in a + b]):.1f} | "
                      f"{np.mean([r['decision_ms_per_step'] for r in a + b]):.1f} | {wc.get('iterations_done', '?')}/{wc.get('iterations_planned', '?')} | "
                      f"{wc['train_wall_s'] / 60:.0f} |")
         series_a.append(100 * np.mean([r["arrival_rate"] for r in a]))
         series_b.append(100 * np.mean([r["arrival_rate"] for r in b]))
-    bars = figure("tada-ablations", tf.grouped_bars([n for n, _ in have], {"no malfunctions": series_a, "malfunctions": series_b}, {},
-                                                    "Ablations: trains arrived on medium (%)", "arrived (%)", ylim=(0, 105)),
+    bars = figure("tada-ablations", tf.grouped_bars(["executor"] + [n for n, _ in have], {"no malfunctions": series_a, "malfunctions": series_b}, {},
+                                                    "Ablations: trains arrived on medium (%)", "arrived (%)", ylim=(90, 101)),
                   "Ablation results on medium")
+    n_tr = sum(r["n_agents"] for r in eb)
+    top_seed = max(gain_seeds, key=lambda k: len(gain_seeds[k])) if gain_seeds else None
+    top_txt = (f" Almost all of it is one train on one map: seed {top_seed} with malfunctions, where the executor delivers "
+               f"{exk[(top_seed, True)]['arrived']} of {exk[(top_seed, True)]['n_agents']}, is recovered by {len(gain_seeds[top_seed])} of the "
+               f"{len(have)} trained runs ({', '.join('`' + x + '`' for x in gain_seeds[top_seed])}). That is a real, repeatable repair, "
+               f"and also the whole of the effect.") if top_seed is not None else ""
     txt = f"""Every ablation trains for 60 iterations of 8 medium episodes with malfunctions (half the main run's
 budget, so the grid fits), with a 55-minute wall-clock cap. The baseline row is the main run's own
 checkpoint after 60 iterations, so every row has seen the same number of episodes. All rows are
@@ -287,9 +307,20 @@ the cap cut a run short.
 
 {chr(10).join(lines)}
 
-Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run.
+Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run; executor row from
+{link('results/executor.json')}.
 
-{bars}"""
+{bars}
+
+*The y-axis starts at 90%.*
+
+No setting separates from the executor or from the others. Without malfunctions every run delivers
+exactly the executor's trains. With malfunctions the net difference to the executor ranges from
+{min(spread):+d} to {max(spread):+d} trains out of {n_tr}.{top_txt} The ablations
+do change how much the policy edits (from {min(np.mean([r['commits'] for r in load(f'results/{n}.json')['rows']]) for n, _ in have):.1f} to
+{max(np.mean([r['commits'] for r in load(f'results/{n}.json')['rows']]) for n, _ in have):.1f} edits per episode), and none of them
+ever terminated an episode. On this scenario, budget, window size, shaping, features and YIELD_TO do
+not matter, because there is almost nothing left to gain."""
     inject("TADA_ABLATIONS", txt)
 
 

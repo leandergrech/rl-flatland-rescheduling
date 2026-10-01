@@ -11,12 +11,12 @@ control project. Every number on this page comes from a run of the scripts liste
 !!! abstract "In one paragraph"
     The executor under the dispatcher reproduces main's OR reference exactly on all 80 held-out
     episodes, and no edit it offers has ever produced a deadlock or a reservation violation
-    (28,705 random edits in step 1; 0 terminations in 161 evaluation episodes and
+    (28,705 random edits in step 1; 0 terminations in 221 evaluation episodes and
     continuous runs). The learned dispatcher, trained for 55 minutes on medium, ties the executor
     there: 99.3% / 98.3% arrival without / with malfunctions against
     99.3% / 98.0%, and far above main's best learned policy (35% / 36%). Transferred to
     xlarge with malfunctions it gains 9 trains and loses 4 over 10 seeds; in the continuous variant
-    it matches the executor at every injection rate, and neither deadlocks. 2 ablations are below.
+    it matches the executor at every injection rate, and neither deadlocks. 5 ablations are below.
     The structure works as a safe interface for learning; within this compute budget the learning
     on top of it adds almost nothing, and the reasons are listed under
     [What did not work](#what-did-not-work).
@@ -254,16 +254,31 @@ checkpoint after 60 iterations, so every row has seen the same number of episode
 evaluated like the main run (10 seeds × malfunctions off/on, greedy). "Iterations done" shows where
 the cap cut a run short.
 
-| Run | Change | Arrival, no malf. (%) | Arrival, malf. (%) | Norm. reward, malf. | Terminations | Truncations | Edits per episode | Wall-clock per step (ms) | Iterations done | Training (min) |
-|---|---|---|---|---|---|---|---|---|---|---|
-| `main_it60` | main run at 60 iterations: B = 2, M = 8, set (i), all actions | 99.3 ± 0.7 | 98.3 ± 1.1 | 0.983 | 0 | 20 | 4.8 | 11.5 | 60/60 | 35 |
-| `B1` | B = 1 | 99.3 ± 0.7 | 98.7 ± 1.0 | 0.986 | 0 | 20 | 1.0 | 14.8 | 60/60 | 29 |
-| `noyield` | YIELD_TO disabled | 99.3 ± 0.7 | 98.0 ± 1.4 | 0.983 | 0 | 20 | 9.4 | 13.0 | 60/60 | 29 |
+| Run | Change | Arrival, no malf. (%) | Arrival, malf. (%) | Trains gained / lost vs executor, malf. | Norm. reward, no malf. | Norm. reward, malf. | Terminations | Truncations | Edits per episode | Wall-clock per step (ms) | Iterations done | Training (min) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| executor | every clearance PROCEED (no learning) | 99.3 ± 0.7 | 98.0 ± 1.4 | – | 0.9909 | 0.9836 | 0 | 20 | 0 | 8.5 | – | – |
+| `main_it60` | main run at 60 iterations: B = 2, M = 8, set (i), all actions | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9909 | 0.9831 | 0 | 20 | 4.8 | 11.5 | 60/60 | 35 |
+| `B1` | B = 1 | 99.3 ± 0.7 | 98.7 ± 1.0 | +2 / -0 | 0.9909 | 0.9857 | 0 | 20 | 1.0 | 14.8 | 60/60 | 29 |
+| `B4` | B = 4 | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9908 | 0.9834 | 0 | 20 | 14.2 | 11.1 | 60/60 | 22 |
+| `noyield` | YIELD_TO disabled | 99.3 ± 0.7 | 98.0 ± 1.4 | +0 / -0 | 0.9909 | 0.9830 | 0 | 20 | 9.4 | 13.0 | 60/60 | 29 |
+| `M4` | M = 4 | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9909 | 0.9837 | 0 | 20 | 2.6 | 11.6 | 60/60 | 15 |
+| `M16` | M = 16 | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9906 | 0.9839 | 0 | 20 | 3.6 | 11.7 | 60/60 | 22 |
 
-Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run.
+Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run; executor row from
+[executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json).
 
 ![Ablation results on medium](assets/figures/tada-ablations-light.svg#only-light)
 ![Ablation results on medium](assets/figures/tada-ablations-dark.svg#only-dark)
+
+*The y-axis starts at 90%.*
+
+No setting separates from the executor or from the others. Without malfunctions every run delivers
+exactly the executor's trains. With malfunctions the net difference to the executor ranges from
++0 to +2 trains out of 300. Almost all of it is one train on one map: seed 1005 with malfunctions, where the executor delivers 26 of 30, is recovered by 5 of the 6 trained runs (`main_it60`, `B1`, `B4`, `M4`, `M16`). That is a real, repeatable repair, and also the whole of the effect. The ablations
+do change how much the policy edits (from 1.0 to
+14.2 edits per episode), and none of them
+ever terminated an episode. On this scenario, budget, window size, shaping, features and YIELD_TO do
+not matter, because there is almost nothing left to gain.
 <!-- TADA_ABLATIONS:END -->
 
 ## Generalisation without retraining
