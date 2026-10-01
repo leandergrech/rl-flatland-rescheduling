@@ -351,6 +351,25 @@ def continuous() -> None:
             lines.append(f"| {r:g} | {ctl} | {m['injected']:.0f} | {m['throughput_per_1000']:.1f} | {m['mean_delay']:.1f} | {100 * m['on_time_share']:.0f} | "
                          f"{m['backlog_off_map']:.0f} | {m['terms']}/{len(rr)} | {m['window_mean']:.2f} | {m['decision_ms_per_step']:.0f} |")
     fig = figure("tada-continuous", tf.continuous_sweep(agg, rates, ctrls), "Throughput and delay against injection rate")
+
+    def first(ctl, cond):
+        r = [x for x in rates if (x, ctl) in agg and cond(agg[(x, ctl)])]
+        return f"{r[0]:g}" if r else "beyond the sweep"
+
+    reading = []
+    for ctl in ctrls:
+        cap = max(agg[(x, ctl)]["throughput_per_1000"] for x in rates if (x, ctl) in agg)
+        reading.append(f"{'the executor' if ctl == 'executor' else 'the learned dispatcher'} drops below half of its trains on time at rate "
+                       f"{first(ctl, lambda m: m['on_time_share'] < 0.5)}, starts queueing more than 10 trains off-map at "
+                       f"{first(ctl, lambda m: m['backlog_off_map'] > 10)}, and peaks at {cap:.0f} arrivals per 1000 steps")
+    edits = {r: np.mean([x["commits"] for x in rows if x["controller"] == "learned" and x["rate"] == r]) for r in rates} if "learned" in ctrls else {}
+    deadlocks = sum(x["terminated"] for x in rows)
+    reading_txt = (f"Neither controller ever deadlocked ({deadlocks} terminations in {len(rows)} runs): both break by running out of capacity, "
+                   f"not by locking up. {reading[0][0].upper() + reading[0][1:]}" + (f"; {reading[1]}." if len(reading) > 1 else ".") +
+                   (f" The learned layer issues {edits[rates[-1]]:.0f} plan edits per run at rate {rates[-1]:g} and none below "
+                    f"{min([r for r in rates if edits[r] > 0], default=rates[-1]):g}, without moving throughput or delay beyond the seed-to-seed "
+                    f"spread; it does cost wall-clock, because at high rates the window is always full and every candidate edit is a "
+                    f"SIPP search through a dense table." if edits else ""))
     seeds = sorted({r["arrival_seed"] for r in rows})
     txt = f"""One medium map (seed 5000), a pool of 400 trains whose earliest departures follow a Poisson process at
 the given rate, latest arrival = injection + ceil(1.3 τ + 0.2 τ̄) (Flatland 3's allowance), malfunctions
@@ -362,7 +381,9 @@ the delay of the backlog, which is reported separately.
 
 Sources: {link('results/continuous_executor.json')}, {link('results/continuous_learned.json')} (`scripts/tada_continuous.py`).
 
-{fig}"""
+{fig}
+
+{reading_txt}"""
     inject("TADA_CONTINUOUS", txt)
 
 

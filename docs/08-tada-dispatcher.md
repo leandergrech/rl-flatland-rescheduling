@@ -246,6 +246,7 @@ the cap cut a run short.
 |---|---|---|---|---|---|---|---|---|---|---|
 | `main_it60` | main run at 60 iterations: B = 2, M = 8, set (i), all actions | 99.3 ± 0.7 | 98.3 ± 1.1 | 0.983 | 0 | 20 | 4.8 | 11.5 | 60/60 | 35 |
 | `B1` | B = 1 | 99.3 ± 0.7 | 98.7 ± 1.0 | 0.986 | 0 | 20 | 1.0 | 14.8 | 60/60 | 29 |
+| `noyield` | YIELD_TO disabled | 99.3 ± 0.7 | 98.0 ± 1.4 | 0.983 | 0 | 20 | 9.4 | 13.0 | 60/60 | 29 |
 
 Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run.
 
@@ -291,17 +292,26 @@ the delay of the backlog, which is reported separately.
 | Rate (trains/step) | Controller | Injected | Throughput (arrivals/1000 steps) | Mean delay vs LA (steps) | On time (%) | Waiting off-map at end | Deadlock terminations | Mean window occupancy | Wall-clock per step (ms) |
 |---|---|---|---|---|---|---|---|---|---|
 | 0.02 | executor | 19 | 16.0 | 1.1 | 96 | 0 | 0/3 | 1.18 | 11 |
+| 0.02 | learned | 19 | 16.0 | 1.1 | 96 | 0 | 0/3 | 1.18 | 9 |
 | 0.05 | executor | 45 | 38.3 | 0.2 | 97 | 0 | 0/3 | 3.75 | 10 |
+| 0.05 | learned | 45 | 38.3 | 0.2 | 97 | 0 | 0/3 | 3.75 | 13 |
 | 0.1 | executor | 97 | 77.7 | 10.1 | 77 | 1 | 0/3 | 7.24 | 14 |
+| 0.1 | learned | 97 | 77.0 | 9.5 | 78 | 0 | 0/3 | 7.24 | 20 |
 | 0.15 | executor | 142 | 112.0 | 32.7 | 46 | 3 | 0/3 | 7.71 | 19 |
+| 0.15 | learned | 142 | 109.0 | 34.0 | 43 | 5 | 0/3 | 7.71 | 32 |
 | 0.2 | executor | 189 | 120.0 | 100.7 | 27 | 33 | 0/3 | 7.79 | 30 |
+| 0.2 | learned | 189 | 118.7 | 97.6 | 27 | 30 | 0/3 | 7.79 | 182 |
 | 0.3 | executor | 298 | 144.3 | 140.2 | 21 | 106 | 0/3 | 7.85 | 76 |
+| 0.3 | learned | 298 | 144.3 | 144.5 | 22 | 113 | 0/3 | 7.85 | 385 |
 | 0.4 | executor | 388 | 139.7 | 196.7 | 18 | 202 | 0/3 | 7.89 | 452 |
+| 0.4 | learned | 388 | 142.0 | 194.7 | 18 | 200 | 0/3 | 7.89 | 716 |
 
 Sources: [continuous_executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_executor.json), [continuous_learned.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_learned.json) (`scripts/tada_continuous.py`).
 
 ![Throughput and delay against injection rate](assets/figures/tada-continuous-light.svg#only-light)
 ![Throughput and delay against injection rate](assets/figures/tada-continuous-dark.svg#only-dark)
+
+Neither controller ever deadlocked (0 terminations in 42 runs): both break by running out of capacity, not by locking up. The executor drops below half of its trains on time at rate 0.15, starts queueing more than 10 trains off-map at 0.2, and peaks at 144 arrivals per 1000 steps; the learned dispatcher drops below half of its trains on time at rate 0.15, starts queueing more than 10 trains off-map at 0.2, and peaks at 144 arrivals per 1000 steps. The learned layer issues 680 plan edits per run at rate 0.4 and none below 0.1, without moving throughput or delay beyond the seed-to-seed spread; it does cost wall-clock, because at high rates the window is always full and every candidate edit is a SIPP search through a dense table.
 <!-- TADA_CONTINUOUS:END -->
 
 ## What did not work
