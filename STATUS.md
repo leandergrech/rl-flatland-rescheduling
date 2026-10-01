@@ -21,10 +21,11 @@ log:
 
 ## TADA dispatcher
 branch: feat/tada-dispatcher
-step: 0
+step: 1
 state: running
-updated: 2026-09-30T22:56:40Z
+updated: 2026-10-01T00:00:20Z
 blockers: none
-next: step 1: reservation-table executor (subclass of main's planner) + tests: PROCEED-only reproduces main on 80 episodes; 200 random-clearance episodes without deadlock
+next: step 1: finish PROCEED-only check on large/xlarge (48 mismatches in the first full run, cause under investigation), then 200 random-clearance episodes
 log:
 - 2026-09-30T22:56:40Z step 0: branch feat/tada-dispatcher created. Brief correction: on the current paired malfunction split the OR reference is 100/98.0/93.8/89.1% (not 96.3/93.2/89.6, which were the old unpaired seeds 2000-2009); malfunction gap is 0/1.3/4.4/6.6 points small/medium/large/xlarge, so medium has the smallest non-zero gap. Training stays on medium as specified (CPU ceiling); large/xlarge covered by step 5. Design note: with ordered execution a malfunction never makes a plan order-infeasible, only late, so replanning is triggered by clearances only; this is what makes step 1's exact reproduction possible.
+- 2026-10-01T00:00:20Z step 1 in progress: executor, window, env, policy, PPO committed. PROCEED-only matches main's OR exactly on all 20 small and 20 medium episodes and large seeds 1000-1002; first full run reported 48 field mismatches, all on large/xlarge (re-running with per-episode output). Fixed: YIELD_TO planned the second train against a table missing the first train's current cell (caught by retime as an order cycle); find_deadlocked flags plan-scheduled 2x2 rotations (now exempt, counted as rotation_flags); terminations now charge the horizon penalty to unfinished trains; NaN bootstrap on empty windows (PyTorch MHA fast path). CPU was pinned at 400 MHz (thermal) from ~01:00 to ~01:55 UTC+2; now ~2.2 GHz.
