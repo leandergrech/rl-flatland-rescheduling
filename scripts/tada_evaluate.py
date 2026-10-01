@@ -4,6 +4,7 @@
     python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general
     python scripts/tada_evaluate.py --name executor                      # every clearance PROCEED (no policy)
     python scripts/tada_evaluate.py --name main --model model_it60.pt --out main_it60   # an intermediate checkpoint
+    python scripts/tada_evaluate.py --name executor --train-seeds 64 --out executor_train_seeds  # reference for training curves
 """
 
 from __future__ import annotations
@@ -79,9 +80,16 @@ def main() -> None:
     p.add_argument("--n-seeds", type=int, default=10)
     p.add_argument("--out", default=None)
     p.add_argument("--model", default="model.pt", help="checkpoint file inside the run directory")
+    p.add_argument("--train-seeds", type=int, default=0,
+                   help="instead of the held-out seeds, the first N seeds the training loop draws (medium, malfunctions on)")
     a = p.parse_args()
     ckpt = ROOT / "data" / "tada" / "checkpoints" / a.name
     jobs = [(str(ckpt), sc, s, m, a.model) for sc in a.scenarios for m in (False, True) for s in TEST_SEEDS[: a.n_seeds]]
+    if a.train_seeds:
+        import numpy as np
+
+        rng = np.random.default_rng(0)  # TadaPPOConfig.seed: the same sequence ppo.train draws
+        jobs = [(str(ckpt), "medium", int(rng.integers(0, 1000)), True, a.model) for _ in range(a.train_seeds)]
     t0 = time.perf_counter()
     with ProcessPoolExecutor(max_workers=a.workers) as ex:
         rows = list(ex.map(_job, jobs))
@@ -93,6 +101,8 @@ def main() -> None:
     for sc in a.scenarios:
         for m in (False, True):
             rr = [r for r in rows if r["scenario"] == sc and r["malfunctions"] == m]
+            if not rr:
+                continue
             print(f"{a.name} {sc} malf={m}: arrival {100 * np.mean([r['arrival_rate'] for r in rr]):.1f}% "
                   f"nr {np.mean([r['normalized_reward'] for r in rr]):.4f} terminated {sum(r['terminated'] for r in rr)} "
                   f"truncated {sum(r['truncated'] for r in rr)} commits/ep {np.mean([r['commits'] for r in rr]):.1f} "
