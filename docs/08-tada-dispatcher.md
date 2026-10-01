@@ -220,6 +220,10 @@ the env step.
 Sources: [executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json), [main.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/main.json) (`scripts/tada_evaluate.py`),
 main's PPO from [ppo.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/ppo.json).
 
+Main's PPO baseline is not a like-for-like comparison: it drives every train directly with no planner
+underneath, while the dispatcher inherits the planner's plan and can only edit it. The gap between
+them is the planner's, not the learned layer's.
+
 Paired by seed against the executor: without malfunctions, 0 seeds gain a train and 0 lose one (net +0 of 300), normalised reward -0.0007 ± 0.0005; with malfunctions, 2 seeds gain a train and 1 lose one (net +1 of 300), normalised reward +0.0009 ± 0.0014. On held-out medium the learned layer
 is indistinguishable from the plan it sits on.
 

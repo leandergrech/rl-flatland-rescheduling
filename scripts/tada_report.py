@@ -235,6 +235,10 @@ the env step.
 Sources: {link('results/executor.json')}, {link('results/main.json')} (`scripts/tada_evaluate.py`),
 main's PPO from [ppo.json]({GH}data/results/ppo.json).
 
+Main's PPO baseline is not a like-for-like comparison: it drives every train directly with no planner
+underneath, while the dispatcher inherits the planner's plan and can only edit it. The gap between
+them is the planner's, not the learned layer's.
+
 Paired by seed against the executor: {paired[0]}; {paired[1]}. On held-out medium the learned layer
 is indistinguishable from the plan it sits on.
 {train_txt}
