@@ -8,6 +8,18 @@ control project. Every number on this page comes from a run of the scripts liste
 [Reproduce](#reproduce), and the data files are linked next to each table.
 
 <!-- TADA_SUMMARY:START -->
+!!! abstract "In one paragraph"
+    The executor under the dispatcher reproduces main's OR reference exactly on all 80 held-out
+    episodes, and no edit it offers has ever produced a deadlock or a reservation violation
+    (28,705 random edits in step 1; 0 terminations in 161 evaluation episodes and
+    continuous runs). The learned dispatcher, trained for 55 minutes on medium, ties the executor
+    there: 99.3% / 98.3% arrival without / with malfunctions against
+    99.3% / 98.0%, and far above main's best learned policy (35% / 36%). Transferred to
+    xlarge with malfunctions it gains 9 trains and loses 4 over 10 seeds; in the continuous variant
+    it matches the executor at every injection rate, and neither deadlocks. 2 ablations are below.
+    The structure works as a safe interface for learning; within this compute budget the learning
+    on top of it adds almost nothing, and the reasons are listed under
+    [What did not work](#what-did-not-work).
 <!-- TADA_SUMMARY:END -->
 
 ## The analogy

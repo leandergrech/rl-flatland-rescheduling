@@ -387,6 +387,38 @@ Sources: {link('results/continuous_executor.json')}, {link('results/continuous_l
     inject("TADA_CONTINUOUS", txt)
 
 
+# ---------------------------------------------------------------------------------------------- summary
+def summary() -> None:
+    ex, le, g, v = load("results/executor.json"), load("results/main.json"), load("results/main_general.json"), load("verify.json")
+    ce, cl = load("results/continuous_executor.json"), load("results/continuous_learned.json")
+    if not (ex and le and g and v and ce and cl):
+        return
+    e_m, l_m = pick(ex["rows"], "medium", True), pick(le["rows"], "medium", True)
+    e_o, l_o = pick(ex["rows"], "medium", False), pick(le["rows"], "medium", False)
+    exk = {(r["scenario"], r["seed"], r["malfunctions"]): r for r in v["proceed_only"]["rows"]}
+    xl = pick(g["rows"], "xlarge", True)
+    d_xl = [r["arrived"] - exk[("xlarge", r["seed"], True)]["arrived"] for r in xl]
+    n_abl = sum(1 for n, _ in ABLATIONS if n != "main_it60" and load(f"results/{n}.json"))
+    ppo = _ppo_baseline()
+    ppo_o = 100 * np.mean([r["arrival_rate"] for r in ppo if r["split"] == "test"])
+    ppo_m = 100 * np.mean([r["arrival_rate"] for r in ppo if r["split"] == "test_malfunction"])
+    all_eval = [r for f in ["results/main.json", "results/main_general.json"] + [f"results/{n}.json" for n, _ in ABLATIONS] for r in (load(f) or {"rows": []})["rows"]]
+    terms = sum(r.get("terminated", 0) for r in all_eval) + sum(r["terminated"] for r in cl["rows"])
+    txt = f"""!!! abstract "In one paragraph"
+    The executor under the dispatcher reproduces main's OR reference exactly on all 80 held-out
+    episodes, and no edit it offers has ever produced a deadlock or a reservation violation
+    ({v['random_clearances']['commits']:,} random edits in step 1; {terms} terminations in {len(all_eval) + len(cl['rows'])} evaluation episodes and
+    continuous runs). The learned dispatcher, trained for 55 minutes on medium, ties the executor
+    there: {100 * np.mean([r['arrival_rate'] for r in l_o]):.1f}% / {100 * np.mean([r['arrival_rate'] for r in l_m]):.1f}% arrival without / with malfunctions against
+    {100 * np.mean([r['arrival_rate'] for r in e_o]):.1f}% / {100 * np.mean([r['arrival_rate'] for r in e_m]):.1f}%, and far above main's best learned policy ({ppo_o:.0f}% / {ppo_m:.0f}%). Transferred to
+    xlarge with malfunctions it gains {sum(x for x in d_xl if x > 0)} trains and loses {-sum(x for x in d_xl if x < 0)} over 10 seeds; in the continuous variant
+    it matches the executor at every injection rate, and neither deadlocks. {n_abl} ablations are below.
+    The structure works as a safe interface for learning; within this compute budget the learning
+    on top of it adds almost nothing, and the reasons are listed under
+    [What did not work](#what-did-not-work)."""
+    inject("TADA_SUMMARY", txt)
+
+
 # ---------------------------------------------------------------------------------------------- candid
 def failed() -> None:
     v, occ = load("verify.json"), load("occupancy_proceed_only.json")
@@ -454,6 +486,6 @@ to {max(mhz):.0f} MHz per iteration). The 55-minute cap cut the main run at {wc[
 
 
 if __name__ == "__main__":
-    for f in (verify, occupancy, medium, ablations, general, continuous, failed):
+    for f in (verify, occupancy, medium, ablations, general, continuous, failed, summary):
         f()
         print("done", f.__name__)
