@@ -17,7 +17,7 @@ declare -A ARGS=(
   [tree]="--features slack+tree"
 )
 RUNS=("$@")
-[ ${#RUNS[@]} -eq 0 ] && RUNS=(B1 B4 noyield M4 M16 shaping tree)
+[ ${#RUNS[@]} -eq 0 ] && RUNS=(B1 noyield B4 M4 M16 shaping tree)
 for n in "${RUNS[@]}"; do
   $PY scripts/tada_train.py --name "$n" --iterations 60 ${ARGS[$n]}
   $PY scripts/tada_evaluate.py --name "$n"
