@@ -4,7 +4,7 @@
     python scripts/tada_evaluate.py --name main --scenarios small large xlarge --out main_general
     python scripts/tada_evaluate.py --name executor                      # every clearance PROCEED (no policy)
     python scripts/tada_evaluate.py --name main --model model_it60.pt --out main_it60   # an intermediate checkpoint
-    python scripts/tada_evaluate.py --name executor --train-seeds 64 --out executor_train_seeds  # reference for training curves
+    python scripts/tada_evaluate.py --name executor --train-seeds 960 --out executor_train_seeds  # reference for training curves
 """
 
 from __future__ import annotations
@@ -89,7 +89,8 @@ def main() -> None:
         import numpy as np
 
         rng = np.random.default_rng(0)  # TadaPPOConfig.seed: the same sequence ppo.train draws
-        jobs = [(str(ckpt), "medium", int(rng.integers(0, 1000)), True, a.model) for _ in range(a.train_seeds)]
+        seeds = [int(rng.integers(0, 1000)) for _ in range(a.train_seeds)]
+        jobs = [(str(ckpt), "medium", s, True, a.model) for s in dict.fromkeys(seeds)]  # each map once
     t0 = time.perf_counter()
     with ProcessPoolExecutor(max_workers=a.workers) as ex:
         rows = list(ex.map(_job, jobs))

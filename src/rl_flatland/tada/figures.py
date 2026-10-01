@@ -54,29 +54,53 @@ def occupancy(M: int = 8) -> Callable[[str], plt.Figure]:
     return build
 
 
-def training_curve(names: List[str], labels: Dict[str, str]) -> Callable[[str], plt.Figure]:
-    """Arrival rate and normalised reward of training episodes against wall-clock, smoothed over 5 iterations."""
+def train_seeds(n_iter: int, per_iter: int = 8, seed: int = 0) -> List[List[int]]:
+    """The map seeds ppo.train draws, per iteration (same generator and order)."""
+    rng = np.random.default_rng(seed)
+    return [[int(rng.integers(0, 1000)) for _ in range(per_iter)] for _ in range(n_iter)]
+
+
+def _smooth(x, y, k=5):
+    k = min(k, len(y))
+    return x[k - 1 :], np.convolve(y, np.ones(k) / k, mode="valid")
+
+
+def training_curve(names: List[str], labels: Dict[str, str], ref_by_seed: Dict[int, dict] = None, ref_label: str = "") -> Callable[[str], plt.Figure]:
+    """Training episodes per PPO iteration (8 episodes each), smoothed over 5 iterations: arrival rate,
+    normalised reward and plan edits per episode. ``ref_by_seed`` (seed -> executor-only result) draws
+    the executor on exactly the maps of each iteration."""
+    keys = [("arrival_rate", 100, "Trains arrived (%)"), ("normalized_reward", 1, "Normalised reward"), ("edits", 1, "Plan edits per episode")]
 
     def build(mode):
-        fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.2))
+        t = th.TOKENS[mode]
+        fig, axes = plt.subplots(1, 3, figsize=(11.5, 3.2))
         handles = []
+        n_max = 0
         for i, name in enumerate(names):
             path = DATA / "checkpoints" / name / "train_log.jsonl"
             if not path.exists():
                 continue
             rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
-            x = np.array([r["wall_s"] for r in rows]) / 60
+            n_max = max(n_max, len(rows))
+            for r in rows:
+                r["edits"] = r["commits"] / 8.0
+            x = np.array([r["iter"] for r in rows]) + 1
             c = th.slot(i, mode)
-            for ax, key, scale in zip(axes, ["arrival_rate", "normalized_reward"], [100, 1]):
-                y = np.array([r[key] for r in rows]) * scale
-                k = min(5, len(y))
-                ax.plot(x[k - 1 :], np.convolve(y, np.ones(k) / k, mode="valid"), color=c, lw=2)
+            for ax, (key, scale, _) in zip(axes, keys):
+                ax.plot(*_smooth(x, np.array([r[key] for r in rows]) * scale), color=c, lw=2)
             handles.append(Line2D([], [], color=c, lw=2, label=labels.get(name, name)))
-        axes[0].set_title("Trains arrived in training episodes (%)")
-        axes[1].set_title("Normalised reward of training episodes")
-        for ax in axes:
-            ax.set_xlabel("training wall-clock (min)")
-        _legend_top(fig, handles, ncol=min(4, max(1, len(handles))))
+        if ref_by_seed:
+            its = [s for s in train_seeds(n_max) if all(x in ref_by_seed for x in s)]
+            x = np.arange(1, len(its) + 1)
+            for ax, (key, scale, _) in zip(axes[:2], keys[:2]):
+                y = np.array([np.mean([ref_by_seed[s][key] for s in seeds]) for seeds in its]) * scale
+                ax.plot(*_smooth(x, y), color=t["ink2"], lw=1.2, ls=(0, (3, 2)))
+            axes[2].axhline(0, color=t["ink2"], lw=1.2, ls=(0, (3, 2)))
+            handles.append(Line2D([], [], color=t["ink2"], lw=1.2, ls=(0, (3, 2)), label=ref_label))
+        for ax, (key, scale, title) in zip(axes, keys):
+            ax.set_title(title)
+            ax.set_xlabel("PPO iteration (8 episodes each)")
+        _legend_top(fig, handles, ncol=min(3, max(1, len(handles))))
         fig.tight_layout()
         return fig
 

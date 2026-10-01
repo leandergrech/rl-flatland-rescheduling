@@ -180,7 +180,12 @@ def medium() -> None:
          "Learned dispatcher": [100 * np.mean([r["arrival_rate"] for r in pick(le["rows"], "medium", m)]) for m in (False, True)],
          "main's PPO": [100 * np.mean([r["arrival_rate"] for r in pick(ppo_rows, "medium", m)]) for m in (False, True)]},
         {}, "Trains arrived on medium, 10 held-out seeds (%)", "arrived (%)", ylim=(0, 105)), "Arrival on medium by controller")
-    curve = figure("tada-training", tf.training_curve(["main"], {"main": "Learned dispatcher (B = 2, M = 8)"}), "Training curve of the dispatcher")
+    ref = load("results/executor_train_seeds.json")
+    by_seed = {r["seed"]: r for r in ref["rows"]} if ref else None
+    curve = figure("tada-training", tf.training_curve(
+        ["main", "main_ent01_stopped"],
+        {"main": "main run (entropy coef. 0.001)", "main_ent01_stopped": "first run, entropy coef. 0.01 (stopped)"},
+        by_seed, "executor alone on the same maps"), "Training curves of the dispatcher")
     clr = {}
     for r in le["rows"]:
         for k, v in r["clearances"].items():
