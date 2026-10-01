@@ -24,7 +24,7 @@ def _legend_top(fig, handles, ncol=4, y=1.02):
 
 
 def occupancy(M: int = 8) -> Callable[[str], plt.Figure]:
-    """Window occupancy over the episode under PROCEED-only, per scenario (median and 10-90% band)."""
+    """Window occupancy over malfunction-free PROCEED-only episodes, per scenario (median and 10-90% band)."""
     occ: Dict[str, List[int]] = json.loads((DATA / "occupancy_proceed_only.json").read_text())
     grid = np.linspace(0, 1, 101)
 
@@ -33,7 +33,7 @@ def occupancy(M: int = 8) -> Callable[[str], plt.Figure]:
         fig, ax = plt.subplots(figsize=(8.6, 3.2))
         handles = []
         for i, sc in enumerate(th.SCENARIO_ORDER):
-            series = [np.asarray(v, float) for k, v in occ.items() if k.split("|")[0] == sc and len(v) > 1]
+            series = [np.asarray(v, float) for k, v in occ.items() if k.split("|")[:2] == [sc, "0"] and len(v) > 1]
             if not series:
                 continue
             ys = np.stack([np.interp(grid, np.linspace(0, 1, len(s)), s) for s in series])
@@ -46,7 +46,7 @@ def occupancy(M: int = 8) -> Callable[[str], plt.Figure]:
         ax.set_xlim(0, 100)
         ax.set_ylim(0, M + 1)
         ax.set_xlabel("episode progress (% of steps taken)")
-        ax.set_title("Trains in the context window, executor only (median, 10–90% band over 20 episodes)")
+        ax.set_title("Trains in the context window, executor only, no malfunctions (median, 10–90% band, 10 episodes)")
         _legend_top(fig, handles, ncol=4)
         fig.tight_layout()
         return fig

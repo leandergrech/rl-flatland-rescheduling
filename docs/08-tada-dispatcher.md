@@ -138,11 +138,56 @@ until T, so ending an episode early can never score better than running it out.
 ## Step 1: the executor reproduces main exactly
 
 <!-- TADA_VERIFY:START -->
+With every clearance forced to PROCEED, the dispatch loop (window, masks, re-timing, termination
+checks) must leave main's OR reference untouched. Over all 80 held-out episodes it matches the stored
+results ([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)) in arrived trains, deadlocked trains, episode length
+and normalised reward to 1e-9: **80 of
+80 episodes identical, 0 mismatching fields** ([verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json),
+commit `5c667ed`).
+
+| Scenario | Malfunctions | Episodes | Arrived (executor) | Arrived (main's OR) | Identical (arrived, deadlocked, steps, normalised reward) | Terminated | Rotation flags |
+|---|---|---|---|---|---|---|---|
+| small | off | 10 | 100 | 100 | 10/10 | 0 | 0 |
+| small | on | 10 | 100 | 100 | 10/10 | 0 | 0 |
+| medium | off | 10 | 298 | 298 | 10/10 | 0 | 0 |
+| medium | on | 10 | 294 | 294 | 10/10 | 0 | 0 |
+| large | off | 10 | 589 | 589 | 10/10 | 0 | 3 |
+| large | on | 10 | 563 | 563 | 10/10 | 0 | 2 |
+| xlarge | off | 10 | 957 | 957 | 10/10 | 0 | 17 |
+| xlarge | on | 10 | 891 | 891 | 10/10 | 0 | 16 |
+
+"Rotation flags" counts steps at which main's `find_deadlocked` flagged a ring of trains that the
+plan rotates through a block of switches in one step (see [What did not work](#what-did-not-work)).
+
+The second check drives the dispatcher with a random policy: at every decision point it picks
+random choosable trains and, half the time, a random legal clearance (up to B = 2), on
+200 episodes (small and medium, half with malfunctions, seeds 3000 to 3199).
+That committed **28,705 plan edits** (144 per episode) with
+**0 episodes** showing a deadlock, a reservation violation or a train leaving its
+plan. Arrival under random edits was 98.7%
+on small and 98.5% on medium: random edits are safe
+but not free.
 <!-- TADA_VERIFY:END -->
 
 ## Step 2: window occupancy
 
 <!-- TADA_OCCUPANCY:START -->
+![Window occupancy over the episode under the executor alone](assets/figures/tada-occupancy-light.svg#only-light)
+![Window occupancy over the episode under the executor alone](assets/figures/tada-occupancy-dark.svg#only-dark)
+
+*Executor alone (every clearance PROCEED), the 10 malfunction-free held-out episodes per scenario,
+one sample per env step. Source: [occupancy_proceed_only.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/occupancy_proceed_only.json), written by `scripts/tada_verify.py`.*
+
+| Scenario | Mean trains in window | Steps with the window full (M = 8) | Steps with an empty window |
+|---|---|---|---|
+| small | 5.92 | 47% | 7% |
+| medium | 6.62 | 71% | 5% |
+| large | 7.27 | 86% | 1% |
+| xlarge | 7.48 | 90% | 2% |
+
+The window never exceeds M by construction, and every train in it has a legal action (both are
+asserted in `tests/test_tada.py`). On medium and larger maps the window is full for much of the
+episode, so ranking by slack is doing real selection there.
 <!-- TADA_OCCUPANCY:END -->
 
 ## Results on medium

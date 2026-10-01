@@ -128,12 +128,12 @@ def occupancy() -> None:
     md = figure("tada-occupancy", tf.occupancy(8), "Window occupancy over the episode under the executor alone")
     rows = ["| Scenario | Mean trains in window | Steps with the window full (M = 8) | Steps with an empty window |", "|---|---|---|---|"]
     for sc in th.SCENARIO_ORDER:
-        v = np.concatenate([np.asarray(x) for k, x in occ.items() if k.split("|")[0] == sc])
+        v = np.concatenate([np.asarray(x) for k, x in occ.items() if k.split("|")[:2] == [sc, "0"]])
         rows.append(f"| {sc} | {v.mean():.2f} | {100 * np.mean(v >= 8):.0f}% | {100 * np.mean(v == 0):.0f}% |")
     txt = f"""{md}
 
-*Executor alone (every clearance PROCEED), all 20 held-out episodes per scenario, malfunctions off
-and on. Source: {link('occupancy_proceed_only.json')}, written by `scripts/tada_verify.py`.*
+*Executor alone (every clearance PROCEED), the 10 malfunction-free held-out episodes per scenario,
+one sample per env step. Source: {link('occupancy_proceed_only.json')}, written by `scripts/tada_verify.py`.*
 
 {chr(10).join(rows)}
 
