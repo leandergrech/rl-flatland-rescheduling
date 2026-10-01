@@ -47,6 +47,7 @@ class TadaPPOConfig:
     time_budget_s: float = 1800.0
     workers: int = 8
     seed: int = 0
+    save_every: int = 20  # also keep model_it{n}.pt, so shorter ablations can be compared at equal samples
 
 
 def cpu_mhz() -> float:
@@ -191,6 +192,8 @@ def train(cfg: TadaPPOConfig, out_dir: str | Path, log_name: str = "tada") -> Di
                        terminations=int(sum(s["terminated"] for s in summ)), commits=int(sum(s["commits"] for s in summ)),
                        rejected=int(sum(s["rejected"] for s in summ)), clearances=dict(clr), cpu_mhz=cpu_mhz(), **upd)
             done_iters += 1
+            if cfg.save_every and done_iters % cfg.save_every == 0:
+                torch.save(net.state_dict(), out_dir / f"model_it{done_iters}.pt")
             log.write(json.dumps(row) + "\n")
             log.flush()
             print(f"[{log_name}] it={it} t={row['wall_s']}s arr={row['arrival_rate']:.3f} nr={row['normalized_reward']:.4f} "

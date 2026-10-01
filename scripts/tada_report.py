@@ -97,12 +97,13 @@ def verify() -> None:
                          f"{sum(ref[(sc, m, r['seed'])]['arrived'] for r in rr)} | {same}/{len(rr)} | {sum(r['terminated'] for r in rr)} | "
                          f"{sum(r.get('rotation_flags', 0) for r in rr)} |")
     rrows = rc["rows"]
+    n_same = po['episodes'] - len({(m[0], m[1], m[2]) for m in po['mismatches']})
     txt = f"""With every clearance forced to PROCEED, the dispatch loop (window, masks, re-timing, termination
-checks) must leave main's OR reference untouched. Over all 80 held-out episodes it matches the stored
-results ([or.json]({GH}data/results/or.json)) in arrived trains, deadlocked trains, episode length
-and normalised reward to 1e-9: **{po['episodes'] - len({(m[0], m[1], m[2]) for m in po['mismatches']})} of
-{po['episodes']} episodes identical, {len(po['mismatches'])} mismatching fields** ({link('verify.json')},
-commit `{v.get('commit', '?')[:7]}`).
+checks) must leave main's OR reference untouched. Over all 80 held-out episodes it is compared with
+the stored results ([or.json]({GH}data/results/or.json)) on arrived trains, deadlocked trains,
+episode length and normalised reward (to 1e-9).
+**{n_same} of {po['episodes']} episodes are identical, with {len(po['mismatches'])} mismatching fields**
+({link('verify.json')}, commit `{v.get('commit', '?')[:7]}`).
 
 {chr(10).join(lines)}
 
@@ -112,11 +113,12 @@ plan rotates through a block of switches in one step (see [What did not work](#w
 The second check drives the dispatcher with a random policy: at every decision point it picks
 random choosable trains and, half the time, a random legal clearance (up to B = 2), on
 {rc['episodes']} episodes (small and medium, half with malfunctions, seeds 3000 to {3000 + rc['episodes'] - 1}).
-That committed **{rc['commits']:,} plan edits** ({np.mean([r['commits'] for r in rrows]):.0f} per episode) with
-**{rc['bad_episodes']} episodes** showing a deadlock, a reservation violation or a train leaving its
-plan. Arrival under random edits was {100 * np.mean([r['arrival_rate'] for r in rrows if r['scenario'] == 'small']):.1f}%
-on small and {100 * np.mean([r['arrival_rate'] for r in rrows if r['scenario'] == 'medium']):.1f}% on medium: random edits are safe
-but not free."""
+That committed **{rc['commits']:,} plan edits** ({np.mean([r['commits'] for r in rrows]):.0f} per episode).
+**{rc['bad_episodes']} episodes** showed a deadlock, a reservation violation or a train leaving its plan.
+Arrival under random edits was {100 * np.mean([r['arrival_rate'] for r in rrows if r['scenario'] == 'small']):.1f}% on small and
+{100 * np.mean([r['arrival_rate'] for r in rrows if r['scenario'] == 'medium']):.1f}% on medium, against
+{100 * np.mean([r['arrival_rate'] for r in po['rows'] if r['scenario'] == 'small']):.1f}% and {100 * np.mean([r['arrival_rate'] for r in po['rows'] if r['scenario'] == 'medium']):.1f}% for the
+executor alone on the held-out seeds (different seeds, so only indicative): random edits are safe but not free."""
     inject("TADA_VERIFY", txt)
 
 
