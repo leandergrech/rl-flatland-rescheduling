@@ -11,12 +11,12 @@ control project. Every number on this page comes from a run of the scripts liste
 !!! abstract "In one paragraph"
     The executor under the dispatcher reproduces main's OR reference exactly on all 80 held-out
     episodes, and no edit it offers has ever produced a deadlock or a reservation violation
-    (28,705 random edits in step 1; 0 terminations in 241 evaluation episodes and
+    (28,705 random edits in step 1; 0 terminations in 261 evaluation episodes and
     continuous runs). The learned dispatcher, trained for 55 minutes on medium, ties the executor
     there: 99.3% / 98.3% arrival without / with malfunctions against
     99.3% / 98.0%, and far above main's best learned policy (35% / 36%). Transferred to
     xlarge with malfunctions it gains 9 trains and loses 4 over 10 seeds; in the continuous variant
-    it matches the executor at every injection rate, and neither deadlocks. 6 ablations are below.
+    it matches the executor at every injection rate, and neither deadlocks. 7 ablations are below.
     The structure works as a safe interface for learning; within this compute budget the learning
     on top of it adds almost nothing, and the reasons are listed under
     [What did not work](#what-did-not-work).
@@ -268,6 +268,7 @@ the cap cut a run short.
 | `M4` | M = 4 | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9909 | 0.9837 | 0 | 20 | 2.6 | 11.6 | 60/60 | 15 |
 | `M16` | M = 16 | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9906 | 0.9839 | 0 | 20 | 3.6 | 11.7 | 60/60 | 22 |
 | `shaping` | dense slack shaping on | 99.3 ± 0.7 | 99.0 ± 1.0 | +3 / -0 | 0.9906 | 0.9872 | 0 | 20 | 19.4 | 11.8 | 60/60 | 21 |
+| `tree` | feature set (ii): + 3-branch summary | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9895 | 0.9834 | 0 | 20 | 15.6 | 11.7 | 60/60 | 22 |
 
 Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run; executor row from
 [executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json).
@@ -279,7 +280,7 @@ Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for e
 
 No setting separates clearly from the executor or from the others at 10 seeds. Without malfunctions every run delivers
 exactly the executor's trains. With malfunctions the net difference to the executor ranges from
-+0 to +3 trains out of 300. Most of it is one train on one map: seed 1005 with malfunctions, where the executor delivers 26 of 30, is recovered by 6 of the 7 trained runs (`main_it60`, `B1`, `B4`, `M4`, `M16`, `shaping`). That is a real, repeatable repair, and most of the effect. The ablations
++0 to +3 trains out of 300. Most of it is one train on one map: seed 1005 with malfunctions, where the executor delivers 26 of 30, is recovered by 7 of the 8 trained runs (`main_it60`, `B1`, `B4`, `M4`, `M16`, `shaping`, `tree`). That is a real, repeatable repair, and most of the effect. The ablations
 do change how much the policy edits (from 1.0 to
 19.4 edits per episode), and none of them
 ever terminated an episode. The closest to a difference is `shaping`: +3 trains with malfunctions (seeds 1000, 1005) and a paired normalised reward of +0.0036 ± 0.0030 against the executor. Denser reward is what the credit-assignment problem under [What did not work](#what-did-not-work) calls for, but at 10 seeds this is not significant. The executor itself loses only 6 of 300 trains on the
