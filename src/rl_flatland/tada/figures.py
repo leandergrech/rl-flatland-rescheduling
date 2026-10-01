@@ -1,6 +1,6 @@
 """Figures for the TADA dispatcher page (light and dark SVGs, same theme as main's figures).
 
-    python scripts/tada_figures.py      # writes docs/assets/figures/tada-*.svg from data/tada/
+    python scripts/tada_report.py       # writes docs/assets/figures/tada-*.svg from data/tada/
 """
 
 from __future__ import annotations
@@ -112,6 +112,35 @@ def grouped_bars(groups: List[str], series: Dict[str, List[float]], errs: Dict[s
             ax.set_ylim(*ylim)
         ax.set_title(title)
         _legend_top(fig, handles, ncol=min(4, n))
+        fig.tight_layout()
+        return fig
+
+    return build
+
+
+def continuous_sweep(agg: Dict[tuple, dict], rates: List[float], controllers: List[str]) -> Callable[[str], plt.Figure]:
+    """Throughput and mean delay against injection rate, one line per controller."""
+    label = {"executor": "Executor only", "learned": "Learned dispatcher"}
+
+    def build(mode):
+        t = th.TOKENS[mode]
+        fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.2))
+        handles = []
+        x = np.array(rates)
+        axes[0].plot(x, 1000 * x, color=t["ink2"], lw=0.9, ls=(0, (3, 3)))
+        axes[0].text(x[-1], 1000 * x[-1], " injected", fontsize=8, color=t["ink2"], va="center")
+        for i, c in enumerate(controllers):
+            col = th.slot(i, mode)
+            ys = [agg.get((r, c), {}).get("throughput_per_1000", np.nan) for r in rates]
+            ds = [agg.get((r, c), {}).get("mean_delay", np.nan) for r in rates]
+            axes[0].plot(x, ys, color=col, lw=2, marker="o", ms=5)
+            axes[1].plot(x, ds, color=col, lw=2, marker="o", ms=5)
+            handles.append(Line2D([], [], color=col, lw=2, marker="o", ms=5, label=label.get(c, c)))
+        axes[0].set_title("Throughput (arrivals per 1000 steps)")
+        axes[1].set_title("Mean delay of arrived trains vs LA (steps)")
+        for ax in axes:
+            ax.set_xlabel("injection rate (trains per step)")
+        _legend_top(fig, handles, ncol=2)
         fig.tight_layout()
         return fig
 
