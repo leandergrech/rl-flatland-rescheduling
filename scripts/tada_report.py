@@ -304,7 +304,7 @@ def ablations() -> None:
     best_txt = (f" The closest to a difference is `{best}`: {bd[0]:+d} trains with malfunctions (seeds {', '.join(map(str, bd[1]))}) and a paired "
                 f"normalised reward of {bd[2]:+.4f} ± {bd[3]:.4f} against the executor. Denser reward is what the credit-assignment problem "
                 f"under [What did not work](#what-did-not-work) calls for, but at 10 seeds this is not significant.") if bd[0] > 1 else ""
-    top_txt = (f" Almost all of it is one train on one map: seed {top_seed} with malfunctions, where the executor delivers "
+    top_txt = (f" Most of it is one train on one map: seed {top_seed} with malfunctions, where the executor delivers "
                f"{exk[(top_seed, True)]['arrived']} of {exk[(top_seed, True)]['n_agents']}, is recovered by {len(gain_seeds[top_seed])} of the "
                f"{len(have)} trained runs ({', '.join('`' + x + '`' for x in gain_seeds[top_seed])}). That is a real, repeatable repair, "
                f"and most of the effect.") if top_seed is not None else ""

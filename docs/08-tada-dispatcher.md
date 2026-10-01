@@ -275,7 +275,7 @@ Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for e
 
 No setting separates clearly from the executor or from the others at 10 seeds. Without malfunctions every run delivers
 exactly the executor's trains. With malfunctions the net difference to the executor ranges from
-+0 to +3 trains out of 300. Almost all of it is one train on one map: seed 1005 with malfunctions, where the executor delivers 26 of 30, is recovered by 6 of the 7 trained runs (`main_it60`, `B1`, `B4`, `M4`, `M16`, `shaping`). That is a real, repeatable repair, and most of the effect. The ablations
++0 to +3 trains out of 300. Most of it is one train on one map: seed 1005 with malfunctions, where the executor delivers 26 of 30, is recovered by 6 of the 7 trained runs (`main_it60`, `B1`, `B4`, `M4`, `M16`, `shaping`). That is a real, repeatable repair, and most of the effect. The ablations
 do change how much the policy edits (from 1.0 to
 19.4 edits per episode), and none of them
 ever terminated an episode. The closest to a difference is `shaping`: +3 trains with malfunctions (seeds 1000, 1005) and a paired normalised reward of +0.0036 ± 0.0030 against the executor. Denser reward is what the credit-assignment problem under [What did not work](#what-did-not-work) calls for, but at 10 seeds this is not significant. The executor itself loses only 6 of 300 trains on the
