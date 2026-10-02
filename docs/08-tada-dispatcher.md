@@ -4,7 +4,8 @@ icon: fl/tada
 
 # :fl-tada: TADA on rails: a windowed dispatcher on top of the planner
 
-This page describes an experiment on the `feat/tada-dispatcher` branch. It puts a small learned
+This page describes an experiment developed on the `feat/tada-dispatcher` branch and merged
+into `main`. It puts a small learned
 dispatcher on top of the OR reference. The planner keeps doing what it is good at: timed,
 collision-free paths for every train. The policy only decides, at a few trains per step, whether
 to depart from that plan. The structure is taken from TADA, Leander's single-agent air-traffic
@@ -158,10 +159,10 @@ until T, so ending an episode early can never score better than running it out.
 <!-- TADA_VERIFY:START -->
 With every clearance forced to PROCEED, the dispatch loop (window, masks, re-timing, termination
 checks) must leave main's OR reference untouched. Over all 80 held-out episodes it is compared with
-the stored results ([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)) on arrived trains, deadlocked trains,
+the stored results ([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/results/or.json)) on arrived trains, deadlocked trains,
 episode length and normalised reward (to 1e-9).
 **80 of 80 episodes are identical, with 0 mismatching fields**
-([verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json), commit `5c667ed`).
+([verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/verify.json), commit `5c667ed`).
 
 | Scenario | Malfunctions | Episodes | Arrived (executor) | Arrived (main's OR) | Identical (arrived, deadlocked, steps, normalised reward) | Terminated | Rotation flags |
 |---|---|---|---|---|---|---|---|
@@ -195,7 +196,7 @@ executor alone on the held-out seeds (different seeds, so only indicative): rand
 ![Window occupancy over the episode under the executor alone](assets/figures/tada-occupancy-dark.svg#only-dark)
 
 *Executor alone (every clearance PROCEED), the 10 malfunction-free held-out episodes per scenario,
-one sample per env step. Source: [occupancy_proceed_only.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/occupancy_proceed_only.json), written by `scripts/tada_verify.py`.*
+one sample per env step. Source: [occupancy_proceed_only.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/occupancy_proceed_only.json), written by `scripts/tada_verify.py`.*
 
 | Scenario | Mean trains in window | Steps with the window full (M = 8) | Steps with an empty window |
 |---|---|---|---|
@@ -223,8 +224,8 @@ the env step.
 | Learned dispatcher (TADA on rails) | 99.3 ± 0.7 | 98.3 ± 1.0 | 0.990 | 0.984 | 0 | 20 | 11.0 |
 | main's best learned baseline (PPO, compact obs.) | 35.0 ± 8.7 | 36.0 ± 8.3 | 0.724 | 0.729 | – | – | – |
 
-Sources: [executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json), [main.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/main.json) (`scripts/tada_evaluate.py`),
-main's PPO from [ppo.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/ppo.json).
+Sources: [executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/executor.json), [main.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/main.json) (`scripts/tada_evaluate.py`),
+main's PPO from [ppo.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/results/ppo.json).
 
 Main's PPO baseline is not a like-for-like comparison: it drives every train directly with no planner
 underneath, while the dispatcher inherits the planner's plan and can only edit it. The gap between
@@ -235,7 +236,7 @@ is indistinguishable from the plan it sits on.
 
 On the training maps the comparison has more headroom: they are harder than the held-out seeds (the
 executor delivers 95.9% on the 606 distinct maps the run drew,
-[executor_train_seeds.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor_train_seeds.json)). Paired with the executor on the
+[executor_train_seeds.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/executor_train_seeds.json)). Paired with the executor on the
 same eight maps per iteration, the stochastic training policy scored +0.84 ± 0.10 points of arrival and -0.0015 ± 0.0004 normalised reward over all
 115 iterations (79 iterations ahead on arrival). Split by phase: iterations 1–20 +0.79 ± 0.19 points of arrival and -0.0037 ± 0.0008 normalised reward;
 iterations 61–115 +0.82 ± 0.15 points of arrival and -0.0005 ± 0.0004 normalised reward. The arrival gain is present from the first iterations, so it
@@ -248,7 +249,7 @@ edits cost, which shrank to about zero.
 Training: 115 PPO iterations of 8 medium episodes with malfunctions
 (529,521 env steps) in 55 minutes on 8 worker processes,
 CPU clock 400 to 2901 MHz across iterations (median 1664).
-Log: [train_log.jsonl](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/checkpoints/main/train_log.jsonl). Clearances issued by the greedy policy on the 20 evaluation
+Log: [train_log.jsonl](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/checkpoints/main/train_log.jsonl). Clearances issued by the greedy policy on the 20 evaluation
 episodes: PROCEED 97.5%, HOLD 2.4%, YIELD_TO 0.1%, REROUTE 0.0%.
 
 ![Training curves of the dispatcher](assets/figures/tada-training-light.svg#only-light)
@@ -277,7 +278,7 @@ the cap cut a run short.
 | `tree` | feature set (ii): + 3-branch summary | 99.3 ± 0.7 | 98.3 ± 1.1 | +1 / -0 | 0.9895 | 0.9834 | 0 | 20 | 15.6 | 11.7 | 60/60 | 22 |
 
 Sources: `data/tada/results/<run>.json` and `data/tada/checkpoints/<run>/` for each run; executor row from
-[executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/executor.json).
+[executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/executor.json).
 
 ![Ablation results on medium](assets/figures/tada-ablations-light.svg#only-light)
 ![Ablation results on medium](assets/figures/tada-ablations-dark.svg#only-dark)
@@ -309,7 +310,7 @@ step 1.
 | xlarge | off | 95.7 ± 1.1 | 95.7 ± 1.1 | +0 / -0 | 0.9532 | 0.9524 | 102 | 0 | 10 | 139 |
 | xlarge | on | 89.1 ± 2.2 | 89.6 ± 2.1 | +9 / -4 | 0.9219 | 0.9219 | 395 | 0 | 10 | 205 |
 
-Sources: [main_general.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/main_general.json), [verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/verify.json).
+Sources: [main_general.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/main_general.json), [verify.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/verify.json).
 
 Without malfunctions the learned layer changes nothing that matters on any map: it edits plans
 but never gains or loses a train. With malfunctions it gains a few trains on the larger maps, where
@@ -345,7 +346,7 @@ the delay of the backlog, which is reported separately.
 | 0.4 | executor | 388 | 139.7 | 196.7 | 18 | 202 | 0/3 | 7.89 | 452 |
 | 0.4 | learned | 388 | 142.0 | 194.7 | 18 | 200 | 0/3 | 7.89 | 716 |
 
-Sources: [continuous_executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_executor.json), [continuous_learned.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/results/continuous_learned.json) (`scripts/tada_continuous.py`).
+Sources: [continuous_executor.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/continuous_executor.json), [continuous_learned.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/results/continuous_learned.json) (`scripts/tada_continuous.py`).
 
 ![Throughput and delay against injection rate](assets/figures/tada-continuous-light.svg#only-light)
 ![Throughput and delay against injection rate](assets/figures/tada-continuous-dark.svg#only-dark)
@@ -382,7 +383,7 @@ step 1 exercise exactly this path.
 **The entropy bonus outweighed the signal.** With coefficient 0.01 on the summed entropy of the
 autoregressive heads, entropy rose from 1.77 to 2.08 in 32 iterations and plan
 edits per episode from 31 to 152, while reward did not improve. That run was
-stopped and kept ([log](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/tada/checkpoints/main_ent01_stopped/train_log.jsonl)); the main run uses 0.001.
+stopped and kept ([log](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/tada/checkpoints/main_ent01_stopped/train_log.jsonl)); the main run uses 0.001.
 
 **The window is rarely selective, and decisions are everywhere.** Rules (a) to (d) admit almost
 every train that is near another one, so with M = 8 the window is full on 47%, 71%,
@@ -395,7 +396,7 @@ the aircraft that mattered next; the rail rules here are a safety filter more th
 **Medium had no room to improve.** The brief chose medium as the scenario with the largest
 malfunction gap. On the current paired seeds the executor loses 0.0, 1.3, 4.3 and
 6.6 points of arrival to malfunctions on small, medium, large and xlarge
-([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/data/results/or.json)), so medium has the smallest non-zero gap, and the executor
+([or.json](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/data/results/or.json)), so medium has the smallest non-zero gap, and the executor
 already delivers 98–99% of trains on its held-out seeds. A learned layer can at most recover a
 handful of trains there.
 
@@ -406,7 +407,7 @@ to 2901 MHz per iteration). The 55-minute cap cut the main run at 115 of
 
 ## Reproduce
 
-All commands run from the repository root on the `feat/tada-dispatcher` branch, CPU only.
+All commands run from the repository root, CPU only.
 
 ```bash
 python scripts/tada_verify.py --workers 8                 # step 1 checks -> data/tada/verify.json
