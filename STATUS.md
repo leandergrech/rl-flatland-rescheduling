@@ -37,10 +37,10 @@ log:
 ## Docs overhaul (Scheduling Lab)
 branch: feat/docs-lab (from feat/tada-dispatcher)
 step: done
-state: done
-updated: 2026-10-02T12:15:19Z
-blockers: publishing needs main (the github-pages environment deploys only from main): merge feat/docs-lab, or allow the branch
-next: user decision on merging / deploying
+state: published
+updated: 2026-10-02T13:36:27Z
+blockers: none
+next: none
 log:
 - 2026-10-02T12:15:19Z Docs restructured after rl-tokamak-rampup's strategy: rail icon set, nav in four groups (Overview, The benchmark, How it works, Literature), prev/next pager, collapsible page sections, departure-board hero with stat tiles, Open-the-Lab buttons. How it works: hub + six chapters (network, trains, deadlock, planning, execution, learning), each with a widget, 'what it means for the agent' and a self-check; Literature: MAPF toolkit (moved from the primer), timeline, references, glossary and formulas. Scheduling Lab: JavaScript port of flatland-rl 4.3.0 RailEnv + main's OR planner + the TADA executor (docs/javascripts/flatland-core.js, tada-core.js), 40 held-out small/medium maps with 5 recorded policies (scripts/make_lab_data.py); node scripts/check_lab.mjs: 40/40 maps match flatland-rl step for step (distances, successor order, 200 replays, 40 live planner runs, 302 dispatcher clearances). mkdocs build --strict passes; pytest 34 passed.
-
+- 2026-10-02T13:36:27Z Merged to main as PR #1 (merge commit c12d75e, CI green); Pages workflow built and deployed; live site serves the new pages, the Lab scripts and its map data.
