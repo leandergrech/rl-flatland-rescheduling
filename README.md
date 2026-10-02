@@ -1,6 +1,7 @@
 # rl-flatland-rescheduling
 
-**Literature review and Scheduling Lab: <https://leandergrech.github.io/rl-flatland-rescheduling/>**
+**Site: <https://leandergrech.github.io/rl-flatland-rescheduling/>** (the findings, methods and evaluation,
+the Scheduling Lab, architecture and reproduction steps)
 
 Can multi-agent reinforcement learning close the gap to operations research on railway
 rescheduling? Flatland (SBB, Deutsche Bahn, SNCF, AIcrowd; now the Flatland Association) asks
@@ -60,13 +61,15 @@ Arrival rate in % on the 10 held-out seeds per scenario, without / with malfunct
 ## Layout
 
 ```
-docs/                 the site (MkDocs Material): How it works chapters, the Scheduling Lab, Literature
+docs/                 the site (MkDocs Material): home, How it works chapters, the Scheduling Lab, results,
+                      research/ (methods and evaluation), implementation/ (architecture, reproducing), Literature
 docs/javascripts/     flatland-core.js (flatland's RailEnv and the OR planner in JS), tada-core.js,
                       lab.js (the Lab), widgets.js (chapter widgets), rail-draw.js, nav.js
 src/rl_flatland/      scenarios.py (fixed scenarios + seeds), graph.py, deadlock.py, observations.py,
                       env.py (decision wrapper), evaluation.py, metrics.py, plotting.py, policies.py,
                       baselines/or_planner.py, baselines/ppo.py, baselines/imitation.py, baselines/rl_policy.py
-scripts/              train.py, evaluate.py, reproduce.sh, check_reproduction.py
+scripts/              train.py, evaluate.py, reproduce.sh, check_reproduction.py, make_report.py,
+                      make_overview_figures.py, tada_*.py (the dispatcher), make_lab_data.py, check_lab.mjs
 notebooks/            01-explore, 02-baseline, 03-first-experiment
 data/                 scenarios/, results/, checkpoints/, demos/ (all committed, < 20 MB), fetch.py
 tests/                env sanity tests and a smoke test per baseline
@@ -79,7 +82,11 @@ tests/                env sanity tests and a smoke test per baseline
   counts match `data/results/` exactly (about 10 minutes on 8 workers).
 - `FULL=1 bash scripts/reproduce.sh`: retrains PPO, imitation and PPO-tree (30-minute budget each),
   then evaluates everything on all four scenarios.
-- `python scripts/evaluate.py --table` prints the stored summary.
+- `python scripts/evaluate.py --table` prints the stored summary; `python scripts/make_report.py` and
+  `python scripts/make_overview_figures.py` rebuild the tables and figures from `data/` without
+  re-running episodes.
+- The site's [Reproducing the results](https://leandergrech.github.io/rl-flatland-rescheduling/implementation/reproduce/)
+  page lists versions, every check, what is deterministic and what is not.
 - The Lab's JavaScript port of flatland: `python scripts/make_lab_data.py` exports the 40 small and
   medium held-out maps with five policies' recorded episodes (and the check fixtures, not committed),
   then `node scripts/check_lab.mjs` (any Node 18+) checks distances, replays, the live planner and
