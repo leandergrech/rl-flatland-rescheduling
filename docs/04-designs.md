@@ -212,6 +212,8 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 *Share of trains arrived, mean over 10 held-out seeds with standard-error whiskers. The tables below give every number.*
 
+[Every policy on one map, in the Lab](how/7-lab.md?map=medium-1000-n&preset=or&t=76){ .fl-try } [PPO's standstill on small seed 1000](how/7-lab.md?map=small-1000-n&preset=ppo&t=150){ .fl-try }
+
 <!-- RESULTS:START -->
 ### Arrival rate (%), held-out seeds, no malfunctions
 

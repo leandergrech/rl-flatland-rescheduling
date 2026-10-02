@@ -26,6 +26,8 @@ control project. Every number on this page comes from a run of the scripts liste
     [What did not work](#what-did-not-work).
 <!-- TADA_SUMMARY:END -->
 
+[Watch the learned dispatcher in the Lab](how/7-lab.md?map=medium-1005-m&preset=tada&t=60){ .fl-try } [Dispatch yourself on the same map](how/7-lab.md?map=medium-1005-m&preset=you&t=60){ .fl-try }
+
 ## The analogy
 
 TADA realises a predetermined landing sequence (the arrival manager, AMAN) under disturbances. The

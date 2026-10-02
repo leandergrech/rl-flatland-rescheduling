@@ -16,6 +16,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from rl_flatland import theme as th  # noqa: E402
+import matplotlib  # noqa: E402
+
+matplotlib.rcParams["svg.hashsalt"] = "rl-flatland"  # stable element ids, so regenerating a figure does not change the file
 from rl_flatland.tada import figures as tf  # noqa: E402
 
 DATA = ROOT / "data" / "tada"
