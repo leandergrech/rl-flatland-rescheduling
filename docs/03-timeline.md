@@ -25,6 +25,7 @@ group, not across rows.
 | 2021 (ICAPS) | Li et al. | Write-up of the 2020 winner | Largest fully solved instance: 3,256 trains in 704 s; SIPP cut runtime up to 4×; best RL was 8th in Round 2 | [ICAPS 2021](https://ojs.aaai.org/index.php/ICAPS/article/download/15994/15805/19487) |
 | 2021-12-15 | An_Old_Driver (Chen et al.) | OR: MAPF-LNS with slack priorities, delay-based neighbourhoods, periodic partial replanning | Flatland 3 winner: 135.47 at close (145 of 150 instances); 140.99 with all 150 solved in a later rerun | [arXiv:2306.06455](https://arxiv.org/abs/2306.06455) |
 | 2021-12-15 | WaveTeam | RL (no write-up found) | Best Flatland 3 RL entry: 27.868 | [AIcrowd leaderboard](https://www.aicrowd.com/challenges/flatland-3/leaderboards); [Chen et al. 2023](https://arxiv.org/abs/2306.06455) |
+| 2022-03-31 | Leichthammer (MSc thesis, TU Darmstadt) | Hybrid: Dueling Double DQN picks one of 10 wait/reroute resolutions for each delay conflict on a conflict-free timetable; infeasible options masked | Random maps with 20, 35, 50 trains: best network 0.864, 0.875, 0.822 completion against 0.917, 0.892, 0.831 for always waiting; "the waiting and heuristic baseline solutions performed better than all deep networks" | [thesis, Table 6.2](https://ml-research.github.io/papers/leichthammer2022evaluating.pdf) |
 | 2022-04-06 | Kopacz, Mester, Kolumbán & Csató | RL: DQN on pairwise-conflict features | 28×16 grid, 6 trains: normalised reward often above 0.7 in successful episodes; deadlocks remain | [arXiv:2204.03061](https://ar5iv.arxiv.org/html/2204.03061) |
 | 2022-05-25 | Egorov & Shpilman | Model-based MARL (MAMBA): discrete world model, attention communication | More sample-efficient than a re-implementation of JBR_HSE at 5 and 10 trains; less sample-efficient but comparable at 15 trains on 40×45 (results in a figure only) | [arXiv:2205.15023](https://arxiv.org/abs/2205.15023) |
 | 2022-10 (AAAI-23 workshop) | Parametrix.AI (Jiang et al.) | RL: PPO, TreeLSTM over a deep path tree, 3 self-attention blocks, 6-phase curriculum | On the 15 Flatland 3 stages: score 125.3, 66.4% arrived; would rank between the 2nd (132.5) and 3rd (118.0) OR entries | [arXiv:2210.12933, Table 7](https://arxiv.org/pdf/2210.12933) |
@@ -32,7 +33,7 @@ group, not across rows.
 | 2023-10 | AI4REALNET (Horizon Europe, 6 M€) | Flatland as the rail testbed next to Grid2Op and BlueSky | — | [ai4realnet.eu](https://ai4realnet.eu/); [ZHAW](https://www.zhaw.ch/en/research/project/74103) |
 | 2023-10-27 | Flatland Association | flatland-rl 4.0.0 | — | [PyPI](https://pypi.org/pypi/flatland-rl/json) |
 | 2024-08-19 | Jaziri, Künzel & Ramesh | RL: continual DQN expansion with curriculum and EWC | Beats RL baselines (abstract only; no OR comparison) | [arXiv:2408.09838](https://arxiv.org/abs/2408.09838) |
-| 2026 (CPAIOR) | Bourgeat, Legrain & Cappart | Imitation-guided world models | Paywalled; numbers unverified | [DOI](https://doi.org/10.1007/978-3-032-27242-3_6) |
+| 2026 (CPAIOR) | Bourgeat, Legrain & Cappart | Imitation of the 2020 winner's planner, queried during training, then RL in a world model (MAMBA) | Trained at 10 trains: 98.2, 80.8, 71.3% arrived at 5, 10, 15 trains, against 100.0, 98.0, 98.1% for the planner itself | [author PDF, Table 1](https://Max9294D.github.io/files/Expert_Guided_WM.pdf) |
 | 2026-05-11 | enliteAI + SBB + Flatland Assoc. (Castagna et al.) | "Maze-Flatland": semi-hierarchical RL (dispatch policy + routing policy), trained by behaviour cloning from MCTS | Up to 80 trains on 35×30: "nearly doubling" arrivals against Greedy, PP, Deadlock-Avoidance and TreeLSTM baselines; deadlocks ≤ 5% | [arXiv:2605.10257](https://arxiv.org/html/2605.10257v1) |
 | 2026-06-29 | ECML 2026 challenge | Non-RL track winner: prioritized SIPP + corridor locks | 20.8429 against 9.4231 for the RL track's only listed entry (organisers' PPO baseline) | [post-competition analysis](https://flatland-association.github.io/flatland-book/challenges/ecml2026/post-competition_analysis.html) |
 | 2026-08-10 | Flatland Association | flatland-rl 4.3.0 (ECML 2026 rewards, Cython state machine) | — | [CHANGELOG](https://raw.githubusercontent.com/flatland-association/flatland-rl/main/CHANGELOG.md) |
@@ -46,7 +47,9 @@ group, not across rows.
 competition close, Flatland 3 stages with TreeLSTM post hoc against the leaderboard winner's 141.0,
 ECML 2026 against the organisers' RL baseline). Right: share of trains arrived, best OR against best
 RL, where a round reports it, plus this repository's small and xlarge scenarios. Sources are the
-rows of the table above.*
+rows of the table above. For this repository, "RL" is the best policy learned from scratch; the
+learned dispatcher on top of the planner is a hybrid and matches the OR bar by construction
+([TADA on rails](08-tada-dispatcher.md)).*
 
 ## The same story as a timeline
 
@@ -87,8 +90,10 @@ timeline
 4. **Recent RL papers compare against heuristics, not against the winners.** Maze-Flatland
    (2026) beats Greedy, a PP reimplementation, the deadlock-avoidance heuristic and TreeLSTM at up
    to 80 trains, with constant speeds
-   ([Castagna et al. 2026](https://arxiv.org/html/2605.10257v1)). Nobody has published a direct
-   comparison against LNS-based planners on the same instances.
+   ([Castagna et al. 2026](https://arxiv.org/html/2605.10257v1)). The one direct comparison with
+   the 2020 winner's planner on the same instances is small, 5 to 15 trains, and the planner stays
+   ahead (98.0% against 80.8% at 10 trains,
+   [Bourgeat et al. 2026, Table 1](https://Max9294D.github.io/files/Expert_Guided_WM.pdf)).
 5. **Where RL has shown value** is imitation from planners (Mohanty et al.'s 86% with 25% imitation
    data; Maze-Flatland's behaviour cloning from MCTS) and communication (JBR_HSE's single most
    effective change). Those are the threads [Open questions](06-open-questions.md) picks up.

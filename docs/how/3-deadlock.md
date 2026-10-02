@@ -38,8 +38,9 @@ train that later needs either cell, or queues behind the pair, is stuck too, so 
 
 The decision that prevents a deadlock is not taken where the trains meet. It is taken at the switch
 before the single-track section, or at the station, when one train must accept to wait for the
-other. In the widget, “take the loop” alone does not help unless the train also waits there, and
-whether waiting is needed depends on where the other train will be several cells later.
+other. In the widget, one train taking the loop is enough because the timing happens to work, but
+both trains taking it meet head-on inside the loop. Whether a train must also wait there depends
+on where the other train will be several cells later.
 
 ![Uncoordinated shortest paths deadlock where the OR reference does not](../assets/figures/deadlock-snapshot-light.svg#only-light)
 ![Uncoordinated shortest paths deadlock where the OR reference does not](../assets/figures/deadlock-snapshot-dark.svg#only-dark)

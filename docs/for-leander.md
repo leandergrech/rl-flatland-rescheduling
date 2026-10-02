@@ -84,7 +84,7 @@ see.
 ## What is new for you
 
 1. **The MAPF toolbox**: prioritised planning, safe intervals, conflict-based search, large
-   neighbourhood search, and order-preserving execution (MCP). Read [02-primer](literature/mapf.md) first.
+   neighbourhood search, and order-preserving execution (MCP). Read [The MAPF toolkit](literature/mapf.md) first.
 2. **Irreversibility as the dominant failure.** In ATC there is always a manoeuvre (a hold, a
    heading change). On a single track there is none. A learned policy has to be conservative
    about commitments, not about proximity.

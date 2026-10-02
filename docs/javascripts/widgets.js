@@ -510,7 +510,7 @@
     }
     draw();
     onTheme(() => (cv.fit(), draw()));
-    note(root, "Try both trains on “run straight through”, then one on “take the loop and wait”. Taking the loop without waiting is not enough when the timing is wrong: the decision that avoids a deadlock is a decision about order, made before the trains meet.");
+    note(root, "Try both trains on “run straight through”, then one on “take the loop and wait”, then both on “take the loop”. Two sensible detours can still meet head-on: the decision that avoids a deadlock is a decision about order, made for both trains before they meet.");
   }
 
   // ------------------------------------------------------------------ 5 and 6. the planning corridor
@@ -808,19 +808,33 @@
 
   // ------------------------------------------------------------------ mount
   const WIDGETS = { cells: wCells, drive: wDrive, speeds: wSpeeds, deadlock: wDeadlock, sipp: wSipp, mcp: wMcp, reward: wReward };
+  // Screen readers: name the widget, describe its drawings, announce status lines as they change.
+  function a11y(root) {
+    const title = root.dataset.title || "Interactive diagram";
+    root.setAttribute("role", "group");
+    root.setAttribute("aria-label", title);
+    root.querySelectorAll("canvas:not([role])").forEach((c) => {
+      c.setAttribute("role", "img");
+      c.setAttribute("aria-label", title + ". The controls and the text around the drawing describe its state.");
+    });
+    root.querySelectorAll(".fl-status").forEach((s) => s.setAttribute("aria-live", "polite"));
+  }
   function mountAll() {
     document.querySelectorAll(".fl-widget[data-widget]:not([data-mounted])").forEach((root) => {
       const f = WIDGETS[root.dataset.widget];
       if (!f) return;
       root.dataset.mounted = "1";
+      root.querySelectorAll(":scope > .fl-fallback").forEach((n) => n.remove()); // static text for when scripts do not run
       try {
         f(root);
+        a11y(root);
       } catch (e) {
         root.appendChild(document.createTextNode("This widget could not start: " + e.message));
         console.error(e);
       }
     });
   }
+  window.FLWidgetA11y = a11y;
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(mountAll);
   else if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mountAll);
   else mountAll();

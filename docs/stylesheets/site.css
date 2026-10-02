@@ -3,7 +3,7 @@
  * tokens in theme.css (--pr-*, --md-*); the few extra ones below are defined per colour scheme. */
 
 [data-md-color-scheme="default"] {
-  --fl-ink: #b06800;                       /* amber that reads on the light page: icons, accents */
+  --fl-ink: #a05e00;                       /* amber that reads on the light page (4.7:1): icons, accents, small text */
   --fl-rule: rgba(21, 23, 28, 0.14);       /* hairlines and quiet borders */
   --fl-rule-strong: rgba(21, 23, 28, 0.28);
   --fl-panel: #fffdf8;                     /* cards and widget bodies, a touch lighter than the page */
@@ -74,7 +74,7 @@ svg.fl-ic { fill: none !important; }
 
 .fl-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 7rem), 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.6rem;
   margin-top: 1.1rem;
 }
@@ -341,11 +341,118 @@ svg.fl-ic { fill: none !important; }
 .md-typeset .fl-note b,
 .md-typeset .fl-note strong { color: var(--md-default-fg-color); }
 
+/* ---------- home page: the research narrative ---------- */
+.md-typeset .fl-hero .fl-eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--pr-display-font); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--fl-board-muted);
+}
+.fl-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.1rem; }
+.md-typeset .fl-hero a.fl-action {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0.3rem 0.95rem;
+  border: 1px solid var(--fl-amber); border-radius: 6px;
+  font-size: 0.68rem; font-weight: 600; line-height: 1.3; text-decoration: none;
+  color: #15171c; background: var(--fl-amber);
+  transition: background-color 120ms, color 120ms, border-color 120ms;
+}
+.md-typeset .fl-hero a.fl-action:hover,
+.md-typeset .fl-hero a.fl-action:focus-visible { background: #ffd866; border-color: #ffd866; color: #15171c; }
+.md-typeset .fl-hero a.fl-action--quiet { color: var(--fl-board-fg); background: transparent; border-color: rgba(244, 241, 232, 0.35); }
+.md-typeset .fl-hero a.fl-action--quiet:hover,
+.md-typeset .fl-hero a.fl-action--quiet:focus-visible { color: var(--fl-amber); background: rgba(255, 201, 60, 0.08); border-color: var(--fl-amber); }
+.md-typeset .fl-hero a.fl-action:focus-visible { outline: 2px solid var(--fl-amber); outline-offset: 2px; }
+
+/* the three ways in: understand, explore, inspect */
+.fl-paths { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.7rem; margin: -0.4rem 0 2.2rem; }
+.md-typeset a.fl-path {
+  display: flex; align-items: flex-start; gap: 0.7rem; min-width: 0;
+  padding: 0.75rem 0.9rem; border: 1px solid var(--fl-rule-strong); border-radius: 8px;
+  color: var(--md-default-fg-color); background: var(--fl-panel); text-decoration: none;
+  transition: border-color 150ms, box-shadow 150ms, transform 150ms;
+}
+.md-typeset a.fl-path:hover,
+.md-typeset a.fl-path:focus-visible { border-color: var(--md-accent-fg-color); box-shadow: inset 0 2px 0 var(--fl-amber), var(--fl-shadow); transform: translateY(-2px); }
+.fl-path__step {
+  flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.8rem; height: 1.8rem;
+  border-radius: 4px; font-family: var(--pr-display-font); font-size: 0.85rem; font-weight: 700; color: var(--fl-amber);
+  background: linear-gradient(180deg, var(--fl-flap-top) 0 calc(50% - 0.5px), rgba(0, 0, 0, 0.75) calc(50% - 0.5px) calc(50% + 0.75px), var(--fl-flap-bottom) calc(50% + 0.75px) 100%);
+}
+.fl-path__text { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.fl-path__text b { font-family: var(--pr-display-font); font-size: 0.74rem; line-height: 1.3; }
+.fl-path__text span { font-size: 0.64rem; line-height: 1.45; color: var(--md-default-fg-color--light); }
+
+/* provenance: what was reproduced, implemented and compared, or is original */
+.md-typeset .fl-tag {
+  display: inline-block; padding: 0.05rem 0.55rem; border: 1px solid currentColor; border-radius: 999px;
+  font-family: var(--pr-display-font); font-size: 0.56rem; font-weight: 700; line-height: 1.6;
+  letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+}
+.md-typeset .fl-tag--reproduced { color: var(--md-default-fg-color--light); }
+.md-typeset .fl-tag--implemented { color: var(--md-default-fg-color); border-style: dashed; }
+.md-typeset .fl-tag--original { color: #15171c; background: var(--fl-amber); border-color: var(--fl-amber); }
+
+/* numbered findings, each with its evidence */
+.md-typeset .fl-findings > ol { list-style: none; counter-reset: fl-finding; margin: 1rem 0 1.2rem; padding: 0; }
+.md-typeset .fl-findings > ol > li { counter-increment: fl-finding; position: relative; margin: 0 0 0.9rem; padding-left: 2.5rem; }
+.md-typeset .fl-findings > ol > li::before {
+  content: counter(fl-finding); position: absolute; left: 0; top: 0.05rem;
+  display: flex; align-items: center; justify-content: center; width: 1.65rem; height: 1.65rem; border-radius: 4px;
+  font-family: var(--pr-display-font); font-size: 0.76rem; font-weight: 700; color: var(--fl-amber); background: var(--pr-tile-bg);
+}
+.md-typeset .fl-evidence { display: block; margin-top: 0.25rem; font-size: 0.64rem; color: var(--md-default-fg-color--light); }
+
+.md-typeset .fl-about { margin: 0.6rem 0 1rem; padding: 0.8rem 1rem; border-left: 3px solid var(--fl-amber); border-radius: 0 8px 8px 0; background: var(--fl-hover-tint); }
+.md-typeset .fl-about > :first-child { margin-top: 0; }
+.md-typeset .fl-about > :last-child { margin-bottom: 0; }
+
+/* text shown in a widget frame until (or unless) its script replaces it */
+.md-typeset .fl-fallback { margin: 0; font-size: 0.68rem; color: var(--md-default-fg-color--light); }
+
+/* ---------- every page: section label, links, captions, focus, text measure ---------- */
+.md-typeset .fl-section-eyebrow {
+  margin: 0 0 0.3rem;
+  font-family: var(--pr-display-font); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset a:not([class]) {
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+.md-typeset a:not([class]):hover { text-decoration-color: currentColor; }
+.md-typeset a:focus-visible,
+.md-typeset button:focus-visible,
+.md-typeset summary:focus-visible,
+.md-typeset a.gap-tile:focus-visible { outline: 2px solid var(--md-accent-fg-color); outline-offset: 2px; border-radius: 3px; }
+.md-typeset a.gap-tile:focus-visible { border-color: var(--pr-or); }
+/* figure captions: the italic paragraph right after a figure */
+.md-typeset p:has(> img) + p:has(> em:only-child) { font-size: 0.66rem; line-height: 1.55; color: var(--md-default-fg-color--light); }
+.md-typeset p:has(> img) + p:has(> em:only-child) code { font-size: 0.95em; }
+/* keep running text to a readable line length on wide screens; figures, tables and widgets stay wide */
+@media screen and (min-width: 76.25em) {
+  .md-typeset > p:not(:has(img, a.fl-try)),
+  .md-typeset > ul,
+  .md-typeset > ol,
+  .md-typeset > blockquote,
+  .md-typeset > .fl-findings,
+  .md-typeset > .fl-about { max-width: 42rem; }
+}
+
 /* ---------- small screens ---------- */
+@media (max-width: 76.234em) {
+  .fl-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* four tiles side by side would cut "+1 / 300" */
+}
+@media (max-width: 60em) {
+  .fl-paths { grid-template-columns: minmax(0, 1fr); }
+}
 @media (max-width: 600px) {
+  /* wide figures keep a legible size and scroll sideways, like Material's wide tables */
+  .md-typeset p:has(> img[src*="assets/figures/"]) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .md-typeset p > img[src*="assets/figures/"] { width: 560px; max-width: none; }
   .md-typeset .fl-hero { padding: 1.1rem 1rem 1rem; }
   .md-typeset .fl-hero h1 { font-size: 1.15rem; }
-  .fl-stat b { font-size: 1.15rem; }
+  .fl-stat b { font-size: 1.05rem; }
+  .fl-stats { grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }   /* phones: one tile per row */
+  .fl-stat span { margin-top: 0.3rem; }
   .fl-pager__btn .fl-pager__label { max-width: 9.5rem; }
   .fl-pager--bottom { flex-direction: column; }
   .md-typeset a.fl-pager__card { max-width: 100%; padding: 0.6rem 0.75rem; }
@@ -356,6 +463,8 @@ svg.fl-ic { fill: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .md-typeset a.fl-path,
+  .md-typeset a.fl-path:hover { transition: none; transform: none; }
   .fl-toc-toggle svg,
   .md-typeset a.fl-pager__card,
   .md-typeset .grid.cards > ul > li,

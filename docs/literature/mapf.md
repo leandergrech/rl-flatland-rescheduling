@@ -60,7 +60,10 @@ planned to use that cell earlier has left it. This "avoids deadlocks by stopping
 maintain the ordering with which each train visits each cell"
 ([Li et al. 2021](https://ojs.aaai.org/index.php/ICAPS/article/download/15994/15805/19487)). The
 same rule is in the 2019 winner's write-up
-([Andreica 2021](https://arxiv.org/abs/2111.07876)).
+([Andreica 2021](https://arxiv.org/abs/2111.07876)). Multi-robot path finding calls the same
+structure an action dependency graph, and has methods that *switch* the order after delays while
+keeping it deadlock-free, by optimisation or by search. They are covered, with the learned
+approaches, on [Learning on top of a planner](hybrids.md#strand-2-re-ordering-a-plan-after-delays-multi-robot-path-finding).
 
 Why it works: draw a dependency graph with one node per (train, path step). Add an edge along each
 train's path, and an edge from "train \(j\) leaves cell \(x\)" to "train \(i\) enters \(x\)" whenever

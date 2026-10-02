@@ -9,6 +9,7 @@
 | PPO, tree obs | 25.0 ± 8.1 | 24.7 ± 4.8 | 16.5 ± 1.7 | 16.0 ± 1.5 |
 | Reactive rule | 82.0 ± 9.4 | 46.3 ± 10.7 | 25.3 ± 4.3 | 11.1 ± 2.1 |
 | Shortest path, no coordination | 36.0 ± 5.4 | 24.7 ± 4.7 | 8.3 ± 0.7 | 5.7 ± 1.0 |
+| OR + learned dispatcher (trained on medium only) | 100.0 ± 0.0 | 99.3 ± 0.7 | 98.2 ± 0.9 | 95.7 ± 1.1 |
 
 
 ### Normalised reward, held-out seeds, no malfunctions
@@ -22,6 +23,7 @@
 | PPO, tree obs | 0.664 ± 0.044 | 0.751 ± 0.020 | 0.744 ± 0.012 | 0.737 ± 0.013 |
 | Reactive rule | 0.885 ± 0.041 | 0.766 ± 0.043 | 0.689 ± 0.024 | 0.615 ± 0.012 |
 | Shortest path, no coordination | 0.728 ± 0.038 | 0.656 ± 0.030 | 0.564 ± 0.009 | 0.538 ± 0.012 |
+| OR + learned dispatcher (trained on medium only) | 0.994 ± 0.004 | 0.990 ± 0.006 | 0.971 ± 0.010 | 0.952 ± 0.008 |
 
 
 ### Deadlocked trains at episode end (mean per episode), held-out seeds, no malfunctions
@@ -35,6 +37,7 @@
 | PPO, tree obs | 0.0 | 0.2 | 0.2 | 1.0 |
 | Reactive rule | 0.0 | 1.2 | 6.4 | 6.3 |
 | Shortest path, no coordination | 3.6 | 17.9 | 30.7 | 61.7 |
+| OR + learned dispatcher (trained on medium only) | 0.0 | 0.0 | 0.0 | 0.0 |
 
 
 ### Arrival rate (%), same seeds with malfunctions
@@ -48,6 +51,7 @@
 | PPO, tree obs | 22.0 ± 7.7 | 22.7 ± 4.5 | 16.3 ± 1.6 | 15.0 ± 1.5 |
 | Reactive rule | 76.0 ± 9.7 | 45.7 ± 9.7 | 22.3 ± 4.0 | 9.8 ± 1.3 |
 | Shortest path, no coordination | 36.0 ± 5.4 | 23.7 ± 4.0 | 9.2 ± 0.7 | 5.2 ± 0.9 |
+| OR + learned dispatcher (trained on medium only) | 100.0 ± 0.0 | 98.3 ± 1.0 | 94.0 ± 1.7 | 89.6 ± 2.1 |
 
 
 ### Normalised reward, same seeds with malfunctions
@@ -61,6 +65,7 @@
 | PPO, tree obs | 0.656 ± 0.043 | 0.747 ± 0.019 | 0.742 ± 0.012 | 0.732 ± 0.014 |
 | Reactive rule | 0.867 ± 0.040 | 0.761 ± 0.038 | 0.679 ± 0.024 | 0.612 ± 0.010 |
 | Shortest path, no coordination | 0.727 ± 0.038 | 0.649 ± 0.026 | 0.570 ± 0.010 | 0.537 ± 0.013 |
+| OR + learned dispatcher (trained on medium only) | 0.988 ± 0.004 | 0.984 ± 0.008 | 0.951 ± 0.013 | 0.922 ± 0.007 |
 
 
 ### Deadlocked trains at episode end (mean per episode), same seeds with malfunctions
@@ -74,6 +79,7 @@
 | PPO, tree obs | 0.0 | 0.2 | 0.5 | 1.4 |
 | Reactive rule | 0.0 | 1.0 | 5.5 | 6.1 |
 | Shortest path, no coordination | 3.6 | 16.6 | 33.5 | 61.4 |
+| OR + learned dispatcher (trained on medium only) | 0.0 | 0.0 | 0.0 | 0.0 |
 
 
 ### Policy wall-clock per env step (ms, mean over episodes, no malfunctions)

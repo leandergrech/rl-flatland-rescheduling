@@ -24,7 +24,7 @@ from rl_flatland.tada import figures as tf  # noqa: E402
 DATA = ROOT / "data" / "tada"
 DOC = ROOT / "docs" / "08-tada-dispatcher.md"
 FIG = ROOT / "docs" / "assets" / "figures"
-GH = "https://github.com/leandergrech/rl-flatland-rescheduling/blob/feat/tada-dispatcher/"
+GH = "https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/"
 
 ABLATIONS = [  # name, what changes against main (B=2, M=8, slack features, all actions, no shaping)
     ("main_it60", "main run at 60 iterations: B = 2, M = 8, set (i), all actions"),

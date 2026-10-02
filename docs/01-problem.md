@@ -253,3 +253,7 @@ So "solved" cannot mean arrival rate alone. A useful definition has three parts:
    published RL method has shown. The best post-hoc RL result on the Flatland 3 stages reached a
    score of 125.3 with 66.4% of trains arrived, against 141.0 and 88.0% for the winning OR entry
    ([Jiang et al. 2023, Table 7](https://arxiv.org/pdf/2210.12933)).
+
+The learned dispatcher of [TADA on rails](08-tada-dispatcher.md) meets part 1 only by
+construction, because it is the OR reference plus learned edits, and has not met part 2: its gains
+after malfunctions are a few trains, within seed-to-seed variation.

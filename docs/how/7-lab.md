@@ -18,7 +18,11 @@ icon: fl/lab
     episode from the start, so you can try an idea, watch what it does to every train, and take it
     back.
 
-<div class="fl-widget" data-widget="lab" data-title="The Scheduling Lab"></div>
+<div class="fl-widget" data-widget="lab" data-title="The Scheduling Lab">
+<p class="fl-fallback">The Lab runs in JavaScript, which is switched off or did not load. Static
+views of the same maps and policies are in <a href="../3-deadlock/">Conflicts and deadlock</a> and
+<a href="../../04-designs/#results-on-our-scenarios">Designs and results</a>.</p>
+</div>
 
 ## How to use it
 

@@ -1,5 +1,5 @@
 site_name: RL for Flatland train rescheduling
-site_description: A personal literature review and CPU-sized codebase for multi-agent RL train rescheduling on Flatland
+site_description: Can reinforcement learning beat planning at train rescheduling? A reproduced OR planner, learned baselines and a learned dispatcher on Flatland, with an in-browser Scheduling Lab
 site_author: Leander Grech
 repo_url: https://github.com/leandergrech/rl-flatland-rescheduling
 site_url: https://leandergrech.github.io/rl-flatland-rescheduling/
@@ -36,17 +36,10 @@ theme:
         name: Light mode
 
 nav:
-  - Overview:
-      - Home: index.md
-      - For Leander: for-leander.md
-  - The benchmark:
-      - The problem: 01-problem.md
-      - Designs and results: 04-designs.md
-      - TADA on rails: 08-tada-dispatcher.md
-      - Limitations: 05-limitations.md
-      - Open questions: 06-open-questions.md
-  - How it works:
-      - Start here: 02-primer.md
+  - Home: index.md
+  - Understand the problem:
+      - The control problem: 01-problem.md
+      - "How it works: start here": 02-primer.md
       - The rail network: how/1-network.md
       - Trains, timetables and breakdowns: how/2-trains.md
       - Conflicts and deadlock: how/3-deadlock.md
@@ -54,15 +47,29 @@ nav:
       - Executing a plan under disruption: how/5-execution.md
       - Learning on top of the plan: how/6-learning.md
       - The Scheduling Lab: how/7-lab.md
+  - Explore the experiments:
+      - Methods and evaluation: research/methodology.md
+      - Designs and results: 04-designs.md
+      - TADA on rails: 08-tada-dispatcher.md
+      - Limitations: 05-limitations.md
+      - Open questions: 06-open-questions.md
+  - Inspect the implementation:
+      - Architecture: implementation/architecture.md
+      - Reproducing the results: implementation/reproduce.md
   - Literature:
       - The MAPF toolkit: literature/mapf.md
+      - "Learning on top of a planner: related work": literature/hybrids.md
       - Timeline 2019–2026: 03-timeline.md
       - References: 07-references.md
       - Glossary and formulas: literature/glossary.md
+  - About:
+      - About this project: about.md
+      - "Study notes: from air traffic to rail": for-leander.md
 
 hooks:
   - hooks/strip_svg_metadata.py
   - hooks/asset_versions.py
+  - hooks/lazy_images.py
 
 markdown_extensions:
   - admonition
@@ -101,7 +108,6 @@ extra_javascript:
   - javascripts/lab.js
   - javascripts/nav.js
   - javascripts/mathjax.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 validation:
   links:
