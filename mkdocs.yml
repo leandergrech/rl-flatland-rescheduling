@@ -58,6 +58,7 @@ nav:
       - Reproducing the results: implementation/reproduce.md
   - Literature:
       - The MAPF toolkit: literature/mapf.md
+      - "Learning on top of a planner: related work": literature/hybrids.md
       - Timeline 2019–2026: 03-timeline.md
       - References: 07-references.md
       - Glossary and formulas: literature/glossary.md

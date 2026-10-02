@@ -38,7 +38,7 @@ tested.
 | Four fixed mid-size scenarios with seed splits, a decision wrapper and two observations around flatland-rl 4.3.0 | implemented | [Architecture](implementation/architecture.md) |
 | OR planner: prioritized planning, SIPP and ordered execution, written from the published descriptions of the 2019 and 2020 winners | reproduced | [Designs and results](04-designs.md#or-reference-pp-sipp-ordered-execution) |
 | PPO (two observations), behaviour cloning, cloning then PPO, two rule-based references, one evaluation harness | implemented and compared | [Designs and results](04-designs.md#baselines-in-this-repository) |
-| A learned windowed dispatcher on top of the planner, with a re-timed live reservation table and checked clearances; verification, ablations, generalisation and a continuous-traffic variant | original | [TADA on rails](08-tada-dispatcher.md) |
+| A learned windowed dispatcher on top of the planner, with a re-timed live reservation table and checked clearances; verification, ablations, generalisation and a continuous-traffic variant | original (a 2022 thesis tried a close variant: [related work](literature/hybrids.md)) | [TADA on rails](08-tada-dispatcher.md) |
 | The Scheduling Lab: flatland, the planner and the dispatcher in the browser, checked against flatland-rl step for step | original | [The Scheduling Lab](how/7-lab.md) |
 | Chapters with playable models, from the rail network to learning on top of a plan | explanation | [How it works](02-primer.md) |
 
@@ -59,6 +59,9 @@ These follow from the results on this site; the evidence is linked.
 - **Dense decisions dilute credit.** A decision on most steps, nearly all of them "carry on", and a
   reward at the end of the episode: PPO learned to make its edits cost no delay, not which edits
   to make ([results on medium](08-tada-dispatcher.md#results-on-medium)).
+- **Search for prior work before building, not after.** The related-work search ran after the
+  dispatcher experiment and found a 2022 thesis that had tried a close variant on Flatland, with
+  the same null result ([related work](literature/hybrids.md)).
 - **Verify a port step by step.** The browser simulator matched flatland-rl only after reproducing
   details such as the order in which Python iterates a set
   ([how the Lab is checked](how/7-lab.md#how-faithful-it-is)).

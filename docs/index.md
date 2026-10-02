@@ -165,7 +165,8 @@ measures how far each approach gets on identical maps, and tries one way to comb
 
     **TADA on rails.** The author's air-traffic dispatcher design moved to rail: a learned policy
     that may HOLD, YIELD or REROUTE trains, where every edit is re-planned against a live
-    reservation table before it is accepted.
+    reservation table before it is accepted. A 2022 thesis tried a close variant on Flatland,
+    with the same outcome ([related work](literature/hybrids.md)).
 
     [:octicons-arrow-right-24: The experiment](08-tada-dispatcher.md)
 

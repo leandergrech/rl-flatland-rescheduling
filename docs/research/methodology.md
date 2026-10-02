@@ -24,7 +24,8 @@ icon: fl/method
    through checked clearances ([TADA on rails](../08-tada-dispatcher.md)).
 
 Neither question was framed as a hypothesis with a pre-registered test; the comparisons below are
-descriptive, with standard errors over seeds.
+descriptive, with standard errors over seeds. The search for prior work on the second question
+came after the experiment ([Learning on top of a planner](../literature/hybrids.md)).
 
 ## Benchmark and scenarios
 
@@ -58,7 +59,7 @@ therefore paired.
 | PPO, tree observation | **implemented**, standard method | same | same | 30 min wall-clock, 8 processes | same |
 | Behaviour cloning from the planner, then PPO | **implemented**, standard method | same | same, plus 120 planner episodes | 30 min wall-clock, 8 processes | [`baselines/imitation.py`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/src/rl_flatland/baselines/imitation.py) |
 | Reactive rule; shortest path | **implemented** reference heuristics | enter a segment only if no opposing train is on it; or always follow the shortest path | – | none | [`policies.py`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/src/rl_flatland/policies.py) |
-| Learned dispatcher on the planner ("TADA on rails") | **original**: adapted from the author's air-traffic project to rail | HOLD / YIELD_TO / REROUTE clearances, checked against a live reservation table | medium only, seeds 0–999, malfunctions on | 115 PPO iterations × 8 episodes, 55 minutes on 8 processes | [`tada/`](https://github.com/leandergrech/rl-flatland-rescheduling/tree/main/src/rl_flatland/tada) |
+| Learned dispatcher on the planner ("TADA on rails") | **original** to this project: adapted from the author's air-traffic project to rail; closest precedent a 2022 thesis with the same idea and outcome ([related work](../literature/hybrids.md)) | HOLD / YIELD_TO / REROUTE clearances, checked against a live reservation table | medium only, seeds 0–999, malfunctions on | 115 PPO iterations × 8 episodes, 55 minutes on 8 processes | [`tada/`](https://github.com/leandergrech/rl-flatland-rescheduling/tree/main/src/rl_flatland/tada) |
 
 Hyperparameters are stored next to each checkpoint (`data/checkpoints/<run>/config.json`,
 `data/tada/checkpoints/<run>/config.json`). The baselines and their design choices are described in

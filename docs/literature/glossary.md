@@ -35,6 +35,8 @@ this repository. Notation follows [The problem](../01-problem.md).
 | **SIPP** | Safe-interval path planning: A* over (configuration, safe interval). | [The MAPF toolkit](mapf.md) |
 | **Prioritized planning (PP)** | Plan trains one by one in a priority order, each around the reservations of the earlier ones. | [Planning](../how/4-planning.md#prioritized-planning) |
 | **Ordered execution (MCP)** | Enter a cell only after every train planned through it earlier has left; deadlock-free under delays. | [Execution](../how/5-execution.md#keep-the-order-not-the-times) |
+| **Switchable order** | Executing a plan while allowed to change which of two agents passes a shared cell first, keeping the dependency graph acyclic (switchable action dependency graphs, temporal plan graphs). | [Learning on top of a planner](hybrids.md#strand-2-re-ordering-a-plan-after-delays-multi-robot-path-finding) |
+| **Shield (preemptive)** | A check that removes unsafe actions before a learned policy chooses; here the planner computes it for each clearance. | [Learning on top of a planner](hybrids.md#strand-5-air-traffic-control-and-shielded-rl) |
 | **Knock-on delay** | Delay passed from a late train to trains that wait for it. | [Execution](../how/5-execution.md#what-it-costs-knock-on-delay) |
 | **Re-timing** | Recomputing every planned visit's earliest feasible time from the current state and the planned order. | [Execution](../how/5-execution.md#re-timing-and-repair) |
 | **Clearance** | A dispatcher's edit to the plan: HOLD, YIELD_TO a partner, or REROUTE. | [TADA on rails](../08-tada-dispatcher.md) |

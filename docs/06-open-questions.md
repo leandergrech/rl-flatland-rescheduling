@@ -49,6 +49,27 @@ The ranking below is unchanged. The branch makes questions 1 and 5 cheaper: the 
 replans a train from its current position, which question 1 needs and which this page priced at a
 week.
 
+## Update: related work checked (2026-10-02)
+
+A search for learning on top of planners ([Learning on top of a planner](literature/hybrids.md))
+changes the starting point of four questions, not their ranking:
+
+- **Question 1** has a close Flatland precedent. A 2022 thesis learned which wait or reroute
+  resolution to apply to delay conflicts on a conflict-free timetable, and lost to simple
+  baselines ([Leichthammer 2022](07-references.md#leichthammer2022)). It also has a strong
+  non-learned baseline in multi-robot execution: online, deadlock-free re-ordering by search or
+  optimisation ([Feng et al. 2024](07-references.md#feng2024);
+  [Berndt et al.](07-references.md#berndt2023)).
+- **Question 3** has positive prior results outside rail: learned priority orders for
+  prioritized planning ([Zhang et al. 2022](07-references.md#zhang2022)), and, with PPO and
+  attention, about 25% higher warehouse throughput than random priorities
+  ([Zheng et al. 2026](07-references.md#zheng2026)). Flatland with malfunctions is still
+  untested.
+- **Question 4**: the 2020 winner's planner has been used as an expert queried during training,
+  at 5 to 15 trains ([Bourgeat et al. 2026](07-references.md#bourgeat2026)).
+- **Question 5**: the dispatcher of page 8 is a planner-computed preemptive shield in the sense
+  of [Alshiekh et al. 2018](07-references.md#alshiekh2018).
+
 ## 1. Learned repair: when to break the planned order after a malfunction
 
 **Why open.** Every OR winner keeps a plan's cell-visiting order after disruptions (MCP) and then
@@ -60,15 +81,20 @@ still where OR loses most: the ECML 2026 winner fell from 100% delivered on clea
 78% with malfunctions. On our scenarios the OR reference loses 1.3, 4.3 and 6.6 points of arrival
 rate to malfunctions on medium, large and xlarge (same seeds, malfunctions on and off), and knock-on
 waiting behind late or broken trains is almost six times the waiting the plan itself contains
-(4,349 against 742 train-steps on large, seed 1000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). No published RL work targets
-the repair decision on top of a planner. This is where the hypothesis that RL can beat OR on
-malfunction response can actually be tested.
+(4,349 against 742 train-steps on large, seed 1000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). The one
+published learned repair layer on Flatland, a 2022 thesis, resolved delay conflicts on a
+conflict-free timetable with DQN and did not beat waiting or a heuristic
+([Leichthammer 2022](07-references.md#leichthammer2022)). In multi-robot execution, the same
+re-ordering decision is solved by search without learning
+([Feng et al. 2024](07-references.md#feng2024)). This is where the hypothesis that RL can beat OR
+on malfunction response can actually be tested.
 
 **First paper.** A gate that, when a train is held behind a late or broken train, chooses "keep
 order" or "overtake and re-plan this train". Trained as a contextual bandit with counterfactual
 rewards from cloned environments (the simulator is deterministic between malfunctions). Show: X%
 of the arrivals lost to malfunctions recovered, zero deadlocks, Y ms per decision, against the OR
-reference and against "always re-plan" as an oracle-ish upper bound.
+reference, against "always re-plan" as an oracle-ish upper bound, and against a non-learned
+re-ordering search in the style of switchable-edge search.
 
 **Effort.** 4 to 6 weeks: 1 week to make the planner re-plan a train from its current position,
 1 week for counterfactual data, 1 week for the gate, 1 to 2 weeks for evaluation at 30 to 100
@@ -98,7 +124,10 @@ matched planning time.
 keys (fast first, slack first) plus random restarts or LNS
 ([Chen et al. 2023](https://arxiv.org/abs/2306.06455)). A learned ranking that matches best-of-K
 restarts in one pass trades training compute for planning time, which the competition clock
-rewards.
+rewards. It works in multi-robot path finding: a ranking learned from the best of many runs
+([Zhang et al. 2022](07-references.md#zhang2022)), and PPO-learned priority orders with about 25%
+higher warehouse throughput than random ones ([Zheng et al. 2026](07-references.md#zheng2026)).
+Nobody has tried it on rail with malfunctions.
 
 **First paper.** Train a per-train scoring network (features: slack, speed, corridor overlap with
 other trains' shortest paths, departure time) by imitating the best of K random orderings. Report
@@ -115,7 +144,9 @@ for PPO on 5-train maps), and Maze-Flatland's policies are cloned from MCTS. But
 cloning compounds its errors, and nobody has shown a cloned policy generalising from tens to
 hundreds of trains. DAgger needs an expert that can answer "what would you do here?" from states
 the learner reached, which means re-planning from arbitrary states. That is the same planner
-extension as question 1.
+extension as question 1. The 2020 winner's planner has been used this way inside a world model,
+at 5 to 15 trains: 80.8% arrived at 10 trains against the planner's 98.0%
+([Bourgeat et al. 2026, Table 1](07-references.md#bourgeat2026)).
 
 **First paper.** DAgger with PP+SIPP as the expert, on this repo's decision interface. Train at 30
 trains, test at 60 and 100, and measure the gap to the expert against the number of expert queries.
@@ -126,7 +157,9 @@ trains, test at 60 and 100, and measure the gap to the expert against the number
 
 **Why open.** No RL method on Flatland guarantees anything; Maze-Flatland reports ≤ 5% deadlocks.
 Ordered execution is a ready-made shield: any proposed move that would violate the planned visiting
-order is replaced by a wait. Contract-based shielding has touched Flatland
+order is replaced by a wait. Safe-RL calls this kind of check a shield
+([Alshiekh et al. 2018](07-references.md#alshiekh2018);
+[ElSayed-Aly et al. 2021](07-references.md#elsayed2021) for the multi-agent case). Contract-based shielding has touched Flatland
 ([Adalat et al. 2026](https://arxiv.org/abs/2606.14130)), but without numbers we could verify.
 
 **First paper.** PPO acting through an MCP shield over a coarse plan, with the shield's

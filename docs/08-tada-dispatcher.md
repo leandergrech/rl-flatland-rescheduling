@@ -54,6 +54,24 @@ One difference works in our favour. TADA's AMAN could not be recomputed, which c
 policy could fix. Here every clearance replans the affected trains' tails in milliseconds, so the
 learned layer only owns the deviations from the plan.
 
+## Related work
+
+The closest precedent is a 2022 master's thesis on a Flatland fork
+([Leichthammer 2022](07-references.md#leichthammer2022)). There a DQN picks one of ten wait or
+reroute resolutions for each conflict a delay causes on a conflict-free timetable, with infeasible
+options masked. It also found that simple baselines beat every trained network. Two things differ
+here:
+
+- every clearance is re-planned against the whole live reservation table before it is committed,
+  which keeps the plan deadlock-free by construction;
+- the policy chooses among a window of trains rather than one conflict at a time.
+
+Elsewhere, multi-robot execution re-orders passing orders after delays by optimisation, without
+learning (switchable dependency graphs and temporal plan graphs). Learned priorities help a
+prioritized planner before execution, and on a real rail line RL has chosen train orders for an
+optimiser. In that last case it also stayed behind the optimiser. The full comparison is on
+[Learning on top of a planner](literature/hybrids.md).
+
 ## Architecture
 
 ```mermaid

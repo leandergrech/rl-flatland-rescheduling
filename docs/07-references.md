@@ -89,7 +89,7 @@ licence that also forbids use in later Flatland challenges, so none of it was co
 - <a id="jiang2023"></a>**Jiang, Zhang, Li, Chen & Zhu 2023.** "Multi-Agent Path Finding via Tree LSTM." AAAI 2023 MAPF workshop. <https://arxiv.org/abs/2210.12933>. Code <https://github.com/liqimai/flatland-marl>. Used for: Flatland 3 reward restatement (§2), the 15 official test stages and per-stage results (Table 6), the leaderboard comparison with 125.3 points (Table 7), curriculum and "5 days of training" for one phase.
 - <a id="jaziri2024"></a>**Jaziri, Künzel & Ramesh 2024.** "Mitigating the Stability-Plasticity Dilemma in Adaptive Train Scheduling with Curriculum-Driven Continual DQN Expansion." CoLLAs 2025. <https://arxiv.org/abs/2408.09838>. Only the abstract was verified.
 - <a id="castagna2026"></a>**Castagna et al. 2026.** A. Castagna, S. Zahlner, A. Egli, C. Eichenberger, D. Boos, M. Meyer, A. Fuxjäger. "Towards Autonomous Railway Operations: A Semi-Hierarchical Deep Reinforcement Learning Approach to the Vehicle Rescheduling Problem." arXiv:2605.10257, 2026-05-11. <https://arxiv.org/html/2605.10257v1>. Exact per-baseline percentages are only in a bar chart (Fig. 6) and are **unverified**.
-- <a id="bourgeat2026"></a>**Bourgeat, Legrain & Cappart 2026.** "Imitation-Guided World Models for Multi-agent Train Rescheduling." *CPAIOR 2026*, LNCS 16595:82–100. DOI <https://doi.org/10.1007/978-3-032-27242-3_6>. Paywalled with no preprint: only the bibliographic record is verified. Method and numbers are **unverified**.
+- <a id="bourgeat2026"></a>**Bourgeat, Legrain & Cappart 2026.** "Imitation-Guided World Models for Multi-agent Train Rescheduling." *CPAIOR 2026*, LNCS 16595:82–100. DOI <https://doi.org/10.1007/978-3-032-27242-3_6>; author PDF <https://Max9294D.github.io/files/Expert_Guided_WM.pdf>; code <https://github.com/corail-research/Imitation-Guided_World_Models>. Used for: the expert (the 2020 winner's solver, Li et al. 2021, queried during training), training time (§5.2) and Table 1 (arrived / deadlocked at 5, 10 and 15 trains, 100 instances each). Verified in the author PDF on 2026-10-02.
 - <a id="adalat2026"></a>**Adalat, Hamel-De le Court & Belardinelli 2026.** "Contract-Based Compositional Shielding for Safe Multi-Agent Reinforcement Learning." EUMAS 2026. <https://arxiv.org/abs/2606.14130>. Uses Flatland as one of six environments; Flatland numbers **unverified**.
 - <a id="ecml-rl-baseline"></a>**ECML 2026 organisers' RL baseline ("adaptive completion").** <https://github.com/dynamik1703/ecml2026-starterkit> (MIT, branch `rl-masked-baseline`): masked PPO/rerank policy with a deadlock-avoidance fallback on dense station clusters.
 - <a id="alomb"></a>**alomb/FlatlandChallenge** (course project with D3QN, parameter-sharing PPO, curriculum). <https://github.com/alomb/FlatlandChallenge>. No numbers verified.
@@ -110,10 +110,53 @@ licence that also forbids use in later Flatland challenges, so none of it was co
 - <a id="ribeiro2022"></a>**Ribeiro, Ellerbroek & Hoekstra 2022.** "Improving Algorithm Conflict Resolution Manoeuvres with Reinforcement Learning." *Aerospace* 9(12):847. <https://api.openalex.org/works/doi:10.3390/aerospace9120847>. Exact deltas **unverified** (publisher page blocked).
 - <a id="tada"></a>**TADA (Terminal Airspace Digital Assistant).** SESAR 3 JU exploratory research project 101166972, 2024-09 to 2027-02, University of Malta among the partners. <https://www.sesarju.eu/projects/TADA>.
 
+## Learning combined with planning or optimisation
+
+Searched and opened on 2026-10-02 for [Learning on top of a planner](literature/hybrids.md). The
+entries marked *re-checked* were downloaded and their quoted numbers checked against the PDF.
+
+**Flatland**
+
+- <a id="leichthammer2022"></a>**Leichthammer 2022.** L. Leichthammer. "Evaluating Planning-based Machine Learning Algorithms for Scheduling Railway Operations." Master's thesis, TU Darmstadt, 31 March 2022 (supervisor J. Czech). <https://ml-research.github.io/papers/leichthammer2022evaluating.pdf>. Used for: the ten resolution options (§4), the environments (Table 6.1), the results and the quoted conclusion (§6.4.1, Table 6.2). *Re-checked.*
+- <a id="nygren2023"></a>**Nygren, Eichenberger & Frejinger 2023.** "Scope Restriction for Scalable Real-Time Railway Rescheduling: An Exploratory Study." arXiv:2305.03574. <https://arxiv.org/abs/2305.03574>.
+
+**Re-ordering and robust execution in multi-agent path finding**
+
+- <a id="honig2019"></a>**Hönig, Kiesel, Tinka, Durham & Ayanian 2019.** "Persistent and Robust Execution of MAPF Schedules in Warehouses." *IEEE Robotics and Automation Letters* 4(2):1125–1131. Preprint <https://whoenig.github.io/publications/2019_RA-L_Hoenig.pdf>.
+- <a id="berndt2023"></a>**Berndt, van Duijkeren, Palmieri, Kleiner & Keviczky 2023.** "Receding Horizon Re-ordering of Multi-Agent Execution Schedules." arXiv:2312.04190. <https://arxiv.org/abs/2312.04190>. Earlier version: Berndt, van Duijkeren, Palmieri & Keviczky, "A Feedback Scheme to Reorder a Multi-Agent Execution Schedule by Persistently Optimizing a Switchable Action Dependency Graph," ICAPS 2020 workshop, arXiv:2010.05254. *Re-checked* (the 25% figure and "recursively feasible").
+- <a id="feng2024"></a>**Feng, Paul, Chen & Li 2024.** "A Real-Time Rescheduling Algorithm for Multi-robot Plan Execution." *ICAPS 2024*. <https://arxiv.org/abs/2403.18145>.
+- <a id="su2024"></a>**Su, Veerapaneni & Li 2024.** "Bidirectional Temporal Plan Graph: Enabling Switchable Passing Orders for More Efficient Multi-Agent Path Finding Plan Execution." *AAAI 2024*. <https://arxiv.org/abs/2401.00315>.
+- <a id="zahradka2026"></a>**Zahrádka, Woller, Mužíková, Kulich & Přeučil 2026.** "Should I Replan? Learning to Spot the Right Time in Robust MAPF Execution." arXiv:2604.25567. <https://arxiv.org/abs/2604.25567>. *Re-checked.*
+- <a id="yan2026"></a>**Yan, Zhou, Jiang, Smith & Li 2025.** "From Discrete Plans to Real-World Execution: A World-Model-Driven Framework for Execution-Aware Multi-Agent Path Finding." arXiv:2511.21886v2. <https://arxiv.org/abs/2511.21886>. *Re-checked.*
+
+**Learning priorities and neighbourhoods for a planner**
+
+- <a id="zhang2022"></a>**Zhang, Li, Huang, Koenig & Dilkina 2022.** "Learning a Priority Ordering for Prioritized Planning in Multi-Agent Path Finding." *SoCS 2022*, pp. 208–216. <https://taoanhuang.github.io/files/socs22a.pdf>.
+- <a id="zheng2026"></a>**Zheng, Ma, Araki, Chen & Wu 2026.** "Learning-guided Prioritized Planning for Lifelong Multi-Agent Path Finding in Warehouse Automation." *JAIR* 85, Article 28. <https://arxiv.org/abs/2603.23838>. *Re-checked* (the 25% figure and the quoted limitation of the repair step, §4).
+- <a id="huang2022"></a>**Huang, Li, Koenig & Dilkina 2022.** "Anytime Multi-Agent Path Finding via Machine Learning-Guided Large Neighborhood Search." *AAAI 2022*, 36(9):9368–9376. <https://ojs.aaai.org/index.php/AAAI/article/view/21168>.
+- <a id="wang2025"></a>**Wang, Duhan, Li & Sartoretti 2025.** "LNS2+RL: Combining Multi-Agent Reinforcement Learning with Large Neighborhood Search in Multi-Agent Path Finding." *AAAI 2025*. <https://arxiv.org/abs/2405.17794>.
+
+**Railway dispatching with learning and optimisation**
+
+- <a id="zhang2024"></a>**Zhang, Liu, Sun, Dabiri & De Schutter 2024.** "Integrated reinforcement learning and optimization for railway timetable rescheduling." *IFAC CTS 2024*, pp. 310–315, doi:10.1016/j.ifacol.2024.07.358. Preprint <https://www.bartdeschutter.org/publications/24-009-integrated-reinforcement-learning-optimization/24-009-integrated-reinforcement-learning-optimization.pdf>. Used for: Table 3. *Re-checked.*
+- <a id="liu2026"></a>**Liu, Oliveira da Silva, Dabiri, Wang & De Schutter 2026.** "Learning-based model predictive control for passenger-oriented train rescheduling with flexible train composition." *Transportation Research Part C* 191:105841. <https://arxiv.org/abs/2502.15544>.
+- <a id="ghasempour2019"></a>**Ghasempour, Nicholson, Kirkwood, Fujiyama & Heydecker.** "Distributed approximate dynamic control for traffic management of busy railway networks." *IEEE Transactions on Intelligent Transportation Systems*, doi:10.1109/TITS.2019.2934083. Accepted version <https://discovery.ucl.ac.uk/id/eprint/10080161/>.
+- <a id="agasucci2023"></a>**Agasucci, Grani & Lamorgese 2023.** "Solving the single-track train scheduling problem via Deep Reinforcement Learning." *Journal of Rail Transport Planning & Management* 26:100394. <https://arxiv.org/abs/2009.00433>.
+- <a id="prasad2020"></a>**Prasad, Kalyanakrishnan & Khadilkar 2020.** "Optimising a Real-time Scheduler for Railway Lines using Policy Search." *ALA workshop 2020*. <https://ala2020.vub.ac.be/papers/ALA2020_paper_29.pdf>.
+- <a id="tang2022"></a>**Tang et al. 2022.** "A literature review of Artificial Intelligence applications in railway systems." *Transportation Research Part C* 140:103679, doi:10.1016/j.trc.2022.103679. <https://repository.tudelft.nl/file/File_fab39c57-5d2b-4422-b61d-984565c6bab9>.
+- <a id="besinovic2022"></a>**Bešinović et al. 2022.** "Artificial Intelligence in Railway Transport: Taxonomy, Regulations, and Applications." *IEEE Transactions on Intelligent Transportation Systems* 23(9). Accepted version <https://eprints.whiterose.ac.uk/id/eprint/180822/>.
+
+**Safe and shielded reinforcement learning, and learned schedule improvement**
+
+- <a id="alshiekh2018"></a>**Alshiekh, Bloem, Ehlers, Könighofer, Niekum & Topcu 2018.** "Safe Reinforcement Learning via Shielding." *AAAI 2018*. <https://arxiv.org/abs/1708.08611>.
+- <a id="elsayed2021"></a>**ElSayed-Aly, Bharadwaj, Amato, Ehlers, Topcu & Feng 2021.** "Safe Multi-Agent Reinforcement Learning via Shielding." *AAMAS 2021*. <https://arxiv.org/abs/2101.11196>.
+- <a id="zhang2024jsp"></a>**Zhang, Cao, Song, Wu & Zhang 2024.** "Deep Reinforcement Learning Guided Improvement Heuristic for Job Shop Scheduling." *ICLR 2024*. <https://arxiv.org/abs/2211.10936>.
+
 ## Unverified or not found
 
+- For the related-work search (2026-10-02): full texts of Šemrov et al. 2016 (TR Part B 86), Khadilkar 2019 (IEEE T-ITS 20(2)), Mohapatra et al. 2022 ("Gatekeeper", IJCNN), Dalle & Parmentier 2022 (ROADEF) and Ni et al. 2026 were blocked or paywalled; an ML-guided configuration of RECIFE-MILP (Bai et al., RailDresden 2025) was seen only as a search snippet; no public TADA publication or deliverable was found. Nothing on the site depends on them.
 - Pham et al. 2019 (ATM Seminar), "A machine learning approach for conflict resolution in dense traffic scenarios with uncertainties": publisher pages blocked; not cited for numbers.
-- The two ScienceDirect railway-AI reviews (S2590198226003301, S0968090X22001206): HTTP 403; not used.
+- The two ScienceDirect railway-AI reviews (S2590198226003301, S0968090X22001206): HTTP 403. The second is Tang et al. 2022, since read through the TU Delft repository ([entry](#tang2022)); the first is not used.
 - Official score of the ECML 2026 runner-up beyond the post-competition page (12.4925 is verified there; the repository itself states no score).
 - JBR_HSE training hardware and wall-clock time: not reported anywhere we could open.
 - Training compute for TreeLSTM (beyond "5 days" for one phase), Maze-Flatland and MAMBA: not reported in the opened text.
