@@ -46,7 +46,9 @@ group, not across rows.
 competition close, Flatland 3 stages with TreeLSTM post hoc against the leaderboard winner's 141.0,
 ECML 2026 against the organisers' RL baseline). Right: share of trains arrived, best OR against best
 RL, where a round reports it, plus this repository's small and xlarge scenarios. Sources are the
-rows of the table above.*
+rows of the table above. For this repository, "RL" is the best policy learned from scratch; the
+learned dispatcher on top of the planner is a hybrid and matches the OR bar by construction
+([TADA on rails](08-tada-dispatcher.md)).*
 
 ## The same story as a timeline
 

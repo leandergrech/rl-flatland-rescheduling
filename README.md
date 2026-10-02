@@ -53,8 +53,11 @@ Then open `notebooks/01-explore.ipynb`.
 | PPO, tree obs | 25.0 / 22.0 | 24.7 / 22.7 | 16.5 / 16.3 | 16.0 / 15.0 | 31.3 + 22.0 |
 | Reactive rule | 82.0 / 76.0 | 46.3 / 45.7 | 25.3 / 22.3 | 11.1 / 9.8 | 0.0 + 3.5 |
 | Shortest path, no coordination | 36.0 / 36.0 | 24.7 / 23.7 | 8.3 / 9.2 | 5.7 / 5.2 | 0.0 + 0.8 |
+| OR + learned dispatcher (trained on medium only) | 100.0 / 100.0 | 99.3 / 98.3 | 98.2 / 94.0 | 95.7 / 89.6 | 55.1 + 40.4 |
 
 Arrival rate in % on the 10 held-out seeds per scenario, without / with malfunctions (same seeds, rate 1/1000 per train-step, 20 to 50 steps). Mean over episodes. Wall-clock on a ThinkPad i7-1260P (16 threads) with 8 worker processes, while two unrelated training jobs shared the CPU (1-minute load average median 23, range 11 to 44, logged in data/results/run_log/).
+
+The last row is not a policy learned from scratch: it is the OR planner with the learned dispatcher of TADA on rails on top, which may only edit the plan through checked clearances. With every clearance PROCEED it reproduces the OR row exactly, so its arrival rate is the planner's plus whatever the learned edits change. Trained on medium only; small, large and xlarge are evaluated without retraining. Its training and evaluation ran while the CPU clock varied between 400 MHz and 2.9 GHz.
 
 <!-- README_RESULTS:END -->
 
