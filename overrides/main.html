@@ -21,6 +21,10 @@
       {% endif %}
     </nav>
   {% endif %}
+  {#- the section this page belongs to (Understand the problem, Explore the experiments, ...) -#}
+  {% if page.parent and page.parent.title %}
+    <p class="fl-section-eyebrow">{{ page.parent.title }}</p>
+  {% endif %}
   {{ super() }}
   {% if prev or next %}
     <nav class="fl-pager fl-pager--bottom" aria-label="Previous and next page">
