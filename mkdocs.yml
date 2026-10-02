@@ -7,6 +7,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/logo.svg
   favicon: assets/logo.svg
   font:
@@ -17,6 +18,7 @@ theme:
     - navigation.top
     - content.code.copy
     - toc.follow
+    - toc.integrate
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -45,6 +47,10 @@ nav:
   - 7. References: 07-references.md
   - 8. TADA on rails: 08-tada-dispatcher.md
 
+hooks:
+  - hooks/strip_svg_metadata.py
+  - hooks/asset_versions.py
+
 markdown_extensions:
   - admonition
   - attr_list
@@ -56,6 +62,12 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -65,8 +77,10 @@ markdown_extensions:
 extra_css:
   - stylesheets/base.css
   - stylesheets/theme.css
+  - stylesheets/site.css
 
 extra_javascript:
+  - javascripts/nav.js
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
