@@ -1,0 +1,2011 @@
+{
+ "maps": [
+  {
+   "id": "small-1000-n",
+   "scenario": "small",
+   "seed": 1000,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 203,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 167
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 167,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5827586206896551,
+     "deadlocked": 0,
+     "steps": 203
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.6847290640394088,
+     "deadlocked": 6,
+     "steps": 203
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.9152709359605912,
+     "deadlocked": 0,
+     "steps": 203
+    }
+   }
+  },
+  {
+   "id": "small-1000-m",
+   "scenario": "small",
+   "seed": 1000,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 203,
+   "H": 30,
+   "W": 30,
+   "n_malf": 1,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 167
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 167,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5827586206896551,
+     "deadlocked": 0,
+     "steps": 203
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.6847290640394088,
+     "deadlocked": 6,
+     "steps": 203
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.9152709359605912,
+     "deadlocked": 0,
+     "steps": 203
+    }
+   }
+  },
+  {
+   "id": "small-1001-n",
+   "scenario": "small",
+   "seed": 1001,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 165,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 135
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 135,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9678787878787879,
+     "deadlocked": 0,
+     "steps": 127
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 10,
+     "normalized_reward": 0.8357575757575757,
+     "deadlocked": 4,
+     "steps": 165
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.896969696969697,
+     "deadlocked": 0,
+     "steps": 165
+    }
+   }
+  },
+  {
+   "id": "small-1001-m",
+   "scenario": "small",
+   "seed": 1001,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 165,
+   "H": 30,
+   "W": 30,
+   "n_malf": 2,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9945454545454545,
+     "deadlocked": 0,
+     "steps": 153
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9872727272727273,
+     "deadlocked": 0,
+     "steps": 165,
+     "terminated": false,
+     "commits": 13
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9642424242424242,
+     "deadlocked": 0,
+     "steps": 153
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 10,
+     "normalized_reward": 0.8357575757575757,
+     "deadlocked": 4,
+     "steps": 165
+    },
+    "reactive_avoid": {
+     "arrived": 5,
+     "n_agents": 10,
+     "normalized_reward": 0.8363636363636364,
+     "deadlocked": 0,
+     "steps": 165
+    }
+   }
+  },
+  {
+   "id": "small-1002-n",
+   "scenario": "small",
+   "seed": 1002,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 226,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 213
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 213,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9880530973451327,
+     "deadlocked": 0,
+     "steps": 197
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.8137168141592921,
+     "deadlocked": 4,
+     "steps": 226
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9814159292035398,
+     "deadlocked": 0,
+     "steps": 196
+    }
+   }
+  },
+  {
+   "id": "small-1002-m",
+   "scenario": "small",
+   "seed": 1002,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 226,
+   "H": 30,
+   "W": 30,
+   "n_malf": 2,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 213
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 213,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9539823008849557,
+     "deadlocked": 0,
+     "steps": 218
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.8137168141592921,
+     "deadlocked": 4,
+     "steps": 226
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.8942477876106195,
+     "deadlocked": 0,
+     "steps": 226
+    }
+   }
+  },
+  {
+   "id": "small-1003-n",
+   "scenario": "small",
+   "seed": 1003,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 129,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9968992248062015,
+     "deadlocked": 0,
+     "steps": 106
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9968992248062015,
+     "deadlocked": 0,
+     "steps": 106,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9782945736434109,
+     "deadlocked": 0,
+     "steps": 113
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.7511627906976744,
+     "deadlocked": 2,
+     "steps": 129
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9697674418604652,
+     "deadlocked": 0,
+     "steps": 123
+    }
+   }
+  },
+  {
+   "id": "small-1003-m",
+   "scenario": "small",
+   "seed": 1003,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 129,
+   "H": 30,
+   "W": 30,
+   "n_malf": 3,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9829457364341085,
+     "deadlocked": 0,
+     "steps": 117
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.982170542635659,
+     "deadlocked": 0,
+     "steps": 121,
+     "terminated": false,
+     "commits": 2
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9751937984496124,
+     "deadlocked": 0,
+     "steps": 116
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.748062015503876,
+     "deadlocked": 2,
+     "steps": 129
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9643410852713178,
+     "deadlocked": 0,
+     "steps": 124
+    }
+   }
+  },
+  {
+   "id": "small-1004-n",
+   "scenario": "small",
+   "seed": 1004,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 209,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 150
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 150,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9660287081339713,
+     "deadlocked": 0,
+     "steps": 152
+    },
+    "shortest_path": {
+     "arrived": 2,
+     "n_agents": 10,
+     "normalized_reward": 0.5411483253588516,
+     "deadlocked": 7,
+     "steps": 209
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9842105263157894,
+     "deadlocked": 0,
+     "steps": 162
+    }
+   }
+  },
+  {
+   "id": "small-1004-m",
+   "scenario": "small",
+   "seed": 1004,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 209,
+   "H": 30,
+   "W": 30,
+   "n_malf": 1,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9937799043062201,
+     "deadlocked": 0,
+     "steps": 185
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9913875598086125,
+     "deadlocked": 0,
+     "steps": 190,
+     "terminated": false,
+     "commits": 1
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9598086124401914,
+     "deadlocked": 0,
+     "steps": 185
+    },
+    "shortest_path": {
+     "arrived": 2,
+     "n_agents": 10,
+     "normalized_reward": 0.5349282296650717,
+     "deadlocked": 7,
+     "steps": 209
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9779904306220095,
+     "deadlocked": 0,
+     "steps": 185
+    }
+   }
+  },
+  {
+   "id": "small-1005-n",
+   "scenario": "small",
+   "seed": 1005,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 200,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.996,
+     "deadlocked": 0,
+     "steps": 162
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.996,
+     "deadlocked": 0,
+     "steps": 162,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.7150000000000001,
+     "deadlocked": 0,
+     "steps": 200
+    },
+    "shortest_path": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5569999999999999,
+     "deadlocked": 0,
+     "steps": 200
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.922,
+     "deadlocked": 0,
+     "steps": 200
+    }
+   }
+  },
+  {
+   "id": "small-1005-m",
+   "scenario": "small",
+   "seed": 1005,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 200,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.996,
+     "deadlocked": 0,
+     "steps": 162
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.996,
+     "deadlocked": 0,
+     "steps": 162,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.7150000000000001,
+     "deadlocked": 0,
+     "steps": 200
+    },
+    "shortest_path": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5569999999999999,
+     "deadlocked": 0,
+     "steps": 200
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.922,
+     "deadlocked": 0,
+     "steps": 200
+    }
+   }
+  },
+  {
+   "id": "small-1006-n",
+   "scenario": "small",
+   "seed": 1006,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 180,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9594444444444444,
+     "deadlocked": 0,
+     "steps": 137
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9594444444444444,
+     "deadlocked": 0,
+     "steps": 137,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.4783333333333334,
+     "deadlocked": 0,
+     "steps": 180
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 10,
+     "normalized_reward": 0.8105555555555556,
+     "deadlocked": 0,
+     "steps": 180
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.8372222222222222,
+     "deadlocked": 0,
+     "steps": 180
+    }
+   }
+  },
+  {
+   "id": "small-1006-m",
+   "scenario": "small",
+   "seed": 1006,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 180,
+   "H": 30,
+   "W": 30,
+   "n_malf": 3,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9594444444444444,
+     "deadlocked": 0,
+     "steps": 140
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9594444444444444,
+     "deadlocked": 0,
+     "steps": 140,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.4788888888888889,
+     "deadlocked": 0,
+     "steps": 180
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 10,
+     "normalized_reward": 0.8111111111111111,
+     "deadlocked": 0,
+     "steps": 180
+    },
+    "reactive_avoid": {
+     "arrived": 7,
+     "n_agents": 10,
+     "normalized_reward": 0.7894444444444444,
+     "deadlocked": 0,
+     "steps": 180
+    }
+   }
+  },
+  {
+   "id": "small-1007-n",
+   "scenario": "small",
+   "seed": 1007,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 216,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 150
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 150,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.6527777777777778,
+     "deadlocked": 0,
+     "steps": 216
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.6680555555555556,
+     "deadlocked": 7,
+     "steps": 216
+    },
+    "reactive_avoid": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5449074074074074,
+     "deadlocked": 0,
+     "steps": 216
+    }
+   }
+  },
+  {
+   "id": "small-1007-m",
+   "scenario": "small",
+   "seed": 1007,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 216,
+   "H": 30,
+   "W": 30,
+   "n_malf": 4,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9847222222222223,
+     "deadlocked": 0,
+     "steps": 205
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9796296296296296,
+     "deadlocked": 0,
+     "steps": 216,
+     "terminated": false,
+     "commits": 3
+    },
+    "ppo": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.6527777777777778,
+     "deadlocked": 0,
+     "steps": 216
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 10,
+     "normalized_reward": 0.6680555555555556,
+     "deadlocked": 7,
+     "steps": 216
+    },
+    "reactive_avoid": {
+     "arrived": 0,
+     "n_agents": 10,
+     "normalized_reward": 0.5449074074074074,
+     "deadlocked": 0,
+     "steps": 216
+    }
+   }
+  },
+  {
+   "id": "small-1008-n",
+   "scenario": "small",
+   "seed": 1008,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 211,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.995260663507109,
+     "deadlocked": 0,
+     "steps": 188
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9843601895734597,
+     "deadlocked": 0,
+     "steps": 211,
+     "terminated": false,
+     "commits": 19
+    },
+    "ppo": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.7677725118483412,
+     "deadlocked": 0,
+     "steps": 211
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.7109004739336493,
+     "deadlocked": 6,
+     "steps": 211
+    },
+    "reactive_avoid": {
+     "arrived": 8,
+     "n_agents": 10,
+     "normalized_reward": 0.8758293838862559,
+     "deadlocked": 0,
+     "steps": 211
+    }
+   }
+  },
+  {
+   "id": "small-1008-m",
+   "scenario": "small",
+   "seed": 1008,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 211,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.995260663507109,
+     "deadlocked": 0,
+     "steps": 188
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9843601895734597,
+     "deadlocked": 0,
+     "steps": 211,
+     "terminated": false,
+     "commits": 19
+    },
+    "ppo": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.7677725118483412,
+     "deadlocked": 0,
+     "steps": 211
+    },
+    "shortest_path": {
+     "arrived": 4,
+     "n_agents": 10,
+     "normalized_reward": 0.7109004739336493,
+     "deadlocked": 6,
+     "steps": 211
+    },
+    "reactive_avoid": {
+     "arrived": 8,
+     "n_agents": 10,
+     "normalized_reward": 0.8758293838862559,
+     "deadlocked": 0,
+     "steps": 211
+    }
+   }
+  },
+  {
+   "id": "small-1009-n",
+   "scenario": "small",
+   "seed": 1009,
+   "malfunctions": false,
+   "n_agents": 10,
+   "T": 199,
+   "H": 30,
+   "W": 30,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 168
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 168,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 168
+    },
+    "shortest_path": {
+     "arrived": 6,
+     "n_agents": 10,
+     "normalized_reward": 0.9050251256281407,
+     "deadlocked": 0,
+     "steps": 199
+    },
+    "reactive_avoid": {
+     "arrived": 8,
+     "n_agents": 10,
+     "normalized_reward": 0.9190954773869346,
+     "deadlocked": 0,
+     "steps": 199
+    }
+   }
+  },
+  {
+   "id": "small-1009-m",
+   "scenario": "small",
+   "seed": 1009,
+   "malfunctions": true,
+   "n_agents": 10,
+   "T": 199,
+   "H": 30,
+   "W": 30,
+   "n_malf": 2,
+   "outcomes": {
+    "or": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9994974874371859,
+     "deadlocked": 0,
+     "steps": 183
+    },
+    "tada": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9994974874371859,
+     "deadlocked": 0,
+     "steps": 183,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 10,
+     "normalized_reward": 0.9934673366834171,
+     "deadlocked": 0,
+     "steps": 187
+    },
+    "shortest_path": {
+     "arrived": 6,
+     "n_agents": 10,
+     "normalized_reward": 0.9050251256281407,
+     "deadlocked": 0,
+     "steps": 199
+    },
+    "reactive_avoid": {
+     "arrived": 9,
+     "n_agents": 10,
+     "normalized_reward": 0.949748743718593,
+     "deadlocked": 0,
+     "steps": 199
+    }
+   }
+  },
+  {
+   "id": "medium-1000-n",
+   "scenario": "medium",
+   "seed": 1000,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 475,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9804912280701754,
+     "deadlocked": 0,
+     "steps": 472
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.976561403508772,
+     "deadlocked": 0,
+     "steps": 474,
+     "terminated": false,
+     "commits": 35
+    },
+    "ppo": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.524,
+     "deadlocked": 4,
+     "steps": 475
+    },
+    "shortest_path": {
+     "arrived": 1,
+     "n_agents": 30,
+     "normalized_reward": 0.5143157894736843,
+     "deadlocked": 23,
+     "steps": 475
+    },
+    "reactive_avoid": {
+     "arrived": 3,
+     "n_agents": 30,
+     "normalized_reward": 0.599578947368421,
+     "deadlocked": 4,
+     "steps": 475
+    }
+   }
+  },
+  {
+   "id": "medium-1000-m",
+   "scenario": "medium",
+   "seed": 1000,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 475,
+   "H": 50,
+   "W": 50,
+   "n_malf": 15,
+   "outcomes": {
+    "or": {
+     "arrived": 28,
+     "n_agents": 30,
+     "normalized_reward": 0.9414736842105264,
+     "deadlocked": 0,
+     "steps": 475
+    },
+    "tada": {
+     "arrived": 29,
+     "n_agents": 30,
+     "normalized_reward": 0.9541052631578948,
+     "deadlocked": 0,
+     "steps": 475,
+     "terminated": false,
+     "commits": 53
+    },
+    "ppo": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.5541052631578947,
+     "deadlocked": 4,
+     "steps": 475
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 30,
+     "normalized_reward": 0.531157894736842,
+     "deadlocked": 21,
+     "steps": 475
+    },
+    "reactive_avoid": {
+     "arrived": 7,
+     "n_agents": 30,
+     "normalized_reward": 0.6514385964912282,
+     "deadlocked": 4,
+     "steps": 475
+    }
+   }
+  },
+  {
+   "id": "medium-1001-n",
+   "scenario": "medium",
+   "seed": 1001,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 834,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 717
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 717,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 11,
+     "n_agents": 30,
+     "normalized_reward": 0.7386890487609912,
+     "deadlocked": 0,
+     "steps": 834
+    },
+    "shortest_path": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.7992805755395683,
+     "deadlocked": 15,
+     "steps": 834
+    },
+    "reactive_avoid": {
+     "arrived": 27,
+     "n_agents": 30,
+     "normalized_reward": 0.9517186250999201,
+     "deadlocked": 0,
+     "steps": 834
+    }
+   }
+  },
+  {
+   "id": "medium-1001-m",
+   "scenario": "medium",
+   "seed": 1001,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 834,
+   "H": 50,
+   "W": 50,
+   "n_malf": 31,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 733
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 733,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 10,
+     "n_agents": 30,
+     "normalized_reward": 0.7200239808153477,
+     "deadlocked": 0,
+     "steps": 834
+    },
+    "shortest_path": {
+     "arrived": 11,
+     "n_agents": 30,
+     "normalized_reward": 0.7806554756195044,
+     "deadlocked": 7,
+     "steps": 834
+    },
+    "reactive_avoid": {
+     "arrived": 21,
+     "n_agents": 30,
+     "normalized_reward": 0.8744604316546762,
+     "deadlocked": 0,
+     "steps": 834
+    }
+   }
+  },
+  {
+   "id": "medium-1002-n",
+   "scenario": "medium",
+   "seed": 1002,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 834,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 689
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 689,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6768185451638689,
+     "deadlocked": 0,
+     "steps": 834
+    },
+    "shortest_path": {
+     "arrived": 10,
+     "n_agents": 30,
+     "normalized_reward": 0.7217825739408473,
+     "deadlocked": 18,
+     "steps": 834
+    },
+    "reactive_avoid": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.8055555555555556,
+     "deadlocked": 0,
+     "steps": 834
+    }
+   }
+  },
+  {
+   "id": "medium-1002-m",
+   "scenario": "medium",
+   "seed": 1002,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 834,
+   "H": 50,
+   "W": 50,
+   "n_malf": 19,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9960831334932054,
+     "deadlocked": 0,
+     "steps": 689
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9960831334932054,
+     "deadlocked": 0,
+     "steps": 689,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 11,
+     "n_agents": 30,
+     "normalized_reward": 0.7693045563549161,
+     "deadlocked": 0,
+     "steps": 834
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 30,
+     "normalized_reward": 0.6213029576338929,
+     "deadlocked": 24,
+     "steps": 834
+    },
+    "reactive_avoid": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.8055555555555556,
+     "deadlocked": 0,
+     "steps": 834
+    }
+   }
+  },
+  {
+   "id": "medium-1003-n",
+   "scenario": "medium",
+   "seed": 1003,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 592,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.995213963963964,
+     "deadlocked": 0,
+     "steps": 542
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9923986486486487,
+     "deadlocked": 0,
+     "steps": 592,
+     "terminated": false,
+     "commits": 45
+    },
+    "ppo": {
+     "arrived": 15,
+     "n_agents": 30,
+     "normalized_reward": 0.7851914414414414,
+     "deadlocked": 0,
+     "steps": 592
+    },
+    "shortest_path": {
+     "arrived": 12,
+     "n_agents": 30,
+     "normalized_reward": 0.7219031531531532,
+     "deadlocked": 13,
+     "steps": 592
+    },
+    "reactive_avoid": {
+     "arrived": 11,
+     "n_agents": 30,
+     "normalized_reward": 0.6920608108108108,
+     "deadlocked": 0,
+     "steps": 592
+    }
+   }
+  },
+  {
+   "id": "medium-1003-m",
+   "scenario": "medium",
+   "seed": 1003,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 592,
+   "H": 50,
+   "W": 50,
+   "n_malf": 16,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9869932432432432,
+     "deadlocked": 0,
+     "steps": 568
+    },
+    "tada": {
+     "arrived": 29,
+     "n_agents": 30,
+     "normalized_reward": 0.9827139639639639,
+     "deadlocked": 0,
+     "steps": 592,
+     "terminated": false,
+     "commits": 50
+    },
+    "ppo": {
+     "arrived": 12,
+     "n_agents": 30,
+     "normalized_reward": 0.7212274774774774,
+     "deadlocked": 0,
+     "steps": 592
+    },
+    "shortest_path": {
+     "arrived": 12,
+     "n_agents": 30,
+     "normalized_reward": 0.7218468468468469,
+     "deadlocked": 13,
+     "steps": 592
+    },
+    "reactive_avoid": {
+     "arrived": 4,
+     "n_agents": 30,
+     "normalized_reward": 0.6322635135135135,
+     "deadlocked": 0,
+     "steps": 592
+    }
+   }
+  },
+  {
+   "id": "medium-1004-n",
+   "scenario": "medium",
+   "seed": 1004,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 902,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 771
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 771,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9954915003695491,
+     "deadlocked": 0,
+     "steps": 771
+    },
+    "shortest_path": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.7590169992609017,
+     "deadlocked": 17,
+     "steps": 902
+    },
+    "reactive_avoid": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9786770140428677,
+     "deadlocked": 0,
+     "steps": 771
+    }
+   }
+  },
+  {
+   "id": "medium-1004-m",
+   "scenario": "medium",
+   "seed": 1004,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 902,
+   "H": 50,
+   "W": 50,
+   "n_malf": 29,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9994826311899483,
+     "deadlocked": 0,
+     "steps": 792
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9994826311899483,
+     "deadlocked": 0,
+     "steps": 792,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9963414634146341,
+     "deadlocked": 0,
+     "steps": 794
+    },
+    "shortest_path": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.7590169992609017,
+     "deadlocked": 17,
+     "steps": 902
+    },
+    "reactive_avoid": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9787139689578714,
+     "deadlocked": 0,
+     "steps": 821
+    }
+   }
+  },
+  {
+   "id": "medium-1005-n",
+   "scenario": "medium",
+   "seed": 1005,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 542,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 28,
+     "n_agents": 30,
+     "normalized_reward": 0.938929889298893,
+     "deadlocked": 0,
+     "steps": 542
+    },
+    "tada": {
+     "arrived": 28,
+     "n_agents": 30,
+     "normalized_reward": 0.9381918819188192,
+     "deadlocked": 0,
+     "steps": 542,
+     "terminated": false,
+     "commits": 4
+    },
+    "ppo": {
+     "arrived": 5,
+     "n_agents": 30,
+     "normalized_reward": 0.6322878228782287,
+     "deadlocked": 5,
+     "steps": 542
+    },
+    "shortest_path": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.5529520295202952,
+     "deadlocked": 26,
+     "steps": 542
+    },
+    "reactive_avoid": {
+     "arrived": 1,
+     "n_agents": 30,
+     "normalized_reward": 0.5917589175891759,
+     "deadlocked": 6,
+     "steps": 542
+    }
+   }
+  },
+  {
+   "id": "medium-1005-m",
+   "scenario": "medium",
+   "seed": 1005,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 542,
+   "H": 50,
+   "W": 50,
+   "n_malf": 19,
+   "outcomes": {
+    "or": {
+     "arrived": 26,
+     "n_agents": 30,
+     "normalized_reward": 0.9230627306273063,
+     "deadlocked": 0,
+     "steps": 542
+    },
+    "tada": {
+     "arrived": 27,
+     "n_agents": 30,
+     "normalized_reward": 0.9239237392373923,
+     "deadlocked": 0,
+     "steps": 542,
+     "terminated": false,
+     "commits": 58
+    },
+    "ppo": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6432964329643296,
+     "deadlocked": 5,
+     "steps": 542
+    },
+    "shortest_path": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.5476629766297663,
+     "deadlocked": 27,
+     "steps": 542
+    },
+    "reactive_avoid": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.603321033210332,
+     "deadlocked": 6,
+     "steps": 542
+    }
+   }
+  },
+  {
+   "id": "medium-1006-n",
+   "scenario": "medium",
+   "seed": 1006,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 598,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9972129319955407,
+     "deadlocked": 0,
+     "steps": 538
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9972129319955407,
+     "deadlocked": 0,
+     "steps": 538,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 9,
+     "n_agents": 30,
+     "normalized_reward": 0.7488294314381271,
+     "deadlocked": 0,
+     "steps": 598
+    },
+    "shortest_path": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6629319955406912,
+     "deadlocked": 17,
+     "steps": 598
+    },
+    "reactive_avoid": {
+     "arrived": 10,
+     "n_agents": 30,
+     "normalized_reward": 0.7539018952062431,
+     "deadlocked": 2,
+     "steps": 598
+    }
+   }
+  },
+  {
+   "id": "medium-1006-m",
+   "scenario": "medium",
+   "seed": 1006,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 598,
+   "H": 50,
+   "W": 50,
+   "n_malf": 20,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9935897435897436,
+     "deadlocked": 0,
+     "steps": 566
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9935897435897436,
+     "deadlocked": 0,
+     "steps": 566,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 9,
+     "n_agents": 30,
+     "normalized_reward": 0.7488294314381271,
+     "deadlocked": 0,
+     "steps": 598
+    },
+    "shortest_path": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6629319955406912,
+     "deadlocked": 17,
+     "steps": 598
+    },
+    "reactive_avoid": {
+     "arrived": 15,
+     "n_agents": 30,
+     "normalized_reward": 0.7957079152731327,
+     "deadlocked": 0,
+     "steps": 598
+    }
+   }
+  },
+  {
+   "id": "medium-1007-n",
+   "scenario": "medium",
+   "seed": 1007,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 568,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9987089201877934,
+     "deadlocked": 0,
+     "steps": 482
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9987089201877934,
+     "deadlocked": 0,
+     "steps": 482,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 12,
+     "n_agents": 30,
+     "normalized_reward": 0.7967723004694836,
+     "deadlocked": 0,
+     "steps": 568
+    },
+    "shortest_path": {
+     "arrived": 7,
+     "n_agents": 30,
+     "normalized_reward": 0.6305164319248826,
+     "deadlocked": 22,
+     "steps": 568
+    },
+    "reactive_avoid": {
+     "arrived": 25,
+     "n_agents": 30,
+     "normalized_reward": 0.8600352112676056,
+     "deadlocked": 0,
+     "steps": 568
+    }
+   }
+  },
+  {
+   "id": "medium-1007-m",
+   "scenario": "medium",
+   "seed": 1007,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 568,
+   "H": 50,
+   "W": 50,
+   "n_malf": 16,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9987089201877934,
+     "deadlocked": 0,
+     "steps": 484
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9987089201877934,
+     "deadlocked": 0,
+     "steps": 484,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 12,
+     "n_agents": 30,
+     "normalized_reward": 0.7967723004694836,
+     "deadlocked": 0,
+     "steps": 568
+    },
+    "shortest_path": {
+     "arrived": 7,
+     "n_agents": 30,
+     "normalized_reward": 0.6305164319248826,
+     "deadlocked": 22,
+     "steps": 568
+    },
+    "reactive_avoid": {
+     "arrived": 24,
+     "n_agents": 30,
+     "normalized_reward": 0.831924882629108,
+     "deadlocked": 0,
+     "steps": 568
+    }
+   }
+  },
+  {
+   "id": "medium-1008-n",
+   "scenario": "medium",
+   "seed": 1008,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 829,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.998431845597105,
+     "deadlocked": 0,
+     "steps": 658
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.998431845597105,
+     "deadlocked": 0,
+     "steps": 658,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.5585846401286692,
+     "deadlocked": 0,
+     "steps": 829
+    },
+    "shortest_path": {
+     "arrived": 7,
+     "n_agents": 30,
+     "normalized_reward": 0.6312022517088862,
+     "deadlocked": 14,
+     "steps": 829
+    },
+    "reactive_avoid": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6723361479694411,
+     "deadlocked": 0,
+     "steps": 829
+    }
+   }
+  },
+  {
+   "id": "medium-1008-m",
+   "scenario": "medium",
+   "seed": 1008,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 829,
+   "H": 50,
+   "W": 50,
+   "n_malf": 23,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9963409730599115,
+     "deadlocked": 0,
+     "steps": 686
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 0.9963409730599115,
+     "deadlocked": 0,
+     "steps": 686,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 2,
+     "n_agents": 30,
+     "normalized_reward": 0.5585846401286692,
+     "deadlocked": 0,
+     "steps": 829
+    },
+    "shortest_path": {
+     "arrived": 7,
+     "n_agents": 30,
+     "normalized_reward": 0.632529151588259,
+     "deadlocked": 14,
+     "steps": 829
+    },
+    "reactive_avoid": {
+     "arrived": 6,
+     "n_agents": 30,
+     "normalized_reward": 0.6723361479694411,
+     "deadlocked": 0,
+     "steps": 829
+    }
+   }
+  },
+  {
+   "id": "medium-1009-n",
+   "scenario": "medium",
+   "seed": 1009,
+   "malfunctions": false,
+   "n_agents": 30,
+   "T": 439,
+   "H": 50,
+   "W": 50,
+   "n_malf": 0,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 374
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 374,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.7814730447987851,
+     "deadlocked": 0,
+     "steps": 439
+    },
+    "shortest_path": {
+     "arrived": 3,
+     "n_agents": 30,
+     "normalized_reward": 0.5646924829157176,
+     "deadlocked": 14,
+     "steps": 439
+    },
+    "reactive_avoid": {
+     "arrived": 13,
+     "n_agents": 30,
+     "normalized_reward": 0.7541381928625664,
+     "deadlocked": 0,
+     "steps": 439
+    }
+   }
+  },
+  {
+   "id": "medium-1009-m",
+   "scenario": "medium",
+   "seed": 1009,
+   "malfunctions": true,
+   "n_agents": 30,
+   "T": 439,
+   "H": 50,
+   "W": 50,
+   "n_malf": 12,
+   "outcomes": {
+    "or": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 374
+    },
+    "tada": {
+     "arrived": 30,
+     "n_agents": 30,
+     "normalized_reward": 1.0,
+     "deadlocked": 0,
+     "steps": 374,
+     "terminated": false,
+     "commits": 0
+    },
+    "ppo": {
+     "arrived": 14,
+     "n_agents": 30,
+     "normalized_reward": 0.7836750189825361,
+     "deadlocked": 0,
+     "steps": 439
+    },
+    "shortest_path": {
+     "arrived": 5,
+     "n_agents": 30,
+     "normalized_reward": 0.6054669703872437,
+     "deadlocked": 4,
+     "steps": 439
+    },
+    "reactive_avoid": {
+     "arrived": 15,
+     "n_agents": 30,
+     "normalized_reward": 0.7659832953682613,
+     "deadlocked": 0,
+     "steps": 439
+    }
+   }
+  }
+ ],
+ "labels": {
+  "or": "OR planner (PP + SIPP + ordered execution)",
+  "tada": "TADA dispatcher on the planner (learned)",
+  "ppo": "PPO, compact observation (main's best learned)",
+  "shortest_path": "Shortest path, no coordination",
+  "reactive_avoid": "Reactive rule"
+ }
+}
