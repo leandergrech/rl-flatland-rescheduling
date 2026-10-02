@@ -366,8 +366,8 @@ Every baseline trains and evaluates end to end in under an hour. The slowest is 
    arrival rate is 63.0% on small (BC then PPO), 35.0% on medium (PPO), 16.5% on large and 16.0% on
    xlarge (PPO, tree obs), against 100, 99.3, 98.2 and 95.7% for OR. The reactive heuristic on the
    same compact features beats every learned policy on small, medium and large (82.0, 46.3, 25.3%).
-   The gap is larger than the competitions' 20 points because the training budget is 30 CPU minutes,
-   not days.
+   The gap is larger than the competitions' 20 points because the training budget is 30 minutes
+   on a laptop CPU, not days.
 3. **PPO learned to stop deadlocking, then gridlocked.** Training deadlocks fell from about 80% of
    trains to under 5% within 20 minutes. But on 4 medium held-out seeds, 79 of the 86 trains that
    did not arrive were still on the map at the horizon, waiting at switches for trains that were

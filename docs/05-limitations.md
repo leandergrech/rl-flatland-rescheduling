@@ -40,9 +40,9 @@ Arrival rate in % on the 10 held-out seeds per scenario, without / with malfunct
 
 <!-- README_RESULTS:END -->
 
-After 30 CPU minutes of training, the best learned policy is 37 points of arrival rate behind the OR
-reference on small, 64 on medium, 82 on large and 80 on xlarge. From medium up, that is larger
-than both the 20-point gap of NeurIPS 2020 and the 49-point gap between the best Flatland 3 OR and
+After a 30-minute training budget on a laptop CPU, the best learned policy is 37 points of
+arrival rate behind the OR reference on small, 64 on medium, 82 on large and 80 on xlarge. From
+medium up, that is larger than both the 20-point gap of NeurIPS 2020 and the 49-point gap between the best Flatland 3 OR and
 RL entries (88.0% against 38.6%, [Jiang et al. 2023, Table 7](https://arxiv.org/pdf/2210.12933)),
 for two reasons. First, the budget is minutes rather than days. Second, the
 learned policies here have none of the structural fixes the competitive RL entries used (departure

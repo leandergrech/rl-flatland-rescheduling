@@ -10,9 +10,9 @@ repository as the starting point. Each entry says why it is open, what a first p
 and what it would take.
 
 The ranking follows from the results in [Designs and results](04-designs.md#results-on-our-scenarios). On
-their own, learned policies here are 37 to 82 points of arrival rate behind the planner after 30
-CPU minutes, while the planner loses 1.3 to 6.6 points to malfunctions from medium to xlarge. So the
-openings that attach learning to a planner (1 to 4) rank above those that try to replace it (5 to 7).
+their own, learned policies here are 37 to 82 points of arrival rate behind the planner after a
+30-minute training budget on a laptop CPU, while the planner loses 1.3 to 6.6 points to
+malfunctions from medium to xlarge. So the openings that attach learning to a planner (1 to 4) rank above those that try to replace it (5 to 7).
 
 ![The seven openings by estimated effort, in rank order](assets/figures/openings-light.svg#only-light)
 ![The seven openings by estimated effort, in rank order](assets/figures/openings-dark.svg#only-dark)

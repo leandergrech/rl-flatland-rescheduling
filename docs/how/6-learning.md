@@ -62,8 +62,9 @@ Put in your vocabulary:
 ## Two ways to put learning in
 
 **Replace the planner.** Main's learned baselines drive every train directly: PPO with parameter
-sharing, behaviour cloning from the planner, and cloning followed by PPO. After 30 CPU minutes the
-best of them delivers 35% of trains on medium against the planner's 99.3%
+sharing, behaviour cloning from the planner, and cloning followed by PPO. After a 30-minute
+training budget on a laptop CPU the best of them delivers 35% of trains on medium against the
+planner's 99.3%
 ([Designs and results](../04-designs.md#results-on-our-scenarios)). In the Lab, its typical failure
 is not a head-on deadlock but a standstill: on small seed 1000 it departs nine of ten trains and
 every one of them is still stopped on the map at the horizon, waiting at switches for trains that
