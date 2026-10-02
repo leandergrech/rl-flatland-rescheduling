@@ -1,4 +1,8 @@
-# 3. Timeline of results, 2019 to 2026
+---
+icon: fl/timeline
+---
+
+# :fl-timeline: Timeline of results, 2019 to 2026
 
 Flatland's first public challenge ran in 2019
 ([Mohanty et al. 2020, §4.1](https://arxiv.org/abs/2012.05893)). We found no published Flatland
@@ -87,4 +91,4 @@ timeline
    comparison against LNS-based planners on the same instances.
 5. **Where RL has shown value** is imitation from planners (Mohanty et al.'s 86% with 25% imitation
    data; Maze-Flatland's behaviour cloning from MCTS) and communication (JBR_HSE's single most
-   effective change). Those are the threads [06-open-questions](06-open-questions.md) picks up.
+   effective change). Those are the threads [Open questions](06-open-questions.md) picks up.

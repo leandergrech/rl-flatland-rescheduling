@@ -1,4 +1,8 @@
-# 8. TADA on rails: a windowed dispatcher on top of the planner
+---
+icon: fl/tada
+---
+
+# :fl-tada: TADA on rails: a windowed dispatcher on top of the planner
 
 This page describes an experiment on the `feat/tada-dispatcher` branch. It puts a small learned
 dispatcher on top of the OR reference. The planner keeps doing what it is good at: timed,

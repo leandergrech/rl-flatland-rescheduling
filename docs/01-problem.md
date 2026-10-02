@@ -1,4 +1,8 @@
-# 1. The control problem
+---
+icon: fl/problem
+---
+
+# :fl-problem: The control problem
 
 Flatland is a discrete-time simulator of trains on a rail network drawn on a grid. You control
 every train. Each train must get from its start station to its target station inside a time
@@ -20,7 +24,7 @@ winning OR entries actually solve.
     ([Jiang et al. 2023, Table 6](https://arxiv.org/pdf/2210.12933)), and the ECML 2026 challenge
     up to 532 trains on a 120×150 map
     ([level config](https://flatland-association.github.io/flatland-book/challenges/ecml2026/levelconfig.html)).
-    [05-limitations](05-limitations.md#what-changes-at-competition-scale) covers what changes at that scale.
+    [Limitations](05-limitations.md#what-changes-at-competition-scale) covers what changes at that scale.
 
 ## Infrastructure
 
@@ -57,7 +61,7 @@ T = \min\Big( \big\lceil 1.5 \max_i \tau_i \big\rceil + 0.2\,\bar\tau,\; 24\,(W 
 with \(C\) the number of cities. Each train gets a travel allowance
 \(\lceil 1.3\,\tau_i + 0.2\,\bar\tau \rceil\), \(ED_i\) is drawn uniformly from the window that still
 lets it arrive by \(0.95\,T\), and \(LA_i = ED_i +\) allowance. On the held-out seeds of our four
-scenarios \(T\) ranges from 129 to 2,021 steps (see [02-primer](02-primer.md#what-the-numbers-look-like)).
+scenarios \(T\) ranges from 129 to 2,021 steps (see [02-primer](how/2-trains.md#what-the-numbers-look-like)).
 
 ## State
 
@@ -114,7 +118,7 @@ Each train picks one of 5 actions per step
 matters at a **decision instant**: when the train is ready to depart, or when it is at the exit
 point of its current cell. For a train at speed \(1/k\), that is one step in \(k\). Between
 decision instants the train keeps rolling. So each train lives in a semi-MDP with state-dependent
-decision times, which matters for RL credit assignment and discounting (see [04-designs](04-designs.md)).
+decision times, which matters for RL credit assignment and discounting (see [Designs and results](04-designs.md)).
 
 ## Dynamics
 
@@ -212,7 +216,7 @@ Because trains can neither pass nor reverse, two trains that meet head-on on a s
 segment can never move again, and every train queued behind them is stuck too. A deadlock is
 absorbing and it spreads, because other trains pile up behind the blocked ones. Most of the gap
 between RL and OR in the competitions comes from how each method avoids deadlocks
-(see [05-limitations](05-limitations.md)). `rl_flatland.deadlock.find_deadlocked` counts the trains
+(see [Limitations](05-limitations.md)). `rl_flatland.deadlock.find_deadlocked` counts the trains
 in head-on cores plus those queued behind them, and every result table in this repo reports that
 count.
 
@@ -232,12 +236,12 @@ and repairs them when malfunctions shift the timing. Flatland adds four twists t
 ([Stern et al. 2019](https://arxiv.org/abs/1906.08291)): directed motion with headings, per-train
 speeds, time windows, and trains that vanish at their target. Finding the fastest joint solution
 is NP-hard ([Jiang et al. 2023, §1](https://arxiv.org/pdf/2210.12933)), so all practical entries
-use prioritised or large-neighbourhood heuristics (see [04-designs](04-designs.md)).
+use prioritised or large-neighbourhood heuristics (see [Designs and results](04-designs.md)).
 
 ## What "solved" would mean
 
 At the scale of this repo, the OR reference already gets 100% of trains home on the small and
-medium scenarios without malfunctions (see [04-designs](04-designs.md#results-on-our-scenarios)).
+medium scenarios without malfunctions (see [Designs and results](04-designs.md#results-on-our-scenarios)).
 So "solved" cannot mean arrival rate alone. A useful definition has three parts:
 
 1. **Parity:** a learned policy that matches the OR reference's arrival rate and normalised reward

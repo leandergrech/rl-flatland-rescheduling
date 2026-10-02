@@ -1,4 +1,8 @@
-# References
+---
+icon: fl/books
+---
+
+# :fl-books: References
 
 Every source below was opened on 2026-09-30, either in this project's main session or by a
 research sub-agent that fetched the page or PDF and returned the URL with each extracted fact.
@@ -20,7 +24,7 @@ Installed on 2026-09-30 into a fresh `.venv` (uv 0.10.11, CPython 3.12.3) on a T
 | matplotlib | 3.10.9 | matplotlib licence (PSF-based) | plots |
 | cython | 3.3.0 | Apache-2.0 | dependency of flatland-rl |
 | gymnasium | 1.3.0 | MIT | installed with stable-baselines3, not imported by `rl_flatland` |
-| stable-baselines3 | 2.9.0 | MIT | installed; not used, see [04-designs](04-designs.md#why-a-custom-ppo-trainer) |
+| stable-baselines3 | 2.9.0 | MIT | installed; not used, see [Designs and results](04-designs.md#why-a-custom-ppo-trainer) |
 | mkdocs | 1.6.1 | BSD-2-Clause | this site |
 | mkdocs-material | 9.7.7 | MIT | this site |
 | pytest | 9.1.1 | MIT | tests |
