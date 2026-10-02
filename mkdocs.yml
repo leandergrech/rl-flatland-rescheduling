@@ -68,6 +68,7 @@ nav:
 hooks:
   - hooks/strip_svg_metadata.py
   - hooks/asset_versions.py
+  - hooks/lazy_images.py
 
 markdown_extensions:
   - admonition
@@ -106,7 +107,6 @@ extra_javascript:
   - javascripts/lab.js
   - javascripts/nav.js
   - javascripts/mathjax.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 validation:
   links:

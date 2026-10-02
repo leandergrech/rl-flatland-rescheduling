@@ -1,5 +1,5 @@
 /* Site theme "Departure board": amber on near-black, like a station departure board. */
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
+/* Space Mono is linked from overrides/main.html (extrahead), so it loads in parallel with this file. */
 
 :root {
   --pr-display-font: "Space Mono", "IBM Plex Mono", monospace;

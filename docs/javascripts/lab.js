@@ -1194,8 +1194,10 @@
   function mount() {
     document.querySelectorAll('.fl-widget[data-widget="lab"]:not([data-mounted])').forEach((root) => {
       root.dataset.mounted = "1";
+      root.querySelectorAll(":scope > .fl-fallback").forEach((n) => n.remove());
       try {
         wLab(root);
+        if (window.FLWidgetA11y) window.FLWidgetA11y(root);
       } catch (e) {
         root.appendChild(document.createTextNode("The Lab could not start: " + e.message));
         console.error(e);
