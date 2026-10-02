@@ -10,3 +10,4 @@ site/
 .ipynb_checkpoints/
 .cache/
 data/_large/
+data/lab_fixture/

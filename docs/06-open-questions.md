@@ -1,11 +1,15 @@
-# 6. Open questions you could attack
+---
+icon: fl/idea
+---
+
+# :fl-idea: Open questions you could attack
 
 Ranked by expected value per unit of effort for you: an RL researcher with ATC multi-agent experience,
 one laptop-class CPU for prototyping, and access to a cluster for scaling. Effort assumes this
 repository as the starting point. Each entry says why it is open, what a first paper would show,
 and what it would take.
 
-The ranking follows from the results in [04-designs](04-designs.md#results-on-our-scenarios). On
+The ranking follows from the results in [Designs and results](04-designs.md#results-on-our-scenarios). On
 their own, learned policies here are 37 to 82 points of arrival rate behind the planner after 30
 CPU minutes, while the planner loses 1.3 to 6.6 points to malfunctions from medium to xlarge. So the
 openings that attach learning to a planner (1 to 4) rank above those that try to replace it (5 to 7).
@@ -15,6 +19,36 @@ openings that attach learning to a planner (1 to 4) rank above those that try to
 
 *Effort ranges from the sections below, in rank order. "2–3 months" and "2+ months" are drawn as 9 to 13 weeks.*
 
+## Update: what the TADA dispatcher settled and what it opened
+
+[Page 8](08-tada-dispatcher.md) puts a learned, windowed dispatcher on top of the OR reference
+(TADA's structure, transplanted from air traffic control). Three things changed:
+
+- **Question 5 (shielded RL) is half answered.** A re-timed reservation table under the planner
+  made every offered edit safe: no deadlock or reservation violation in any episode, including
+  200 episodes of random edits ([step 1](08-tada-dispatcher.md#step-1-the-executor-reproduces-main-exactly))
+  and the continuous runs that inject up to 400 trains. The other half, how far learning improves on the
+  plan it is shielded by, came out close to zero after 55 minutes of training on 8 cores. On held-out medium the
+  learned layer ties the executor, and its only gains are a few trains on large and xlarge with
+  malfunctions ([results](08-tada-dispatcher.md#results-on-medium),
+  [generalisation](08-tada-dispatcher.md#generalisation-without-retraining)).
+- **Question 1 (learned repair) is sharpened, not closed.** On the harder training maps, editing
+  plans at all (even near-randomly) delivered more trains than the executor; what PPO learned was
+  to stop those edits costing delay, not which edits to make
+  ([training curves](08-tada-dispatcher.md#results-on-medium)). Credit assignment is the
+  bottleneck: a decision point on most env steps, almost all of them no-ops, and a reward at the
+  horizon. That favours question 1's design (decide only when a train is actually held behind a
+  late one, and score the choice with counterfactual rollouts) over PPO on a dense decision stream.
+- **A new, cheap opening: a relevance window.** The context window's rules are a safety filter, so
+  the window is full on most steps ([what did not work](08-tada-dispatcher.md#what-did-not-work)).
+  TADA worked because its rule picked the aircraft that mattered next. The rail equivalent would admit
+  only trains whose plan just slipped behind a late or broken train, which is question 1's trigger.
+  It needs no new machinery on the branch, about one to two weeks.
+
+The ranking below is unchanged. The branch makes questions 1 and 5 cheaper: the executor already
+replans a train from its current position, which question 1 needs and which this page priced at a
+week.
+
 ## 1. Learned repair: when to break the planned order after a malfunction
 
 **Why open.** Every OR winner keeps a plan's cell-visiting order after disruptions (MCP) and then
@@ -23,7 +57,7 @@ spends engineering effort on replanning: LNS-based partial replanning in 2020 an
 [Chen et al. 2023](https://arxiv.org/abs/2306.06455)), and "overstay rights" plus corridor locks in
 the ECML 2026 winner ([repo](https://github.com/darshanmakwana412/ecml2026)). Malfunctions are
 still where OR loses most: the ECML 2026 winner fell from 100% delivered on clean levels to 56 to
-78% with malfunctions. On our scenarios the OR reference loses 1.3, 4.4 and 6.6 points of arrival
+78% with malfunctions. On our scenarios the OR reference loses 1.3, 4.3 and 6.6 points of arrival
 rate to malfunctions on medium, large and xlarge (same seeds, malfunctions on and off), and knock-on
 waiting behind late or broken trains is almost six times the waiting the plan itself contains
 (4,349 against 742 train-steps on large, seed 1000, [notebook 03](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/notebooks/03-first-experiment.ipynb)). No published RL work targets

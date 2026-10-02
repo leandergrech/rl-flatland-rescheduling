@@ -1,4 +1,8 @@
-# 5. Limitations: what fails, and by how much
+---
+icon: fl/warning
+---
+
+# :fl-warning: Limitations: what fails, and by how much
 
 ## The RL-versus-OR gap in the official rounds
 
@@ -19,7 +23,7 @@ from OR based solutions" ([Laurent et al. 2021, §6](http://proceedings.mlr.pres
 
 ## On our mid-size scenarios
 
-Details and all metrics are in [04-designs](04-designs.md#results-on-our-scenarios).
+Details and all metrics are in [Designs and results](04-designs.md#results-on-our-scenarios).
 
 <!-- README_RESULTS:START -->
 | Policy | small 30×30, 10 trains | medium 50×50, 30 | large 80×80, 60 | xlarge 100×100, 100 | train + eval (min) |
@@ -155,7 +159,7 @@ OR is not solved either, which is the opening for learning:
 ## Partial observability
 
 Every OR entry reads the full state and plans with the exact simulator. Every RL entry in
-[04-designs](04-designs.md) gives each train a local view: a tree to depth 1 to 3, or depth over 10
+[Designs and results](04-designs.md) gives each train a local view: a tree to depth 1 to 3, or depth over 10
 for TreeLSTM. Communication (JBR_HSE's attention, MAMBA's messages, TreeLSTM's cross-train
 attention) is how RL entries claw back global information. It was JBR_HSE's single most effective
 change ([Laurent et al. 2021, §4.2](http://proceedings.mlr.press/v133/laurent21a/laurent21a.pdf)).
@@ -175,7 +179,7 @@ natural one is ordered execution itself: RL proposes, the MCP layer disposes.
 ## Sim-to-real
 
 Flatland abstracts away train length, braking curves, signalling headways, crews, rolling stock and
-passenger connections (see [02-primer](02-primer.md#flatlands-abstraction-and-what-it-leaves-out)).
+passenger connections (see [02-primer](how/1-network.md#real-maps)).
 Its networks are procedurally generated, its timetables come from a formula, and its malfunctions
 are memoryless Poisson onsets with uniform durations
 ([`malfunction_generators.py`](https://github.com/flatland-association/flatland-rl/blob/v4.3.0/flatland/envs/malfunction_generators.py)).

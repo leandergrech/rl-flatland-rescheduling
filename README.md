@@ -1,6 +1,6 @@
 # rl-flatland-rescheduling
 
-**Literature review: <https://leandergrech.github.io/rl-flatland-rescheduling/>**
+**Literature review and Scheduling Lab: <https://leandergrech.github.io/rl-flatland-rescheduling/>**
 
 Can multi-agent reinforcement learning close the gap to operations research on railway
 rescheduling? Flatland (SBB, Deutsche Bahn, SNCF, AIcrowd; now the Flatland Association) asks
@@ -11,7 +11,10 @@ planner scored 20.84 against 9.42 for the RL baseline. This repository is a veri
 review of that gap (2019 to 2026) and a CPU-sized codebase to work on it. It has four fixed mid-size
 scenarios, an OR reference that reproduces the core of the winning planners, a parameter-shared
 PPO baseline, and an imitation-then-PPO baseline, all evaluated by one harness on held-out seeds
-with and without malfunctions.
+with and without malfunctions. The site explains the mechanisms chapter by chapter with
+interactive widgets and ends in a **Scheduling Lab**: flatland itself, ported to JavaScript and
+checked step for step against flatland-rl on 40 held-out maps, where you can replay every policy,
+run the planner, break trains and dispatch yourself.
 
 **Scope:** 30×30 to 100×100 grids with 10 to 100 trains. Every baseline trains and evaluates on a
 laptop CPU in under an hour. The competitions went up to 314×314 cells and 6,256 trains; see
@@ -25,7 +28,7 @@ cd rl-flatland-rescheduling
 python3.12 -m venv .venv && source .venv/bin/activate      # or: uv venv --python 3.12 .venv
 pip install torch --index-url https://download.pytorch.org/whl/cpu   # CPU-only torch, optional
 pip install -e ".[dev]"
-pytest                                   # 19 tests, about 1 min
+pytest                                   # 34 tests, about 1 min
 bash scripts/reproduce.sh                # re-evaluate stored baselines on small+medium, compare with data/results
 mkdocs serve                             # the literature review locally
 ```
@@ -57,7 +60,9 @@ Arrival rate in % on the 10 held-out seeds per scenario, without / with malfunct
 ## Layout
 
 ```
-docs/                 literature review (MkDocs Material), published to GitHub Pages
+docs/                 the site (MkDocs Material): How it works chapters, the Scheduling Lab, Literature
+docs/javascripts/     flatland-core.js (flatland's RailEnv and the OR planner in JS), tada-core.js,
+                      lab.js (the Lab), widgets.js (chapter widgets), rail-draw.js, nav.js
 src/rl_flatland/      scenarios.py (fixed scenarios + seeds), graph.py, deadlock.py, observations.py,
                       env.py (decision wrapper), evaluation.py, metrics.py, plotting.py, policies.py,
                       baselines/or_planner.py, baselines/ppo.py, baselines/imitation.py, baselines/rl_policy.py
@@ -75,6 +80,10 @@ tests/                env sanity tests and a smoke test per baseline
 - `FULL=1 bash scripts/reproduce.sh`: retrains PPO, imitation and PPO-tree (30-minute budget each),
   then evaluates everything on all four scenarios.
 - `python scripts/evaluate.py --table` prints the stored summary.
+- The Lab's JavaScript port of flatland: `python scripts/make_lab_data.py` exports the 40 small and
+  medium held-out maps with five policies' recorded episodes (and the check fixtures, not committed),
+  then `node scripts/check_lab.mjs` (any Node 18+) checks distances, replays, the live planner and
+  the dispatcher's clearances against flatland-rl, step for step (40/40 maps).
 
 ## Licence
 

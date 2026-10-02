@@ -7,6 +7,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
+  custom_dir: overrides
   logo: assets/logo.svg
   favicon: assets/logo.svg
   font:
@@ -17,6 +18,7 @@ theme:
     - navigation.top
     - content.code.copy
     - toc.follow
+    - toc.integrate
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -34,15 +36,33 @@ theme:
         name: Light mode
 
 nav:
-  - Home: index.md
-  - For Leander: for-leander.md
-  - 1. The problem: 01-problem.md
-  - 2. Domain primer: 02-primer.md
-  - 3. Timeline 2019-2026: 03-timeline.md
-  - 4. Solution designs: 04-designs.md
-  - 5. Limitations: 05-limitations.md
-  - 6. Open questions: 06-open-questions.md
-  - 7. References: 07-references.md
+  - Overview:
+      - Home: index.md
+      - For Leander: for-leander.md
+  - The benchmark:
+      - The problem: 01-problem.md
+      - Designs and results: 04-designs.md
+      - TADA on rails: 08-tada-dispatcher.md
+      - Limitations: 05-limitations.md
+      - Open questions: 06-open-questions.md
+  - How it works:
+      - Start here: 02-primer.md
+      - The rail network: how/1-network.md
+      - Trains, timetables and breakdowns: how/2-trains.md
+      - Conflicts and deadlock: how/3-deadlock.md
+      - Planning with reservations: how/4-planning.md
+      - Executing a plan under disruption: how/5-execution.md
+      - Learning on top of the plan: how/6-learning.md
+      - The Scheduling Lab: how/7-lab.md
+  - Literature:
+      - The MAPF toolkit: literature/mapf.md
+      - Timeline 2019–2026: 03-timeline.md
+      - References: 07-references.md
+      - Glossary and formulas: literature/glossary.md
+
+hooks:
+  - hooks/strip_svg_metadata.py
+  - hooks/asset_versions.py
 
 markdown_extensions:
   - admonition
@@ -55,6 +75,12 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.arithmatex:
       generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+        custom_icons:
+          - overrides/.icons
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -64,8 +90,16 @@ markdown_extensions:
 extra_css:
   - stylesheets/base.css
   - stylesheets/theme.css
+  - stylesheets/site.css
+  - stylesheets/lab.css
 
 extra_javascript:
+  - javascripts/flatland-core.js
+  - javascripts/tada-core.js
+  - javascripts/rail-draw.js
+  - javascripts/widgets.js
+  - javascripts/lab.js
+  - javascripts/nav.js
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 

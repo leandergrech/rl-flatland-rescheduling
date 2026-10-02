@@ -1,6 +1,10 @@
-# 4. Solution designs side by side
+---
+icon: fl/results
+---
 
-This page compares the designs that produced the numbers in [03-timeline](03-timeline.md), then the
+# :fl-results: Solution designs and results
+
+This page compares the designs that produced the numbers in [Timeline](03-timeline.md), then the
 baselines in this repository and how they perform on our mid-size scenarios.
 
 ## Published designs
@@ -208,6 +212,8 @@ effect of malfunctions. Learned policies were trained on small and medium only.
 
 *Share of trains arrived, mean over 10 held-out seeds with standard-error whiskers. The tables below give every number.*
 
+[Every policy on one map, in the Lab](how/7-lab.md?map=medium-1000-n&preset=or&t=76){ .fl-try } [PPO's standstill on small seed 1000](how/7-lab.md?map=small-1000-n&preset=ppo&t=150){ .fl-try }
+
 <!-- RESULTS:START -->
 ### Arrival rate (%), held-out seeds, no malfunctions
 
@@ -354,7 +360,7 @@ Every baseline trains and evaluates end to end in under an hour. The slowest is 
 1. **The OR reference is close to perfect at this scale, and never deadlocks.** It gets 100% of
    trains home on small, 99.3% on medium, 98.2% on large and 95.7% on xlarge, with zero deadlocked
    trains in all 80 episodes. It spends 0.05 to 7 s planning once, then 0.05 to 1.3 ms per step.
-   Malfunctions cost it 0, 1.3, 4.4 and 6.6 points of arrival rate on the four scenarios. That
+   Malfunctions cost it 0, 1.3, 4.3 and 6.6 points of arrival rate on the four scenarios. That
    loss grows with density, which is the knock-on effect of order-preserving execution.
 2. **Every learned baseline is far behind, and mostly behind a ten-line rule.** The best learned
    arrival rate is 63.0% on small (BC then PPO), 35.0% on medium (PPO), 16.5% on large and 16.0% on
@@ -381,7 +387,7 @@ Every baseline trains and evaluates end to end in under an hour. The slowest is 
    16.0%), with almost no deadlocks (at most 1.4 trains per episode) and the best normalised reward
    of any learned policy from medium up (0.751 to 0.737). The low deadlock count has a cost: it
    never dispatches 67 to 69% of trains from medium up (see the failure-mode breakdown in
-   [05-limitations](05-limitations.md#where-the-trains-that-do-not-arrive-end-up)).
+   [Limitations](05-limitations.md#where-the-trains-that-do-not-arrive-end-up)).
 6. **Malfunctions barely move the learned policies** (at most 6 points either way), because they
    fail for other reasons first. Malfunction robustness only becomes a meaningful comparison once a
    learned policy gets most trains home.
