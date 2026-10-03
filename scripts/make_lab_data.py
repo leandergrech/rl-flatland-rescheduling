@@ -17,7 +17,7 @@ docs/assets/lab/maps/<id>.json with
 data/lab_fixture/<id>.json holds what the Node check compares against (scripts/check_lab.mjs):
 per-step train states, distance maps and main's OR plan. docs/assets/lab/index.json lists the maps.
 
-    python scripts/make_lab_data.py                      # small and medium, seeds 1000-1009, both splits
+    python scripts/make_lab_data.py                      # all four scenarios, seeds 1000-1009, both splits (large + xlarge alone: 28 min on 8 workers)
     python scripts/make_lab_data.py --scenarios small --seeds 1000 1001 --workers 4
 """
 
@@ -310,7 +310,7 @@ def job(args) -> dict:
 
 def main() -> None:
     p = argparse.ArgumentParser()
-    p.add_argument("--scenarios", nargs="+", default=["small", "medium"])
+    p.add_argument("--scenarios", nargs="+", default=["small", "medium", "large", "xlarge"])
     p.add_argument("--seeds", type=int, nargs="+", default=list(range(1000, 1010)))
     p.add_argument("--workers", type=int, default=8)
     a = p.parse_args()
