@@ -60,10 +60,11 @@ log:
 
 ## Lab: large and xlarge maps
 branch: feat/lab-large (from main @ a94585f)
-step: done on the branch
-state: awaiting merge (merging to main publishes the site)
-updated: 2026-10-03T13:33:53Z
+step: done
+state: published
+updated: 2026-10-03T14:44:35Z
 blockers: none
-next: user decision to merge
+next: none
 log:
 - 2026-10-03T13:33:53Z The Scheduling Lab now has all 80 held-out maps (small, medium, large 80x80/60 trains, xlarge 100x100/100 trains; seeds 1000-1009; malfunctions off and on for every seed). Export 28 min for large+xlarge; 400 recorded outcomes equal data/; check_lab 80/80 (7,173 dispatcher clearances). Malfunctions control is now an explicit off/on pair. Guided experiment 9 on xlarge seeds 1003 and 1008. Load of a 100-train map ~1 s; 'You dispatch' re-runs take several seconds there (window rebuilt every step), noted in the Lab. All '40 maps' mentions updated.
+- 2026-10-03T14:44:35Z Merged to main as PR #3 (merge commit 31b4455, CI green); Pages deployed; live index lists 80 maps and the Lab serves the large and xlarge maps.
