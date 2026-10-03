@@ -8,8 +8,9 @@ icon: fl/lab
 
 !!! abstract "What this is"
 
-    Flatland itself, running in your browser on the 40 held-out small and medium maps of this
-    repository (10 seeds each, with and without malfunctions). It is not a model of flatland: it is
+    Flatland itself, running in your browser on all 80 held-out maps of this repository: the four
+    scenarios from 30×30 with 10 trains to 100×100 with 100 trains, 10 seeds each, every seed with
+    malfunctions off and on. It is not a model of flatland: it is
     a JavaScript port of flatland-rl 4.3.0's environment and of this repository's OR planner, checked
     to reproduce flatland step for step on every one of those maps ([how faithful it
     is](#how-faithful-it-is)). Presets are grouped by **who dispatches**. *Recorded* presets replay
@@ -26,9 +27,10 @@ views of the same maps and policies are in <a href="../3-deadlock/">Conflicts an
 
 ## How to use it
 
-- **Above: pick a map and who dispatches.** Small (30×30, 10 trains) or medium (50×50, 30 trains),
-  a held-out seed, and malfunctions on or off; the same seed with and without malfunctions is the
-  same map and timetable. The story under the presets lists the episode's breakdowns, its first
+- **Above: pick a map and who dispatches.** Small (30×30, 10 trains), medium (50×50, 30), large
+  (80×80, 60) or xlarge (100×100, 100); a held-out seed; and malfunctions off or on. Every seed has
+  both: the same map and timetable, once without breakdowns and once with flatland's breakdowns
+  for that seed (rate 1/1000 per train-step, 20 to 50 steps each). The story under the presets lists the episode's breakdowns, its first
   deadlock, its first late arrival and its end; click a time to jump there.
 - **The side pane stays in view** while the panels scroll past it:
     - *Playback*: play, step, speed, the time slider, and an event strip (breakdowns in red, a
@@ -96,6 +98,13 @@ Each takes a few minutes. Predict first, then look.
    one line of logic.
 8. **A rule that is not enough.** [The reactive rule on medium seed 1005](7-lab.md?map=medium-1005-n&preset=reactive_avoid&t=170&train=20):
    five trains jam at t = 187. Its check looks one segment ahead; why was that too late?
+9. **A hundred trains.** [The planner on xlarge seed 1003](7-lab.md?map=xlarge-1003-n&preset=or&t=0)
+   gets 97 of 100 trains home. [With malfunctions on](7-lab.md?map=xlarge-1003-m&preset=or&t=0)
+   it gets 78, the largest loss to breakdowns of any held-out map. Find the breakdowns on the event
+   strip and follow the queue behind one on the time–space diagram. Then compare
+   [the learned dispatcher on the same map](7-lab.md?map=xlarge-1003-m&preset=tada&t=0) (82, its
+   largest gain anywhere) with [xlarge seed 1008](7-lab.md?map=xlarge-1008-m&preset=tada&t=0),
+   where it got 84 against the planner's 87.
 
 ## How faithful it is {#how-faithful-it-is}
 
@@ -110,17 +119,22 @@ OR planner (distance maps, prioritized planning with SIPP, the eight orders, ord
 `docs/javascripts/tada-core.js` ports page 8's dispatcher executor and its context window.
 
 **How it is checked.** `node scripts/check_lab.mjs` (after `python scripts/make_lab_data.py`, which
-writes the fixtures) checks, on each of the 40 maps: every train's distance-to-target from every
+writes the fixtures) checks, on each of the 80 maps: every train's distance-to-target from every
 configuration; Python's successor order where a train has a choice; the five recorded episodes,
 replayed step for step (state, position, heading, progress through the cell, speed and breakdown
 counter of every train, then arrivals and normalised reward); the planner run live here against
-main's planner (identical paths, identical episode); and the learned dispatcher's 302 recorded
+main's planner (identical paths, identical episode); and the learned dispatcher's 7,173 recorded
 clearances re-applied through the ported executor, with identical windows at every step and an
-identical episode. Result: **40 of 40 maps match flatland-rl**.
+identical episode. Result: **80 of 80 maps match flatland-rl**, and the 400 recorded episodes
+(five policies on 80 maps) have exactly the outcomes stored in `data/`.
 
 **What is not ported.** The learned policies' networks: PPO and the TADA dispatcher are replays of
-what they did in flatland, not policies running here. The large and xlarge scenarios (the planner
-would run, but the maps and recordings would make the page heavy). Flatland's observation builders,
-which nothing in the Lab needs. Rendering is this page's own.
+what they did in flatland, not policies running here. Flatland's observation builders, which
+nothing in the Lab needs. Rendering is this page's own.
+
+**Speed.** A map is fetched only when you pick it (about 45 KB compressed for a 100×100 map).
+Loading a 100-train map and replaying every controller on it takes about a second. *You dispatch*
+rebuilds the dispatcher's window at every step, so on large and xlarge maps each re-run takes a few
+seconds.
 
 See also [the glossary and formula sheet](../literature/glossary.md).

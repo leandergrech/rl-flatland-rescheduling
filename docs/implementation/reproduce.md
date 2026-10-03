@@ -37,7 +37,7 @@ pip install -e ".[dev]"
 | `pytest` | environment sanity, a smoke test per baseline, the dispatcher's executor and window, the figure palette | about 1 minute |
 | `bash scripts/reproduce.sh` | re-evaluates every stored baseline on the small and medium held-out seeds and checks that trains arrived, normalised reward, deadlocks and episode length match `data/results/` exactly | about 10 minutes |
 | `python scripts/tada_verify.py --workers 8` | the dispatcher's executor reproduces the OR planner exactly on all 80 evaluation episodes, and 200 episodes of random clearances never deadlock or violate a reservation | – |
-| `python scripts/make_lab_data.py`, then `node scripts/check_lab.mjs` | the browser port against flatland-rl on the 40 Lab maps: distances, five recorded policies, the live planner, the dispatcher's clearances (any Node 18+) | – |
+| `python scripts/make_lab_data.py`, then `node scripts/check_lab.mjs` | the browser port against flatland-rl on the 80 Lab maps: distances, five recorded policies, the live planner, the dispatcher's clearances (any Node 18+); the fixtures it writes (about 430 MB) are not committed | export about 28 min for large and xlarge alone; check about 8.5 min |
 | `mkdocs build --strict` | this site, with every internal link and anchor checked | under a minute |
 
 ## What is exact and what is not

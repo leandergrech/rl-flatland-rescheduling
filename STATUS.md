@@ -57,3 +57,13 @@ log:
 - 2026-10-02T15:32:17Z Results tables (Designs and results, Limitations, README) now include 'OR + learned dispatcher (trained on medium only)' from data/tada/results, with notes that it equals the OR row when every clearance is PROCEED; make_report.py --tables-only.
 - 2026-10-02T15:32:17Z Related-work search (4 parallel searches; closest sources re-checked against their PDFs): new page literature/hybrids.md and 23 references. Closest precedent: Leichthammer 2022 (TU Darmstadt MSc thesis): DQN picks feasibility-masked wait/reroute resolutions on a conflict-free Flatland timetable and loses to simple baselines, the same null result. Not found: a learned policy whose edits are committed only after re-planning against a live reservation table. Open questions 1, 3, 4, 5, the timeline (Leichthammer row; Bourgeat 2026 now verified from the author PDF), Methods, TADA page, home card and About updated accordingly.
 - 2026-10-02T15:57:05Z Merged to main as PR #2 (merge commit 43547a9, CI green); Pages workflow deployed; live site serves the new home page, Methods, Architecture, Reproducing, About and the related-work page.
+
+## Lab: large and xlarge maps
+branch: feat/lab-large (from main @ a94585f)
+step: done on the branch
+state: awaiting merge (merging to main publishes the site)
+updated: 2026-10-03T13:33:53Z
+blockers: none
+next: user decision to merge
+log:
+- 2026-10-03T13:33:53Z The Scheduling Lab now has all 80 held-out maps (small, medium, large 80x80/60 trains, xlarge 100x100/100 trains; seeds 1000-1009; malfunctions off and on for every seed). Export 28 min for large+xlarge; 400 recorded outcomes equal data/; check_lab 80/80 (7,173 dispatcher clearances). Malfunctions control is now an explicit off/on pair. Guided experiment 9 on xlarge seeds 1003 and 1008. Load of a 100-train map ~1 s; 'You dispatch' re-runs take several seconds there (window rebuilt every step), noted in the Lab. All '40 maps' mentions updated.

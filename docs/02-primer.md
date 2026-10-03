@@ -14,7 +14,7 @@ icon: fl/primer
       **what it means for the agent**, buttons that open the Lab at the right moment, and a short
       self-check.
     - The widgets and the Lab run a JavaScript port of flatland-rl 4.3.0 and of this repository's
-      planner that reproduces flatland step for step on all 40 small and medium held-out maps
+      planner that reproduces flatland step for step on all 80 held-out maps, small to xlarge
       ([how it is checked](how/7-lab.md#how-faithful-it-is)).
     - Where the mechanisms come from is in [The MAPF toolkit](literature/mapf.md); every term and
       formula is on the [glossary and formula sheet](literature/glossary.md).
@@ -113,7 +113,7 @@ splits, and (in Flatland) can only reverse at a dead end. Three consequences fol
 
     ---
 
-    All of the above on 40 real maps: replay every policy, run the planner, break trains, and
+    All of the above on 80 real maps, up to 100×100 with 100 trains: replay every policy, run the planner, break trains, and
     dispatch yourself.
 
 </div>

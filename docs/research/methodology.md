@@ -115,7 +115,7 @@ samples), with a 55-minute cap.
 | A clearance cannot create a deadlock | **by construction, not proven** | each clearance is a SIPP search against the live reservation table and is committed only if it succeeds; observed 0 deadlocks and 0 reservation violations in 200 random-clearance episodes (28,705 edits) and in every dispatcher evaluation ([step 1](../08-tada-dispatcher.md#step-1-the-executor-reproduces-main-exactly)) |
 | The learned dispatcher improves on the planner | **not supported** at 10 seeds | ties on medium; a few trains gained on large and xlarge with malfunctions, within seed-to-seed variation ([results](../08-tada-dispatcher.md#generalisation-without-retraining)) |
 | The dispatcher generalises from medium to other sizes | **observation** on the evaluated seeds only | evaluated without retraining on 10 seeds each of small, large and xlarge |
-| The in-browser Lab reproduces flatland-rl | **observation** | identical step by step on the 40 exported maps, five recorded policies each, the live planner and 302 recorded clearances ([how it is checked](../how/7-lab.md#how-faithful-it-is)); untested on other maps or flatland versions |
+| The in-browser Lab reproduces flatland-rl | **observation** | identical step by step on the 80 exported maps (all four scenarios), five recorded policies each, the live planner and 7,173 recorded clearances ([how it is checked](../how/7-lab.md#how-faithful-it-is)); untested on other maps or flatland versions |
 
 ## Controlled experiments and competition results
 

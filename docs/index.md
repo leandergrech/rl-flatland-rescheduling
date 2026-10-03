@@ -21,7 +21,7 @@ may only edit the planner's plan through checked clearances.
 <div class="fl-stat"><b>99.3%</b><span>trains arrived on medium maps (30 trains) with the reproduced OR planner</span></div>
 <div class="fl-stat"><b>35%</b><span>the best policy learned from scratch on the same maps, after a 30-minute training budget</span></div>
 <div class="fl-stat"><b>+1 / 300</b><span>net trains gained by the learned dispatcher over the planner, medium with breakdowns: no measurable gain</span></div>
-<div class="fl-stat"><b>40 / 40</b><span>held-out maps on which the in-browser simulator matches flatland-rl step for step</span></div>
+<div class="fl-stat"><b>80 / 80</b><span>held-out maps, up to 100×100 with 100 trains, on which the in-browser simulator matches flatland-rl step for step</span></div>
 </div>
 
 <div class="fl-actions">
@@ -173,7 +173,7 @@ measures how far each approach gets on identical maps, and tries one way to comb
 -   <span class="fl-tag fl-tag--original">Original</span>
 
     **The Scheduling Lab.** Flatland, the planner and the dispatcher ported to JavaScript and
-    checked step for step against flatland-rl on 40 held-out maps. Replay every policy, break
+    checked step for step against flatland-rl on 80 held-out maps, up to 100 trains. Replay every policy, break
     trains, or dispatch yourself.
 
     [:octicons-arrow-right-24: Open the Lab](how/7-lab.md)
