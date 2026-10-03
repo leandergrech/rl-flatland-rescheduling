@@ -112,7 +112,7 @@ Each is argued where it matters; the short version:
   executor and window, and the figure palette.
 - `node scripts/check_lab.mjs` checks the browser port against fixtures exported from flatland-rl:
   distances, five recorded policies, the live planner and the dispatcher's recorded clearances on
-  all 40 maps.
+  all 80 maps.
 - GitHub Actions run the tests on every push to `main` and every pull request
   ([`ci.yml`](https://github.com/leandergrech/rl-flatland-rescheduling/blob/main/.github/workflows/ci.yml)),
   and build this site with `mkdocs build --strict` and publish it from `main`

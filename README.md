@@ -14,7 +14,7 @@ scenarios, an OR reference that reproduces the core of the winning planners, a p
 PPO baseline, and an imitation-then-PPO baseline, all evaluated by one harness on held-out seeds
 with and without malfunctions. The site explains the mechanisms chapter by chapter with
 interactive widgets and ends in a **Scheduling Lab**: flatland itself, ported to JavaScript and
-checked step for step against flatland-rl on 40 held-out maps, where you can replay every policy,
+checked step for step against flatland-rl on all 80 held-out maps (up to 100×100 with 100 trains), where you can replay every policy,
 run the planner, break trains and dispatch yourself.
 
 **Scope:** 30×30 to 100×100 grids with 10 to 100 trains. Every baseline trains and evaluates on a
@@ -90,10 +90,11 @@ tests/                env sanity tests and a smoke test per baseline
   re-running episodes.
 - The site's [Reproducing the results](https://leandergrech.github.io/rl-flatland-rescheduling/implementation/reproduce/)
   page lists versions, every check, what is deterministic and what is not.
-- The Lab's JavaScript port of flatland: `python scripts/make_lab_data.py` exports the 40 small and
-  medium held-out maps with five policies' recorded episodes (and the check fixtures, not committed),
+- The Lab's JavaScript port of flatland: `python scripts/make_lab_data.py` exports the 80 held-out
+  maps (four scenarios, 10 seeds, malfunctions off and on) with five policies' recorded episodes
+  (and the check fixtures, about 430 MB, not committed),
   then `node scripts/check_lab.mjs` (any Node 18+) checks distances, replays, the live planner and
-  the dispatcher's clearances against flatland-rl, step for step (40/40 maps).
+  the dispatcher's clearances against flatland-rl, step for step (80/80 maps).
 
 ## Licence
 

@@ -49,8 +49,8 @@ trains, then has the least lateness, then the earliest arrivals. The Lab shows t
 map. On medium seed 1000 without breakdowns, the four rule-based orders route 22, 20, 29 and 20 of
 the 30 trains; the third random order routes all 30, and all 30 arrive. On medium seed 1003 the
 orders route between 27 and 30, and the plan kept arrives with normalised reward 0.995 instead of
-0.929 for the worst order. (The Lab's planner is checked to produce exactly main's paths on all 40
-held-out small and medium maps; these numbers come from its planner panel.)
+0.929 for the worst order. (The Lab's planner is checked to produce exactly main's paths on all 80
+held-out maps; these numbers come from its planner panel.)
 
 [The eight orders on medium seed 1000](7-lab.md?map=medium-1000-n&preset=or&t=120){ .fl-try } [Plan with "least slack first" only](7-lab.md?map=medium-1000-n&preset=or&order=slack&t=120){ .fl-try } [Seed 1005: even the best order gets 28 of 30 home](7-lab.md?map=medium-1005-n&preset=or&t=200){ .fl-try }
 

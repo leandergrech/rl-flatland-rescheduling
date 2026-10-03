@@ -1,4 +1,4 @@
-/* The Scheduling Lab: flatland in the browser, on the 40 held-out small and medium maps of this repo.
+/* The Scheduling Lab: flatland in the browser, on the 80 held-out maps of this repo (4 scenarios × 10 seeds × malfunctions off/on).
  *
  *   recorded presets   replay the actions a policy took in flatland-rl, through the JavaScript port of the env
  *                      (flatland-core.js), which reproduces flatland step for step (scripts/check_lab.mjs)
@@ -200,7 +200,7 @@
     // URL state
     const q = new URLSearchParams(location.search);
     if (q.get("map")) {
-      const m = q.get("map").match(/^(small|medium)-(\d+)-([nm])$/);
+      const m = q.get("map").match(/^(small|medium|large|xlarge)-(\d+)-([nm])$/);
       if (m) Object.assign(S, { scen: m[1], seed: +m[2], malf: m[3] === "m" });
     }
     if (q.get("preset") && PRESETS[q.get("preset")]) S.preset = q.get("preset");
@@ -243,8 +243,9 @@
     // map picker
     mapRow.appendChild(el("span", "fl-lab-label", "Map"));
     const scenBtns = {};
-    for (const sc of ["small", "medium"])
-      scenBtns[sc] = btn(mapRow, sc === "small" ? "small · 30×30 · 10 trains" : "medium · 50×50 · 30 trains", () => {
+    const SCEN_LABEL = { small: "small · 30×30 · 10 trains", medium: "medium · 50×50 · 30 trains", large: "large · 80×80 · 60 trains", xlarge: "xlarge · 100×100 · 100 trains" };
+    for (const sc of Object.keys(SCEN_LABEL))
+      scenBtns[sc] = btn(mapRow, SCEN_LABEL[sc], () => {
         S.scen = sc;
         loadMap();
       }, "fl-chip");
@@ -255,10 +256,14 @@
       loadMap();
     });
     mapRow.appendChild(seedSel);
-    const malfBtn = btn(mapRow, "malfunctions", () => {
-      S.malf = !S.malf;
-      loadMap();
-    }, "fl-chip");
+    // malfunctions: every seed exists twice, with flatland's breakdowns off and on (same network, trains and timetable)
+    mapRow.appendChild(el("span", "fl-lab-label", "Malfunctions"));
+    const malfBtns = {};
+    for (const [v, text] of [[false, "off"], [true, "on (rate 1/1000, 20–50 steps)"]])
+      malfBtns[v] = btn(mapRow, text, () => {
+        S.malf = v;
+        loadMap();
+      }, "fl-chip");
 
     // presets
     const presetBtns = {};
@@ -419,8 +424,7 @@
     async function loadMap() {
       const id = mapId();
       for (const [sc, b] of Object.entries(scenBtns)) b.setAttribute("aria-pressed", String(sc === S.scen));
-      malfBtn.setAttribute("aria-pressed", String(S.malf));
-      malfBtn.textContent = S.malf ? "malfunctions on" : "malfunctions off";
+      for (const [v, b] of Object.entries(malfBtns)) b.setAttribute("aria-pressed", String((v === "true") === S.malf));
       seedSel.value = String(S.seed);
       story.innerHTML = '<span class="fl-note">Loading the map…</span>';
       const map = await getJSON(`maps/${id}.json`);
@@ -508,7 +512,7 @@
         });
         row.appendChild(sel);
         ctlBody.appendChild(row);
-        ctlBody.appendChild(el("p", "fl-note", "Pause at any step and use the window panel. Your clearances are kept in the URL; at most two per step, as in the brief."));
+        ctlBody.appendChild(el("p", "fl-note", "Pause at any step and use the window panel. Your clearances are kept in the URL; at most two per step, as in the brief." + (S.map && S.map.agents.length >= 60 ? " On a map this size each re-run takes a few seconds." : "")));
         if (S.you.length) {
           const lst = el("div", "fl-lab-list");
           S.you.forEach((c, i) => {
